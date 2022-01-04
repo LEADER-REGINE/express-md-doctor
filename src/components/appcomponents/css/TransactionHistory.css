@@ -1,0 +1,11 @@
+.transactionBox {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.transactionList {
+    width: 100%;
+    max-width: 720px;
+    overflow: auto;
+    max-height: 360px;
+}

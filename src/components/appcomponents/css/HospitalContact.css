@@ -1,0 +1,120 @@
+.contactBox {
+  padding-left: 75px;
+  padding-right: 75px;
+  width: 599px;
+}
+
+.contactContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+.deetBox {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.contactDetailBox {
+  margin-left: 25px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactNameBox {
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+}
+
+.contactDeetsBox {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 899px) {
+  .contactContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  }
+
+  .contactBox {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media only screen and (max-width: 809px) {
+  .contactBox {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .deetBox {
+    max-width: 350px;
+  }
+  .contactBox {
+    max-width: 550px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .contactBox {
+    max-width: 450px;
+  }
+}
+
+@media only screen and (max-width: 666px) {
+  .contactBox {
+    max-width: 350px;
+  }
+}
+
+@media only screen and (max-width: 499px) {
+  .contactBox {
+    padding: 0;
+  }
+
+  .deetBox {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .contactBox {
+    padding: 0;
+    width: 320px;
+  }
+
+  .deetBox {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .fname {
+    font-size: 0.8rem !important;
+  }
+
+  .lname {
+    font-size: 1.1rem !important;
+  }
+
+  .type {
+    font-size: 0.7rem !important;
+  }
+
+  .headerStyle {
+    font-size: 1.3rem !important;
+    text-align: center;
+  }
+}

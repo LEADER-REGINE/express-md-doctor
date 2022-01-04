@@ -1,0 +1,93 @@
+.docProfileBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 25px;
+}
+
+.docDetails2 {
+    display: none;
+}
+
+.docImg {
+    width: 256px;
+    height: 256px;
+}
+
+.container {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.docName {
+    padding-right: 25px;
+}
+
+.reviewBox {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reviewList {
+    width: 100%;
+    max-width: 720px;
+    overflow: auto;
+    max-height: 360px;
+}
+
+@media only screen and (max-width: 899px) {
+    .reviewBox {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+    .reviewList {
+        width: 100%;
+        max-width: 720px;
+        overflow: auto;
+        max-height: 360px;
+    }
+
+    .base {
+        padding-bottom: 56px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .docDeets {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media only screen and (max-width: 557px) {
+    .docProfileBox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-top: 25px;
+    }
+
+    .docDetails {
+        display: none;
+    }
+
+    .docDetails2 {
+        display: block;
+        margin-top: 25px;
+    }
+
+    .docDeets {
+        font-size: 1.4rem !important;
+    }
+
+    .starsRating {
+        display: none;
+    }
+
+    .docName {
+        text-align: center;
+    }
+}
