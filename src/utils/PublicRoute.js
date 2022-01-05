@@ -4,13 +4,14 @@ import { isLogin } from "./isLoggedin";
 export default function PublicRoute({
     component: Component,
     restricted,
+    isAuthenticated,
     ...rest
 }) {
     return (
         <Route
             {...rest}
             component={(props) =>
-                isLogin() && restricted ? (
+                isAuthenticated && restricted ? (
                     <Redirect to="/dashboard" />
                 ) : (
                     <Component {...props} />

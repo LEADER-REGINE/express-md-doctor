@@ -13,15 +13,14 @@ import { NavLink, useHistory } from "react-router-dom";
 
 export default function Welcome() {
     let history = useHistory();
-    function Login() {
-        localStorage.setItem("jwt", 'yes');
+    function Continue() {
         history.push("/dashboard")
     }
 
     return (
         <Box>
             <Typography>Welcome to ExpressMD for Doctors</Typography>
-            <Button variant="contained" onClick={() => Login()}>Continue</Button>
+            <Button variant="contained" onClick={() => Continue()}>Continue</Button>
         </Box >
     );
 }

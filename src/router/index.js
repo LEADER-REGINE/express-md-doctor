@@ -15,6 +15,7 @@ import Login from '../pages/App/Login';
 import Nav from '../components/appcomponents/Nav';
 import PrivateRoute from '../utils/PrivateRoute';
 import PublicRoute from '../utils/PublicRoute';
+import firebase from '../config/firebase';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -75,22 +76,40 @@ export default function RouterComponent() {
         },
     })
     const [value, setValue] = useState(0);
+
+    const [values, setValues] = useState({
+        isAuthenticated: false,
+    });
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                setValues({ isAuthenticated: true });
+
+            } else {
+                setValues({ isAuthenticated: false });
+            }
+        });
+    }, []);
+
     return (
         <ThemeProvider theme={ui.isDarkMode ? darkTheme : lightTheme}>
             <CssBaseline />
             <Router>
                 <Switch >
                     <PublicRoute
+                        isAuthenticated={values.isAuthenticated}
                         restricted={true}
                         component={Login}
                         path="/login"
                         exact />
                     <PublicRoute
+                        isAuthenticated={values.isAuthenticated}
                         restricted={false}
                         component={Welcome}
                         path="/"
                         exact />
                     <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
                         component={App}
                         path="/dashboard"
                         exact />

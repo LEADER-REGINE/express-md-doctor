@@ -99,6 +99,20 @@ export default function App() {
           <Container>
             <Paper elevation={3} className="schedPaper">
               <Typography className="schedHeader" variant="h6">
+                New Requests
+              </Typography>
+              <Box className="schedDetails">
+                <Typography className="schedText" variant="subtitle2">
+                  There are no new requests.
+                </Typography>
+              </Box>
+            </Paper>
+          </Container>
+        </Box>
+        <Box className="schedBox">
+          <Container>
+            <Paper elevation={3} className="schedPaper">
+              <Typography className="schedHeader" variant="h6">
                 Upcoming Appointments
               </Typography>
               <Box className="schedDetails">
@@ -108,50 +122,6 @@ export default function App() {
               </Box>
             </Paper>
           </Container>
-        </Box>
-
-        <Box sx={style.label}>
-          <Typography variant="h6">Doctor Category</Typography>
-        </Box>
-        <Box sx={style.wrapper}>
-          <Paper sx={style.categoryPaper} variant="outlined">
-            <Box sx={style.item}>
-              <Box
-                component="img"
-                src={doctorPhoto}
-                alt=""
-                sx={style.category}
-                style={{ backgroundColor: "#FFC107" }}
-              ></Box>
-              <Typography variant="subtitle2" sx={style.categoryText}>
-                General Doctor
-              </Typography>
-            </Box>
-          </Paper>
-          <Paper sx={style.categoryPaper} variant="outlined">
-            <Box sx={style.item}>
-              <Box
-                component="img"
-                src={category}
-                alt=""
-                sx={style.category}
-                style={{ backgroundColor: "#65A4DA" }}
-              ></Box>
-              <Typography variant="subtitle2" sx={style.categoryText}>
-                Pediatrics
-              </Typography>
-            </Box>
-          </Paper>
-          {/* <Paper sx = {style.categoryPaper} variant = "outlined">
-                    <Box sx = {style.item}>
-                        <Typography variant="subtitle2" sx = {style.categoryText}>Pediatrics</Typography>
-                    </Box>
-                    </Paper>
-                    <Paper sx = {style.categoryPaper} variant = "outlined">
-                    <Box sx = {style.item}>
-                    category 4
-                    </Box>
-                    </Paper> */}
         </Box>
       </Container>
     </Box>
