@@ -16,6 +16,7 @@ import Nav from '../components/appcomponents/Nav';
 import PrivateRoute from '../utils/PrivateRoute';
 import PublicRoute from '../utils/PublicRoute';
 import firebase from '../config/firebase';
+import Profile from '../pages/App/Profile';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -112,6 +113,12 @@ export default function RouterComponent() {
                         isAuthenticated={values.isAuthenticated}
                         component={App}
                         path="/dashboard"
+                        exact />
+
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
+                        component={Profile}
+                        path="/profile"
                         exact />
                 </Switch>
                 <Box>
