@@ -6,6 +6,29 @@ import bcrypt from 'bcryptjs';
 import firebase from '../../config/firebase';
 import { NavLink, useHistory } from "react-router-dom";
 
+const style = {
+    loginLabel : {
+        fontSize : "45px",
+        marginLeft : "25px",
+        marginTop : "100px",
+        color : "#808080"
+    },
+    outerCon : {
+        display : "flex",
+        justifyContent : "center",
+        flexDirection : "column",
+        alignItems : "center"
+    },
+    inputEmail : {
+        width : "270px",
+        marginTop : "20px"
+    },
+    loginBTN : {
+        width : "250px",
+        marginTop : "20px"
+    }
+}
+
 
 const db = firebase.firestore();
 
@@ -41,18 +64,25 @@ export default function Login() {
 
     return (
         <Box>
-            <TextField label="Email"
-                onChange={userInput("email")}
-                value={payload.email}
-            />
-            <TextField label="Password"
+            <Typography sx = {style.loginLabel}>Login</Typography>
+            <Box sx = {style.outerCon}>
+                <TextField label="Email"
+                    onChange={userInput("email")}
+                    value={payload.email}
+                    sx = {style.inputEmail}
+                    variant = "standard"
+                />
+                <TextField label="Password"
                 type="password"
                 onChange={userInput("password")}
-                value={payload.password} />
-
-            <Button variant="contained"
+                value={payload.password}
+                sx = {style.inputEmail}
+                variant = "standard"
+                 />
+                <Button variant="contained"
                 onClick={() => login()}
-            >Login</Button>
+                sx = {style.loginBTN}>Login</Button>
+        </Box>
         </Box>
     );
 }
