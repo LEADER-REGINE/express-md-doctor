@@ -1,0 +1,100 @@
+import React, { useState, useEffect } from "react";
+import { Typography, Box, TextField, Button } from "@mui/material";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+import Checkbox from "@mui/material/Checkbox";
+import { useParams } from "react-router-dom";
+import firebase from '../../config/firebase';
+
+const style = {
+  parentCon: {
+    display: "flex",
+    margin: "20px",
+    alignItems: "center"
+
+  },
+  label: {
+    fontSize: "24px",
+    marginRight: "10px"
+  },
+
+  subLabel: {
+    fontSize: "18px",
+    fontStyle: "italic",
+    color: "red"
+  },
+  textField: {
+    width: "300px",
+  },
+  inputField: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: 'center'
+  }
+}
+
+export default function ViewRequest() {
+
+  const { id } = useParams();
+
+  const db = firebase.firestore();
+  const [appointmentData, setappointmentData] = useState({
+    data: [],
+  });
+
+  const fetchData = async () => {
+    let isMounted = true
+    const docRef = await db.collection("doctors").doc(localStorage.getItem("uid")).collection("PendingRequests").doc(id);
+    let rawData = [];
+    docRef.get().then((doc) => {
+      rawData.push(doc.data());
+      setappointmentData({ data: rawData });
+    });
+    isMounted = false
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <Box className="base">
+      {
+        appointmentData && appointmentData.data.map((data) => {
+          let setDate = data.datetime.toDate().toLocaleDateString();
+          let setTime = data.datetime.toDate().toLocaleTimeString();
+          return (
+            <Box>
+              <Box>
+                <Typography>Name: {data.userFullName}</Typography>
+                <Typography>Date: {setDate}</Typography>
+                <Typography>Time: {setTime}</Typography>
+                <Typography>Gender: {data.gender}</Typography>
+                <Typography>Location: {data.location}</Typography>
+              </Box>
+              <Box>
+                <Typography>Symptoms: {data.symptoms}</Typography>
+              </Box>
+              <Box>
+                <Typography>What do I feel: {data.feel}</Typography>
+                <Typography>Any Others?: {data.others}</Typography>
+              </Box>
+              <Box>
+                <Typography>Status: {data.status}</Typography>
+              </Box>
+              <Box>
+                <Button variant="contained">Accept</Button>
+                <Button variant="contained">Decline</Button>
+                <Button variant="outlined">Change Time or Date</Button>
+              </Box>
+            </Box>
+          );
+        })
+      }
+
+    </Box>
+  );
+}

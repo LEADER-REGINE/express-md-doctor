@@ -8,7 +8,7 @@ import Ticker from "react-ticker";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import category from "../assets/child 1.png";
 import doctorPhoto from "../assets/doctor 1.png";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import firebase from '../config/firebase';
 const style = {
   requestBtn: {
@@ -142,11 +142,14 @@ export default function App() {
                     let setDate = setappointment.datetime.toDate().toLocaleDateString();
                     let setTime = setappointment.datetime.toDate().toLocaleTimeString();
                     return (
-                      <Paper key={setappointment.userID}>
-                        <Typography variant="subtitle2">Assigned Doctor:{setappointment.assigned_doctor}</Typography>
-                        <Typography variant="subtitle2">Date:{setDate}</Typography>
-                        <Typography variant="subtitle2">Time:{setTime}</Typography>
-                      </Paper>
+                      <Link key={setappointment.userID} to={`view/${setappointment.userID}`}>
+                        <Paper >
+                          <Typography variant="subtitle2">Name:{setappointment.userFullName}</Typography>
+                          <Typography variant="subtitle2">Date:{setDate}</Typography>
+                          <Typography variant="subtitle2">Time:{setTime}</Typography>
+                          <Typography variant="subtitle2">Location:{setappointment.location}</Typography>
+                        </Paper>
+                      </Link>
                     )
                   })
                 }

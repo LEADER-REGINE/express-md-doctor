@@ -16,6 +16,7 @@ import Nav from '../components/appcomponents/Nav';
 import PrivateRoute from '../utils/PrivateRoute';
 import PublicRoute from '../utils/PublicRoute';
 import firebase from '../config/firebase';
+import ViewRequest from '../pages/App/ViewRequest'
 import Profile from '../pages/App/Profile';
 
 export default function RouterComponent() {
@@ -119,6 +120,11 @@ export default function RouterComponent() {
                         isAuthenticated={values.isAuthenticated}
                         component={Profile}
                         path="/profile"
+                        exact />
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
+                        component={ViewRequest}
+                        path="/view/:id"
                         exact />
                 </Switch>
                 <Box>
