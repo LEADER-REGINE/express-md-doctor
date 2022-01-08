@@ -11,7 +11,7 @@ const style = {
         fontSize: "45px",
         marginLeft: "25px",
         marginTop: "100px",
-        color: "#808080"
+        color: "#808080",
     },
     outerCon: {
         display: "flex",
