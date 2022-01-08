@@ -20,7 +20,7 @@ const user = auth.currentUser;
 
 function Profile() {
 
-    const id = auth.currentUser.uid;
+    const id = localStorage.getItem("uid");
 
     const history = useHistory();
     const db = firebase.firestore();

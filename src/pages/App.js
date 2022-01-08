@@ -1,15 +1,15 @@
 import { Typography, Box, Container, Button, Paper } from "@mui/material";
 import Nav from "../components/appcomponents/Nav";
 import TopPhoto from "../assets/Drawkit-Vector-Illustration-Medical-01 1.png";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getTheme } from "../redux/actions/uiAction";
 import Ticker from "react-ticker";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import category from "../assets/child 1.png";
 import doctorPhoto from "../assets/doctor 1.png";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useHistory } from "react-router-dom";
+import firebase from '../config/firebase';
 const style = {
   requestBtn: {
     borderColor: "white",
@@ -91,6 +91,37 @@ const style = {
 };
 
 export default function App() {
+  const [isEmpty, setisEmpty] = useState(false);
+  const history = useHistory();
+  const db = firebase.firestore();
+  const [fetchPendingAppointments, setfetchPendingAppointments] = useState({
+    appointments: [],
+  })
+
+  const fetchList = async () => {
+    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("PendingRequests");
+    userRef.get().then((doc) => {
+      if (doc.size != 0) {
+        setisEmpty(false);
+        userRef.onSnapshot((doc) => {
+          let getPendingAppointment = [];
+          doc.forEach((req) => {
+            getPendingAppointment.push(req.data());
+          });
+          setfetchPendingAppointments({ appointments: getPendingAppointment });
+        })
+      } else {
+        // doc.data() will be undefined in this case
+        setisEmpty(true);
+      }
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    });
+  }
+  useEffect(() => {
+    fetchList();
+  }, []);
+
 
   return (
     <Box className="base">
@@ -102,9 +133,23 @@ export default function App() {
                 New Requests
               </Typography>
               <Box className="schedDetails">
-                <Typography className="schedText" variant="subtitle2">
-                  There are no new requests.
-                </Typography>
+                {isEmpty ?
+                  <Typography className="schedText" variant="subtitle2">
+                    There is no scheduled appointment.
+                  </Typography>
+                  :
+                  fetchPendingAppointments.appointments.map((setappointment) => {
+                    let setDate = setappointment.datetime.toDate().toLocaleDateString();
+                    let setTime = setappointment.datetime.toDate().toLocaleTimeString();
+                    return (
+                      <Paper key={setappointment.userID}>
+                        <Typography variant="subtitle2">Assigned Doctor:{setappointment.assigned_doctor}</Typography>
+                        <Typography variant="subtitle2">Date:{setDate}</Typography>
+                        <Typography variant="subtitle2">Time:{setTime}</Typography>
+                      </Paper>
+                    )
+                  })
+                }
               </Box>
             </Paper>
           </Container>

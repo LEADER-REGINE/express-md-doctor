@@ -12,27 +12,27 @@ import { NavLink, useHistory } from "react-router-dom";
 import Banner from "../assets/image 45.png"
 
 const style = {
-    outerCon : {
-        display : "flex",
-        alignItems : "center",
-        flexDirection : "column"
+    outerCon: {
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column"
     },
-    bannerCon : {
-        display : "flex",
-        marginTop : "150px"
-        
+    bannerCon: {
+        display: "flex",
+        marginTop: "150px"
+
     },
-    banner : {
-        height : "170px",
-        width : "250px"
+    banner: {
+        height: "170px",
+        width: "250px"
     },
 
-    label : {
-        fontSize : "18px",
-        marginBottom : "180px"
+    label: {
+        fontSize: "18px",
+        marginBottom: "180px"
     },
-    continueBTN : {
-        width : "200px"
+    continueBTN: {
+        width: "200px"
     }
 }
 
@@ -43,12 +43,12 @@ export default function Welcome() {
     }
 
     return (
-        <Box sx = {style.outerCon}>
-            <Box sx ={style.bannerCon}>
-                <Box component = "img" src = {Banner} sx = {style.banner}></Box>
+        <Box sx={style.outerCon}>
+            <Box sx={style.bannerCon}>
+                <Box component="img" src={Banner} sx={style.banner}></Box>
             </Box>
-            <Typography sx = {style.label}>Welcome to ExpressMD for Doctors</Typography>
-            <Button variant="contained" onClick={() => Continue()} sx = {style.continueBTN}>Continue</Button>
+            <Typography sx={style.label}>Welcome to ExpressMD for Doctors</Typography>
+            <Button variant="contained" onClick={() => Continue()} sx={style.continueBTN}>Continue</Button>
         </Box >
     );
 }

@@ -7,25 +7,25 @@ import firebase from '../../config/firebase';
 import { NavLink, useHistory } from "react-router-dom";
 
 const style = {
-    loginLabel : {
-        fontSize : "45px",
-        marginLeft : "25px",
-        marginTop : "100px",
-        color : "#808080"
+    loginLabel: {
+        fontSize: "45px",
+        marginLeft: "25px",
+        marginTop: "100px",
+        color: "#808080"
     },
-    outerCon : {
-        display : "flex",
-        justifyContent : "center",
-        flexDirection : "column",
-        alignItems : "center"
+    outerCon: {
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center"
     },
-    inputEmail : {
-        width : "270px",
-        marginTop : "20px"
+    inputEmail: {
+        width: "270px",
+        marginTop: "20px"
     },
-    loginBTN : {
-        width : "250px",
-        marginTop : "20px"
+    loginBTN: {
+        width: "250px",
+        marginTop: "20px"
     }
 }
 
@@ -52,6 +52,7 @@ export default function Login() {
                     // Signed in
                     var user = userCredential.user;
                     console.log(user);
+                    localStorage.setItem("uid", user.uid);
                     // ...
                     history.push("/dashboard")
                 })
@@ -64,25 +65,25 @@ export default function Login() {
 
     return (
         <Box>
-            <Typography sx = {style.loginLabel}>Login</Typography>
-            <Box sx = {style.outerCon}>
+            <Typography sx={style.loginLabel}>Login</Typography>
+            <Box sx={style.outerCon}>
                 <TextField label="Email"
                     onChange={userInput("email")}
                     value={payload.email}
-                    sx = {style.inputEmail}
-                    variant = "standard"
+                    sx={style.inputEmail}
+                    variant="standard"
                 />
                 <TextField label="Password"
-                type="password"
-                onChange={userInput("password")}
-                value={payload.password}
-                sx = {style.inputEmail}
-                variant = "standard"
-                 />
+                    type="password"
+                    onChange={userInput("password")}
+                    value={payload.password}
+                    sx={style.inputEmail}
+                    variant="standard"
+                />
                 <Button variant="contained"
-                onClick={() => login()}
-                sx = {style.loginBTN}>Login</Button>
-        </Box>
+                    onClick={() => login()}
+                    sx={style.loginBTN}>Login</Button>
+            </Box>
         </Box>
     );
 }
