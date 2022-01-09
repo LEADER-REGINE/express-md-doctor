@@ -18,6 +18,9 @@ import PublicRoute from '../utils/PublicRoute';
 import firebase from '../config/firebase';
 import ViewRequest from '../pages/App/ViewRequest'
 import Profile from '../pages/App/Profile';
+import EditRequest from '../pages/App/EditRequest';
+import IsSuccessful from "../pages/App/IsSuccessful";
+import IsNotSuccessful from "../pages/App/IsNotSuccessful";
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -126,6 +129,21 @@ export default function RouterComponent() {
                         component={ViewRequest}
                         path="/view/:id"
                         exact />
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
+                        component={EditRequest}
+                        path="/view/:id/edit"
+                        exact />
+                    <PrivateRoute
+                        exact
+                        isAuthenticated={values.isAuthenticated}
+                        component={IsSuccessful}
+                        path="/success" />
+                    <PrivateRoute
+                        exact
+                        isAuthenticated={values.isAuthenticated}
+                        component={IsNotSuccessful}
+                        path="/sorry" />
                 </Switch>
                 <Box>
                     <Paper elevation="8" className="bottomNav">

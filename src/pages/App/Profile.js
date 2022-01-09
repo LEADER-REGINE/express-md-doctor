@@ -21,7 +21,7 @@ const user = auth.currentUser;
 function Profile() {
 
     const id = localStorage.getItem("uid");
-
+    console.log(id);
     const history = useHistory();
     const db = firebase.firestore();
     const [userProfile, setuserProfile] = useState({

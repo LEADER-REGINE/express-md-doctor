@@ -6,7 +6,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import firebase from '../../config/firebase';
 
 const style = {
@@ -40,6 +40,7 @@ export default function ViewRequest() {
 
   const { id } = useParams();
 
+  const history = useHistory();
   const db = firebase.firestore();
   const [appointmentData, setappointmentData] = useState({
     data: [],
@@ -59,6 +60,10 @@ export default function ViewRequest() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  function editRequest() {
+    history.push(`${id}/edit`)
+  }
 
   return (
     <Box className="base">
@@ -88,7 +93,7 @@ export default function ViewRequest() {
               <Box>
                 <Button variant="contained">Accept</Button>
                 <Button variant="contained">Decline</Button>
-                <Button variant="outlined">Change Time or Date</Button>
+                <Button variant="outlined" onClick={() => editRequest()}>Change Time or Date</Button>
               </Box>
             </Box>
           );

@@ -10,6 +10,7 @@ import category from "../assets/child 1.png";
 import doctorPhoto from "../assets/doctor 1.png";
 import { NavLink, useHistory } from "react-router-dom";
 import Banner from "../assets/image 45.png"
+import { getAuth, signOut } from "firebase/auth";
 
 const style = {
     outerCon: {
