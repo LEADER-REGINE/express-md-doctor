@@ -28,6 +28,9 @@ const style = {
   },
   textField: {
     width: "300px",
+    "&:disabled": {
+      color: "green"
+    }
   },
   inputField: {
     display: "flex",
@@ -35,6 +38,7 @@ const style = {
     alignItems: 'center'
   }
 }
+
 
 export default function ViewRequest() {
 
@@ -113,10 +117,11 @@ export default function ViewRequest() {
                 <Typography>Location: {data.location}</Typography>
               </Box>
               <Box>
-                <Typography>Symptoms: {data.symptoms}</Typography>
+              <Typography>What do I feel:</Typography>
+              <TextField  	inputProps={{ readOnly: true, }} value = {data.feel} sx = {style.textField}></TextField>
               </Box>
               <Box>
-                <Typography>What do I feel: {data.feel}</Typography>
+                <Typography>Symptoms: {data.symptoms}</Typography>
                 <Typography>Any Others?: {data.others}</Typography>
               </Box>
               <Box>

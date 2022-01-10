@@ -88,6 +88,12 @@ const style = {
   label: {
     marginTop: "20px",
   },
+
+  upcommingReq : {
+    padding: "20px",
+    borderColor: "#7EB6BC",
+    borderWidth: "2px",
+  }
 };
 
 export default function App() {
@@ -197,7 +203,7 @@ export default function App() {
                     let setTime = upcomingAppointment.datetime.toDate().toLocaleTimeString();
                     return (
                       <Link key={upcomingAppointment.userID} to={`view/${upcomingAppointment.userID}`}>
-                        <Paper >
+                        <Paper sx = {style.upcommingReq} variant="outlined">
                           <Typography variant="subtitle2">Name:{upcomingAppointment.userFullName}</Typography>
                           <Typography variant="subtitle2">Date:{setDate}</Typography>
                           <Typography variant="subtitle2">Time:{setTime}</Typography>
