@@ -43,7 +43,8 @@ function Profile() {
     function logout() {
         signOut(auth)
             .then(() => {
-                history.push("/")
+                history.push("/");
+                localStorage.removeItem("uid");
             })
             .catch((error) => {
                 // An error happened.
