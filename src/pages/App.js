@@ -91,18 +91,23 @@ const style = {
 };
 
 export default function App() {
-  const [isEmpty, setisEmpty] = useState(false);
+  const [isReqEmpty, setisReqEmpty] = useState(false);
+  const [isupcomingEmpty, setisUpcomingEmpty] = useState(false);
   const history = useHistory();
   const db = firebase.firestore();
   const [fetchPendingAppointments, setfetchPendingAppointments] = useState({
     appointments: [],
   })
 
-  const fetchList = async () => {
-    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("PendingRequests");
-    userRef.get().then((doc) => {
+  const [fetchUpcomingAppointments, setfetchUpcomingAppointments] = useState({
+    appointments: [],
+  })
+
+  const fetchReqList = async () => {
+    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("requests").where("status", "==", "Pending");
+    userRef.onSnapshot((doc) => {
       if (doc.size != 0) {
-        setisEmpty(false);
+        setisReqEmpty(false);
         userRef.onSnapshot((doc) => {
           let getPendingAppointment = [];
           doc.forEach((req) => {
@@ -112,14 +117,31 @@ export default function App() {
         })
       } else {
         // doc.data() will be undefined in this case
-        setisEmpty(true);
+        setisReqEmpty(true);
       }
-    }).catch((error) => {
-      console.log("Error getting document:", error);
+    });
+  }
+  const fetchUpcomingList = async () => {
+    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("requests").where("status", "==", "Accepted");
+    userRef.onSnapshot((doc) => {
+      if (doc.size != 0) {
+        setisUpcomingEmpty(false);
+        userRef.onSnapshot((doc) => {
+          let getUpcomingAppointment = [];
+          doc.forEach((req) => {
+            getUpcomingAppointment.push(req.data());
+          });
+          setfetchUpcomingAppointments({ appointments: getUpcomingAppointment });
+        })
+      } else {
+        // doc.data() will be undefined in this case
+        setisUpcomingEmpty(true);
+      }
     });
   }
   useEffect(() => {
-    fetchList();
+    fetchReqList();
+    fetchUpcomingList();
   }, []);
 
 
@@ -133,9 +155,9 @@ export default function App() {
                 New Requests
               </Typography>
               <Box className="schedDetails">
-                {isEmpty ?
+                {isReqEmpty ?
                   <Typography className="schedText" variant="subtitle2">
-                    There is no scheduled appointment.
+                    There are no new requests.
                   </Typography>
                   :
                   fetchPendingAppointments.appointments.map((setappointment) => {
@@ -164,9 +186,27 @@ export default function App() {
                 Upcoming Appointments
               </Typography>
               <Box className="schedDetails">
-                <Typography className="schedText" variant="subtitle2">
-                  There are no upcoming appointments.
-                </Typography>
+
+                {isupcomingEmpty ?
+                  <Typography className="schedText" variant="subtitle2">
+                    There are no upcoming appointments.
+                  </Typography>
+                  :
+                  fetchUpcomingAppointments.appointments.map((upcomingAppointment) => {
+                    let setDate = upcomingAppointment.datetime.toDate().toLocaleDateString();
+                    let setTime = upcomingAppointment.datetime.toDate().toLocaleTimeString();
+                    return (
+                      <Link key={upcomingAppointment.userID} to={`view/${upcomingAppointment.userID}`}>
+                        <Paper >
+                          <Typography variant="subtitle2">Name:{upcomingAppointment.userFullName}</Typography>
+                          <Typography variant="subtitle2">Date:{setDate}</Typography>
+                          <Typography variant="subtitle2">Time:{setTime}</Typography>
+                          <Typography variant="subtitle2">Location:{upcomingAppointment.location}</Typography>
+                        </Paper>
+                      </Link>
+                    )
+                  })
+                }
               </Box>
             </Paper>
           </Container>

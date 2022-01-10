@@ -66,7 +66,7 @@ export default function EditRequest() {
 
     const fetchData = async () => {
         let isMounted = true
-        const docRef = await db.collection("doctors").doc(localStorage.getItem("uid")).collection("PendingRequests").doc(id);
+        const docRef = await db.collection("doctors").doc(localStorage.getItem("uid")).collection("requests").doc(id);
         let rawData = [];
         docRef.get().then((doc) => {
             rawData.push(doc.data());
@@ -104,57 +104,37 @@ export default function EditRequest() {
     }, []);
 
     const submitForm = (e) => {
-
         var docRef = db.collection("doctors")
-            .doc(id)
-            .collection("PendingRequests")
-            .doc(
-                localStorage.getItem("uid"));
+            .doc(localStorage.getItem("uid"))
+            .collection("requests")
+            .doc(id);
         var userRef = db.collection("users")
-            .doc(getAuth().currentUser.uid)
-            .collection("PendingRequests")
-            .doc(
-                localStorage.getItem("uid"));
-
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                alert("You can only request once. Please wait for your doctor to accept your request");
-            } else {
-                var docRef = db.collection("doctors")
-                    .doc(localStorage.getItem("uid"))
-                    .collection("PendingRequests")
-                    .doc(id);
-                var userRef = db.collection("users")
-                    .doc(id)
-                    .collection("PendingRequests")
-                    .doc(id);
-
-                userRef
+            .doc(id)
+            .collection("requests")
+            .doc(id);
+        userRef
+            .update({
+                datetime: specifiedDate,
+                status: "Edited",
+            })
+            .then((docReference) => {
+                docRef
                     .update({
                         datetime: specifiedDate,
+                        status: "Edited",
                     })
-                    .then((docReference) => {
-                        docRef
-                            .update({
-                                datetime: specifiedDate,
-                            })
-                            .then((docRef) => {
-                                history.push("/success");
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                                history.push("/sorry");
-                            });
+                    .then((docRef) => {
+                        history.push("/success");
                     })
                     .catch((error) => {
                         console.log(error);
                         history.push("/sorry");
                     });
-            }
-        }).catch((error) => {
-            console.log(error);
-            history.push("/sorry");
-        });
+            })
+            .catch((error) => {
+                console.log(error);
+                history.push("/sorry");
+            });
     }
 
     return (

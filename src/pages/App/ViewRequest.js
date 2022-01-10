@@ -48,7 +48,7 @@ export default function ViewRequest() {
 
   const fetchData = async () => {
     let isMounted = true
-    const docRef = await db.collection("doctors").doc(localStorage.getItem("uid")).collection("PendingRequests").doc(id);
+    const docRef = await db.collection("doctors").doc(localStorage.getItem("uid")).collection("requests").doc(id);
     let rawData = [];
     docRef.get().then((doc) => {
       rawData.push(doc.data());
@@ -62,7 +62,39 @@ export default function ViewRequest() {
   }, []);
 
   function editRequest() {
-    history.push(`${id}/edit`)
+    history.push(`${id}/edit`);
+  }
+
+  function acceptRequest() {
+    var docRef = db.collection("doctors")
+      .doc(localStorage.getItem("uid"))
+      .collection("requests")
+      .doc(id);
+    var userRef = db.collection("users")
+      .doc(id)
+      .collection("requests")
+      .doc(id);
+    userRef
+      .update({
+        status: "Accepted",
+      })
+      .then((docReference) => {
+        docRef
+          .update({
+            status: "Accepted",
+          })
+          .then((docRef) => {
+            history.push("/success");
+          })
+          .catch((error) => {
+            console.log(error);
+            history.push("/sorry");
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        history.push("/sorry");
+      });
   }
 
   return (
@@ -91,7 +123,7 @@ export default function ViewRequest() {
                 <Typography>Status: {data.status}</Typography>
               </Box>
               <Box>
-                <Button variant="contained">Accept</Button>
+                <Button variant="contained" onClick={() => acceptRequest()}>Accept</Button>
                 <Button variant="contained">Decline</Button>
                 <Button variant="outlined" onClick={() => editRequest()}>Change Time or Date</Button>
               </Box>
