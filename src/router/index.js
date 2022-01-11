@@ -21,6 +21,7 @@ import Profile from '../pages/App/Profile';
 import EditRequest from '../pages/App/EditRequest';
 import IsSuccessful from "../pages/App/IsSuccessful";
 import IsNotSuccessful from "../pages/App/IsNotSuccessful";
+import DeclineRequest from '../pages/App/DeclineRequest';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -133,6 +134,11 @@ export default function RouterComponent() {
                         isAuthenticated={values.isAuthenticated}
                         component={EditRequest}
                         path="/view/:id/edit"
+                        exact />
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
+                        component={DeclineRequest}
+                        path="/view/:id/decline"
                         exact />
                     <PrivateRoute
                         exact

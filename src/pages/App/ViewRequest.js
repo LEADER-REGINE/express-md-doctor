@@ -69,6 +69,10 @@ export default function ViewRequest() {
     history.push(`${id}/edit`);
   }
 
+  function declineRequest() {
+    history.push(`${id}/decline`);
+  }
+
   function acceptRequest() {
     var docRef = db.collection("doctors")
       .doc(localStorage.getItem("uid"))
@@ -117,8 +121,8 @@ export default function ViewRequest() {
                 <Typography>Location: {data.location}</Typography>
               </Box>
               <Box>
-              <Typography>What do I feel:</Typography>
-              <TextField  	inputProps={{ readOnly: true, }} value = {data.feel} sx = {style.textField}></TextField>
+                <Typography>What do I feel:</Typography>
+                <TextField inputProps={{ readOnly: true, }} value={data.feel} sx={style.textField}></TextField>
               </Box>
               <Box>
                 <Typography>Symptoms: {data.symptoms}</Typography>
@@ -127,11 +131,33 @@ export default function ViewRequest() {
               <Box>
                 <Typography>Status: {data.status}</Typography>
               </Box>
-              <Box>
-                <Button variant="contained" onClick={() => acceptRequest()}>Accept</Button>
-                <Button variant="contained">Decline</Button>
-                <Button variant="outlined" onClick={() => editRequest()}>Change Time or Date</Button>
-              </Box>
+
+              {(() => {
+                switch (data.status) {
+                  case "Pending":
+                    return (
+                      <Box>
+                        <Button variant="contained" onClick={() => acceptRequest()}>Accept</Button>
+                        <Button variant="contained" onClick={() => declineRequest()}>Decline</Button>
+                        <Button variant="outlined" onClick={() => editRequest()}>Change Time or Date</Button>
+                      </Box>
+                    );
+                  case "Edited":
+                    return null;
+                  case "Accepted":
+                    return (
+                      <Box>
+                        <Button variant="contained">Complete Appointment</Button>
+                        <Button variant="outlined">Cancel Appointment</Button>
+                      </Box>
+                    );
+
+                  case "Declined":
+                    return null;
+                  default:
+                    return null;
+                }
+              })()}
             </Box>
           );
         })
