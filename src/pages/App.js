@@ -171,7 +171,7 @@ export default function App() {
                     let setTime = setappointment.datetime.toDate().toLocaleTimeString();
                     return (
                       <Link key={setappointment.userID} to={`view/${setappointment.userID}`}>
-                        <Paper >
+                        <Paper sx = {style.upcommingReq} variant="outlined" >
                           <Typography variant="subtitle2">Name:{setappointment.userFullName}</Typography>
                           <Typography variant="subtitle2">Date:{setDate}</Typography>
                           <Typography variant="subtitle2">Time:{setTime}</Typography>
