@@ -28,12 +28,13 @@ const style = {
     color: "red"
   },
   textField: {
-    width: "300px",
+    width: "350px",
   },
   inputField: {
     display: "flex",
-    justifyContent: "center",
-    alignItems: 'center'
+    marginLeft: "45px",
+    marginRight: "45px",
+    justifyContent: "center"
   },
 
   innerCon : {
@@ -137,7 +138,9 @@ export default function ViewRequest() {
               </Box>
               <Box>
                 <Typography sx = {style.innerSub}>What do I feel:</Typography>
+                <Box sx = {style.inputField}>
                 <TextField inputProps={{ readOnly: true, }} value={data.feel} sx={style.textField}></TextField>
+                </Box>
               </Box>
               <Box>
                 <Typography>Symptoms: {data.symptoms}</Typography>
