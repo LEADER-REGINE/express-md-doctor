@@ -204,10 +204,10 @@ export default function App() {
                     return (
                       <Link key={upcomingAppointment.userID} to={`view/${upcomingAppointment.userID}`}>
                         <Paper sx = {style.upcommingReq} variant="outlined">
-                          <Typography variant="subtitle2">Name:{upcomingAppointment.userFullName}</Typography>
-                          <Typography variant="subtitle2">Date:{setDate}</Typography>
-                          <Typography variant="subtitle2">Time:{setTime}</Typography>
-                          <Typography variant="subtitle2">Location:{upcomingAppointment.location}</Typography>
+                          <Typography variant="subtitle1">Name: {upcomingAppointment.userFullName}</Typography>
+                          <Typography variant="subtitle1">Date: {setDate}</Typography>
+                          <Typography variant="subtitle1">Time: {setTime}</Typography>
+                          <Typography variant="subtitle1">Location: {upcomingAppointment.location}</Typography>
                         </Paper>
                       </Link>
                     )

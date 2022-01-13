@@ -18,7 +18,8 @@ const style = {
   },
   label: {
     fontSize: "24px",
-    marginRight: "10px"
+    marginTop : "20px",
+    marginLeft: "20px"
   },
 
   subLabel: {
@@ -28,15 +29,26 @@ const style = {
   },
   textField: {
     width: "300px",
-    "&:disabled": {
-      color: "green"
-    }
   },
   inputField: {
     display: "flex",
     justifyContent: "center",
     alignItems: 'center'
+  },
+
+  innerCon : {
+    marginTop : "20px",
+    display : "flex",
+    flexDirection : "column",
+    marginLeft : "30px"
+  },
+
+  innerSub : {
+    fontSize : "18px",
+    marginLeft : "25px",
+    marginTop : "20px"
   }
+
 }
 
 
@@ -114,14 +126,17 @@ export default function ViewRequest() {
           return (
             <Box>
               <Box>
-                <Typography>Name: {data.userFullName}</Typography>
-                <Typography>Date: {setDate}</Typography>
-                <Typography>Time: {setTime}</Typography>
-                <Typography>Gender: {data.gender}</Typography>
-                <Typography>Location: {data.location}</Typography>
+                <Typography sx = {style.label}>Review Requests</Typography>
+              </Box>
+              <Box sx = {style.innerCon}>
+                <Typography variant = "subtitle1">Name: {data.userFullName}</Typography>
+                <Typography variant = "subtitle1">Date: {setDate}</Typography>
+                <Typography variant = "subtitle1">Time: {setTime}</Typography>
+                <Typography variant = "subtitle1">Gender: {data.gender}</Typography>
+                <Typography variant = "subtitle1">Location: {data.location}</Typography>
               </Box>
               <Box>
-                <Typography>What do I feel:</Typography>
+                <Typography sx = {style.innerSub}>What do I feel:</Typography>
                 <TextField inputProps={{ readOnly: true, }} value={data.feel} sx={style.textField}></TextField>
               </Box>
               <Box>
