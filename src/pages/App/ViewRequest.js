@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Box, TextField, Button } from "@mui/material";
+import { Typography, Box, TextField, Button, Avatar } from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
@@ -18,7 +18,7 @@ const style = {
   },
   label: {
     fontSize: "24px",
-    marginTop : "20px",
+    marginTop: "20px",
     marginLeft: "20px"
   },
 
@@ -37,17 +37,17 @@ const style = {
     justifyContent: "center"
   },
 
-  innerCon : {
-    marginTop : "20px",
-    display : "flex",
-    flexDirection : "column",
-    marginLeft : "30px"
+  innerCon: {
+    marginTop: "20px",
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: "30px"
   },
 
-  innerSub : {
-    fontSize : "18px",
-    marginLeft : "25px",
-    marginTop : "20px"
+  innerSub: {
+    fontSize: "18px",
+    marginLeft: "25px",
+    marginTop: "20px"
   }
 
 }
@@ -127,19 +127,22 @@ export default function ViewRequest() {
           return (
             <Box>
               <Box>
-                <Typography sx = {style.label}>Review Requests</Typography>
-              </Box>
-              <Box sx = {style.innerCon}>
-                <Typography variant = "subtitle1">Name: {data.userFullName}</Typography>
-                <Typography variant = "subtitle1">Date: {setDate}</Typography>
-                <Typography variant = "subtitle1">Time: {setTime}</Typography>
-                <Typography variant = "subtitle1">Gender: {data.gender}</Typography>
-                <Typography variant = "subtitle1">Location: {data.location}</Typography>
+                <Typography sx={style.label}>Review Requests</Typography>
               </Box>
               <Box>
-                <Typography sx = {style.innerSub}>What do I feel:</Typography>
-                <Box sx = {style.inputField}>
-                <TextField inputProps={{ readOnly: true, }} value={data.feel} sx={style.textField}></TextField>
+                <Avatar alt="Image of Patient" src={data.photoURL} />
+              </Box>
+              <Box sx={style.innerCon}>
+                <Typography variant="subtitle1">Name: {data.userFullName}</Typography>
+                <Typography variant="subtitle1">Date: {setDate}</Typography>
+                <Typography variant="subtitle1">Time: {setTime}</Typography>
+                <Typography variant="subtitle1">Gender: {data.gender}</Typography>
+                <Typography variant="subtitle1">Location: {data.location}</Typography>
+              </Box>
+              <Box>
+                <Typography sx={style.innerSub}>What do I feel:</Typography>
+                <Box sx={style.inputField}>
+                  <TextField inputProps={{ readOnly: true, }} value={data.feel} sx={style.textField}></TextField>
                 </Box>
               </Box>
               <Box>
