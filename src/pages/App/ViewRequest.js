@@ -40,14 +40,26 @@ const style = {
   innerCon: {
     marginTop: "20px",
     display: "flex",
-    flexDirection: "column",
-    marginLeft: "30px"
+    flexDirection: "row",
+    marginLeft: "30px",
+    alignItems : "center",
+    
   },
 
   innerSub: {
     fontSize: "18px",
     marginLeft: "25px",
-    marginTop: "20px"
+    marginTop: "20px",
+  },
+
+  patientProf : {
+    width : "90px",
+    height : "100px",
+    borderRadius : "90px"
+  },
+
+  superInnerCon : {
+    marginLeft : "30px"
   }
 
 }
@@ -129,15 +141,20 @@ export default function ViewRequest() {
               <Box>
                 <Typography sx={style.label}>Review Requests</Typography>
               </Box>
-              <Box>
-                <Avatar alt="Image of Patient" src={data.photoURL} />
-              </Box>
+              {/* <Box>
+                <Box component = "img" alt="Image of Patient"  sx = {style.patientProf}src={data.photoURL} />
+              </Box> */}
               <Box sx={style.innerCon}>
+                <Box>
+                <Box component = "img" alt="Image of Patient"  sx = {style.patientProf}src={data.photoURL} />
+                </Box>
+                <Box sx = {style.superInnerCon}>
                 <Typography variant="subtitle1">Name: {data.userFullName}</Typography>
                 <Typography variant="subtitle1">Date: {setDate}</Typography>
                 <Typography variant="subtitle1">Time: {setTime}</Typography>
                 <Typography variant="subtitle1">Gender: {data.gender}</Typography>
                 <Typography variant="subtitle1">Location: {data.location}</Typography>
+                </Box>
               </Box>
               <Box>
                 <Typography sx={style.innerSub}>What do I feel:</Typography>
