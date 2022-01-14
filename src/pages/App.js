@@ -90,9 +90,11 @@ const style = {
   },
 
   upcommingReq : {
-    padding: "20px",
+    minWidth : "300px",
+    padding : "10px",
     borderColor: "#7EB6BC",
     borderWidth: "2px",
+    marginBottom : "10px"
   }
 };
 
