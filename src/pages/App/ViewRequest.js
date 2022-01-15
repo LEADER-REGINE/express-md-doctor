@@ -61,6 +61,10 @@ const style = {
 
   superInnerCon : {
     marginLeft : "30px"
+  },
+
+  syntCon : {
+    marginLeft : "25px"
   }
 
 }
@@ -160,12 +164,20 @@ export default function ViewRequest() {
               <Box>
                 <Typography sx={style.innerSub}>What do I Feel:</Typography>
                 <Box sx={style.inputField}>
-                  <TextField inputProps={{ readOnly: true, }} value={data.feel} sx={style.textField}></TextField>
+                  <TextField inputProps={{ readOnly: true, }}
+                   value={data.feel} 
+                   sx={style.textField}
+                   variant="outlined"
+                   multiline
+                   maxRows={10}
+                   minRows={5}
+                   ></TextField>
                 </Box>
               </Box>
-              <Box>
-                <Typography>Symptoms: {data.symptoms}</Typography>
-                <Typography>Any Others?: {data.others}</Typography>
+              <Box sx = {style.syntCon}>
+                <Typography>Any Symptoms: {data.symptoms}</Typography>
+                <Typography>Others?:</Typography>
+                <TextField  variant="standard" inputProps={{ readOnly: true, }} value = {data.others} ></TextField>
               </Box>
               <Box>
                 <Typography>Status: {data.status}</Typography>
