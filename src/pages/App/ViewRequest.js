@@ -34,7 +34,8 @@ const style = {
     display: "flex",
     marginLeft: "45px",
     marginRight: "45px",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop : "10px"
   },
 
   innerCon: {
@@ -47,14 +48,14 @@ const style = {
   },
 
   innerSub: {
-    fontSize: "18px",
+    fontSize: "20px",
     marginLeft: "25px",
     marginTop: "20px",
   },
 
   patientProf : {
     width : "90px",
-    height : "100px",
+    height : "90px",
     borderRadius : "90px"
   },
 
@@ -157,7 +158,7 @@ export default function ViewRequest() {
                 </Box>
               </Box>
               <Box>
-                <Typography sx={style.innerSub}>What do I feel:</Typography>
+                <Typography sx={style.innerSub}>What do I Feel:</Typography>
                 <Box sx={style.inputField}>
                   <TextField inputProps={{ readOnly: true, }} value={data.feel} sx={style.textField}></TextField>
                 </Box>
