@@ -112,7 +112,7 @@ export default function App() {
   })
 
   const fetchReqList = async () => {
-    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("requests").where("status", "==", "Pending");
+    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("requests");
     userRef.onSnapshot((doc) => {
       if (doc.size != 0) {
         setisReqEmpty(false);
