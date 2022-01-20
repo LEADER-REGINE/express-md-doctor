@@ -48,7 +48,7 @@ const style = {
   },
 
   innerSub: {
-    fontSize: "20px",
+    fontSize: "24px",
     marginLeft: "25px",
     marginTop: "20px",
   },
@@ -65,7 +65,35 @@ const style = {
 
   syntCon : {
     marginLeft : "25px"
+  },
+
+  btnBox : {
+    display : "flex",
+    alignItems : "center",
+    justifyContent : "center",
+    flexDirection : "column",
+    marginTop : "20px"
+  },
+  textFieldBotInput: {
+    fontSize: "13px",
+  },
+  otherSynCon: {
+    display: "flex",
+    marginLeft: "20px",
+    marginRight: "20px",
+    marginTop: "10px",
+    marginBottom: "50px"
+  },
+  otherSyn: {
+    width: "408px"
+  }, 
+
+  btn : {
+    width : "200px",
+    marginBottom : "10px",
+    borderRadius : "10px"
   }
+
 
 }
 
@@ -176,8 +204,12 @@ export default function ViewRequest() {
               </Box>
               <Box sx = {style.syntCon}>
                 <Typography>Any Symptoms: {data.symptoms}</Typography>
-                <Typography>Others?:</Typography>
-                <TextField  variant="standard" inputProps={{ readOnly: true, }} value = {data.others} ></TextField>
+                <Box>
+                <Typography sx = {style.textFieldBotInput}>Others?:</Typography>
+                </Box>
+                <Box sx={style.otherSynCon}>
+                <TextField  variant="standard" inputProps={{ readOnly: true, }}  sx={style.otherSyn} value = {data.others} ></TextField>
+                </Box>
               </Box>
               <Box>
                 <Typography>Status: {data.status}</Typography>
@@ -187,10 +219,11 @@ export default function ViewRequest() {
                 switch (data.status) {
                   case "Pending":
                     return (
-                      <Box>
-                        <Button variant="contained" onClick={() => acceptRequest()}>Accept</Button>
-                        <Button variant="contained" onClick={() => declineRequest()}>Decline</Button>
-                        <Button variant="outlined" onClick={() => editRequest()}>Change Time or Date</Button>
+                      <Box sx = {style.btnBox}>
+                        <Button variant="outlined" sx = {style.btn} onClick={() => editRequest()}>Change Time or Date</Button>
+                        <Button variant="contained" sx = {style.btn} onClick={() => acceptRequest()}>Accept</Button>
+                        <Button variant="contained" sx = {style.btn} style={{backgroundColor : "#FF5956"}} onClick={() => declineRequest()}>Decline</Button>
+                        
                       </Box>
                     );
                   case "Edited":
