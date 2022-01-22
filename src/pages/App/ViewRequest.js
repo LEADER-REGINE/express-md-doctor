@@ -35,7 +35,7 @@ const style = {
     marginLeft: "45px",
     marginRight: "45px",
     justifyContent: "center",
-    marginTop : "10px"
+    marginTop: "10px"
   },
 
   innerCon: {
@@ -43,8 +43,8 @@ const style = {
     display: "flex",
     flexDirection: "row",
     marginLeft: "30px",
-    alignItems : "center",
-    
+    alignItems: "center",
+
   },
 
   innerSub: {
@@ -53,26 +53,26 @@ const style = {
     marginTop: "20px",
   },
 
-  patientProf : {
-    width : "90px",
-    height : "90px",
-    borderRadius : "90px"
+  patientProf: {
+    width: "90px",
+    height: "90px",
+    borderRadius: "90px"
   },
 
-  superInnerCon : {
-    marginLeft : "30px"
+  superInnerCon: {
+    marginLeft: "30px"
   },
 
-  syntCon : {
-    marginLeft : "25px"
+  syntCon: {
+    marginLeft: "25px"
   },
 
-  btnBox : {
-    display : "flex",
-    alignItems : "center",
-    justifyContent : "center",
-    flexDirection : "column",
-    marginTop : "20px"
+  btnBox: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    marginTop: "20px"
   },
   textFieldBotInput: {
     fontSize: "13px",
@@ -86,12 +86,12 @@ const style = {
   },
   otherSyn: {
     width: "408px"
-  }, 
+  },
 
-  btn : {
-    width : "200px",
-    marginBottom : "10px",
-    borderRadius : "10px"
+  btn: {
+    width: "200px",
+    marginBottom: "10px",
+    borderRadius: "10px"
   }
 
 
@@ -179,36 +179,36 @@ export default function ViewRequest() {
               </Box> */}
               <Box sx={style.innerCon}>
                 <Box>
-                <Box component = "img" alt="Image of Patient"  sx = {style.patientProf}src={data.photoURL} />
+                  <Box component="img" alt="Image of Patient" sx={style.patientProf} src={data.photoURL} />
                 </Box>
-                <Box sx = {style.superInnerCon}>
-                <Typography variant="subtitle1">Name: {data.userFullName}</Typography>
-                <Typography variant="subtitle1">Date: {setDate}</Typography>
-                <Typography variant="subtitle1">Time: {setTime}</Typography>
-                <Typography variant="subtitle1">Gender: {data.gender}</Typography>
-                <Typography variant="subtitle1">Location: {data.location}</Typography>
+                <Box sx={style.superInnerCon}>
+                  <Typography variant="subtitle1">Name: {data.userFullName}</Typography>
+                  <Typography variant="subtitle1">Date: {setDate}</Typography>
+                  <Typography variant="subtitle1">Time: {setTime}</Typography>
+                  <Typography variant="subtitle1">Gender: {data.gender}</Typography>
+                  <Typography variant="subtitle1">Location: {data.location}</Typography>
                 </Box>
               </Box>
               <Box>
                 <Typography sx={style.innerSub}>What do I Feel:</Typography>
                 <Box sx={style.inputField}>
                   <TextField inputProps={{ readOnly: true, }}
-                   value={data.feel} 
-                   sx={style.textField}
-                   variant="outlined"
-                   multiline
-                   maxRows={10}
-                   minRows={5}
-                   ></TextField>
+                    value={data.feel}
+                    sx={style.textField}
+                    variant="outlined"
+                    multiline
+                    maxRows={10}
+                    minRows={5}
+                  ></TextField>
                 </Box>
               </Box>
-              <Box sx = {style.syntCon}>
+              <Box sx={style.syntCon}>
                 <Typography>Any Symptoms: {data.symptoms}</Typography>
                 <Box>
-                <Typography sx = {style.textFieldBotInput}>Others?:</Typography>
+                  <Typography sx={style.textFieldBotInput}>Others?:</Typography>
                 </Box>
                 <Box sx={style.otherSynCon}>
-                <TextField  variant="standard" inputProps={{ readOnly: true, }}  sx={style.otherSyn} value = {data.others} ></TextField>
+                  <TextField variant="standard" inputProps={{ readOnly: true, }} sx={style.otherSyn} value={data.others} ></TextField>
                 </Box>
               </Box>
               <Box>
@@ -217,13 +217,32 @@ export default function ViewRequest() {
 
               {(() => {
                 switch (data.status) {
+                  case "Requested Cancellation":
+                    return (
+                      <Box sx={style.btnBox}>
+                        <Box>
+                          <Typography sx={style.innerSub}>Reason for Cancellation:</Typography>
+                          <Box sx={style.inputField}>
+                            <TextField inputProps={{ readOnly: true, }}
+                              value={data.reason}
+                              sx={style.textField}
+                              variant="outlined"
+                              multiline
+                              maxRows={10}
+                              minRows={5}
+                            ></TextField>
+                          </Box>
+                        </Box>
+                        <Button variant="outlined" sx={style.btn} onClick={() => declineRequest()}>Cancel Appointment</Button>
+                      </Box>
+                    );
                   case "Pending":
                     return (
-                      <Box sx = {style.btnBox}>
-                        <Button variant="outlined" sx = {style.btn} onClick={() => editRequest()}>Change Time or Date</Button>
-                        <Button variant="contained" sx = {style.btn} onClick={() => acceptRequest()}>Accept</Button>
-                        <Button variant="contained" sx = {style.btn} style={{backgroundColor : "#FF5956"}} onClick={() => declineRequest()}>Decline</Button>
-                        
+                      <Box sx={style.btnBox}>
+                        <Button variant="outlined" sx={style.btn} onClick={() => editRequest()}>Change Time or Date</Button>
+                        <Button variant="contained" sx={style.btn} onClick={() => acceptRequest()}>Accept</Button>
+                        <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Decline</Button>
+
                       </Box>
                     );
                   case "Edited":
