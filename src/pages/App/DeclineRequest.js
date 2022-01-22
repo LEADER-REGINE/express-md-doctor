@@ -109,41 +109,63 @@ export default function DeclineRequest() {
                         location: data.location,
                         phoneNumber: data.phoneNumber,
                         reason: payload.reason,
+                        photoURL: data.photoURL,
                         status: "Declined",
                     })
                     .then((docReference) => {
-                        docRefMove
-                            .set({
-                                feel: data.feel,
-                                symptoms: data.symptoms,
-                                others: data.others,
-                                assigned_doctor: data.assigned_doctor,
-                                doctorId: data.doctorId,
-                                userID: data.userID,
-                                userFullName: data.userFullName,
-                                datetime: data.datetime,
-                                gender: data.gender,
-                                location: data.location,
-                                phoneNumber: data.phoneNumber,
-                                reason: payload.reason,
-                                status: "Declined",
+                        userRefMove
+                            .update({
+                                documentId: docReference.id,
                             })
-                            .then((docRef) => {
-                                docRefDelete.delete().then(() => {
-                                    userRefDelete.delete().then(() => {
-                                        history.push("/success");
-                                    }).catch((error) => {
-                                        console.error("Error removing document: ", error);
+                            .then((doc1) => {
+                                docRefMove
+                                    .set({
+                                        feel: data.feel,
+                                        symptoms: data.symptoms,
+                                        others: data.others,
+                                        assigned_doctor: data.assigned_doctor,
+                                        doctorId: data.doctorId,
+                                        userID: data.userID,
+                                        userFullName: data.userFullName,
+                                        datetime: data.datetime,
+                                        gender: data.gender,
+                                        location: data.location,
+                                        phoneNumber: data.phoneNumber,
+                                        reason: payload.reason,
+                                        photoURL: data.photoURL,
+                                        status: "Declined",
+                                    })
+                                    .then((docRef) => {
+                                        docRefMove
+                                            .update({
+                                                documentId: docRef.id,
+                                            })
+                                            .then((docRef2) => {
+                                                docRefDelete.delete().then(() => {
+                                                    userRefDelete.delete().then(() => {
+                                                        history.push("/success");
+                                                    }).catch((error) => {
+                                                        console.error("Error removing document: ", error);
+                                                    });
+                                                }).catch((error) => {
+                                                    console.error("Error removing document: ", error);
+                                                });
+                                            })
+                                            .catch((error) => {
+                                                console.log(error);
+                                                history.push("/sorry");
+                                            });
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                        history.push("/sorry");
                                     });
-                                }).catch((error) => {
-                                    console.error("Error removing document: ", error);
-                                });
-
                             })
                             .catch((error) => {
                                 console.log(error);
                                 history.push("/sorry");
                             });
+
                     })
                     .catch((error) => {
                         console.log(error);
