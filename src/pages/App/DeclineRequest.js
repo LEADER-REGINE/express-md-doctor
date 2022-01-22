@@ -81,11 +81,9 @@ export default function DeclineRequest() {
             var docRefMove = db.collection("doctors")
                 .doc(localStorage.getItem("uid"))
                 .collection("archive")
-                .doc();
             var userRefMove = db.collection("users")
                 .doc(id)
                 .collection("archive")
-                .doc();
             var docRefDelete = db.collection("doctors")
                 .doc(localStorage.getItem("uid"))
                 .collection("requests")
@@ -96,7 +94,7 @@ export default function DeclineRequest() {
                 .doc(id);
             appointmentData.data.map((data) => {
                 userRefMove
-                    .set({
+                    .add({
                         feel: data.feel,
                         symptoms: data.symptoms,
                         others: data.others,
@@ -113,13 +111,15 @@ export default function DeclineRequest() {
                         status: "Declined",
                     })
                     .then((docReference) => {
+                        console.log(docReference.id);
                         userRefMove
+                            .doc(docReference.id)
                             .update({
                                 documentId: docReference.id,
                             })
                             .then((doc1) => {
                                 docRefMove
-                                    .set({
+                                    .add({
                                         feel: data.feel,
                                         symptoms: data.symptoms,
                                         others: data.others,
@@ -137,6 +137,7 @@ export default function DeclineRequest() {
                                     })
                                     .then((docRef) => {
                                         docRefMove
+                                            .doc(docRef.id)
                                             .update({
                                                 documentId: docRef.id,
                                             })

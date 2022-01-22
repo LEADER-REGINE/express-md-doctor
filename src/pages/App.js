@@ -89,12 +89,12 @@ const style = {
     marginTop: "20px",
   },
 
-  upcommingReq : {
-    minWidth : "300px",
-    padding : "10px",
+  upcommingReq: {
+    minWidth: "300px",
+    padding: "10px",
     borderColor: "#7EB6BC",
     borderWidth: "2px",
-    marginBottom : "10px"
+    marginBottom: "10px"
   }
 };
 
@@ -112,7 +112,7 @@ export default function App() {
   })
 
   const fetchReqList = async () => {
-    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("requests");
+    const userRef = db.collection('doctors').doc(localStorage.getItem("uid")).collection("requests").where("status", "!=", "Accepted");
     userRef.onSnapshot((doc) => {
       if (doc.size != 0) {
         setisReqEmpty(false);
@@ -173,7 +173,7 @@ export default function App() {
                     let setTime = setappointment.datetime.toDate().toLocaleTimeString();
                     return (
                       <Link key={setappointment.userID} to={`view/${setappointment.userID}`}>
-                        <Paper sx = {style.upcommingReq} variant="outlined" >
+                        <Paper sx={style.upcommingReq} variant="outlined" >
                           <Typography variant="subtitle2">Name:{setappointment.userFullName}</Typography>
                           <Typography variant="subtitle2">Date:{setDate}</Typography>
                           <Typography variant="subtitle2">Time:{setTime}</Typography>
@@ -205,7 +205,7 @@ export default function App() {
                     let setTime = upcomingAppointment.datetime.toDate().toLocaleTimeString();
                     return (
                       <Link key={upcomingAppointment.userID} to={`view/${upcomingAppointment.userID}`}>
-                        <Paper sx = {style.upcommingReq} variant="outlined">
+                        <Paper sx={style.upcommingReq} variant="outlined">
                           <Typography variant="subtitle1">Name: {upcomingAppointment.userFullName}</Typography>
                           <Typography variant="subtitle1">Date: {setDate}</Typography>
                           <Typography variant="subtitle1">Time: {setTime}</Typography>
