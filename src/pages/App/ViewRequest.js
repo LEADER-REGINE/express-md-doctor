@@ -163,6 +163,112 @@ export default function ViewRequest() {
       });
   }
 
+  function completeRequest() {
+    var docRefMove = db.collection("doctors")
+      .doc(localStorage.getItem("uid"))
+      .collection("archive")
+    var userRefMove = db.collection("users")
+      .doc(id)
+      .collection("archive")
+    var docRefDelete = db.collection("doctors")
+      .doc(localStorage.getItem("uid"))
+      .collection("requests")
+      .doc(id);
+    var userRefDelete = db.collection("users")
+      .doc(id)
+      .collection("requests")
+      .doc(id);
+    var globalReq = db.collection("requests");
+    appointmentData.data.map((data) => {
+      userRefMove
+        .add({
+          feel: data.feel,
+          symptoms: data.symptoms,
+          others: data.others,
+          assigned_doctor: data.assigned_doctor,
+          doctorId: data.doctorId,
+          userID: data.userID,
+          userFullName: data.userFullName,
+          datetime: data.datetime,
+          gender: data.gender,
+          location: data.location,
+          phoneNumber: data.phoneNumber,
+          photoURL: data.photoURL,
+          status: "Completed",
+          globalID: data.globalID,
+        })
+        .then((docReference) => {
+          console.log(docReference.id);
+          userRefMove
+            .doc(docReference.id)
+            .update({
+              documentId: docReference.id,
+            })
+            .then((doc1) => {
+              docRefMove
+                .add({
+                  feel: data.feel,
+                  symptoms: data.symptoms,
+                  others: data.others,
+                  assigned_doctor: data.assigned_doctor,
+                  doctorId: data.doctorId,
+                  userID: data.userID,
+                  userFullName: data.userFullName,
+                  datetime: data.datetime,
+                  gender: data.gender,
+                  location: data.location,
+                  phoneNumber: data.phoneNumber,
+                  photoURL: data.photoURL,
+                  status: "Completed",
+                  globalID: data.globalID,
+                })
+                .then((docRef) => {
+                  docRefMove
+                    .doc(docRef.id)
+                    .update({
+                      documentId: docRef.id,
+                    })
+                    .then((docRef2) => {
+                      globalReq.doc(data.globalID).update({
+                        status: "Completed",
+                      })
+                        .then((docReference3) => {
+                          docRefDelete.delete().then(() => {
+                            userRefDelete.delete().then(() => {
+                              history.push("/success");
+                            }).catch((error) => {
+                              console.error("Error removing document: ", error);
+                              history.push("/sorry");
+                            });
+                          }).catch((error) => {
+                            console.error("Error removing document: ", error);
+                            history.push("/sorry");
+                          });
+                        })
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                      history.push("/sorry");
+                    });
+                })
+                .catch((error) => {
+                  console.log(error);
+                  history.push("/sorry");
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+              history.push("/sorry");
+            });
+
+        })
+        .catch((error) => {
+          console.log(error);
+          history.push("/sorry");
+        });
+    })
+  }
+
   return (
     <Box className="base">
       {
@@ -250,8 +356,8 @@ export default function ViewRequest() {
                   case "Accepted":
                     return (
                       <Box>
-                        <Button variant="contained">Complete Appointment</Button>
-                        <Button variant="outlined">Cancel Appointment</Button>
+                        <Button variant="contained" onClick={() => completeRequest()}>Complete Appointment</Button>
+                        <Button variant="outlined" onClick={() => declineRequest()}>Cancel Appointment</Button>
                       </Box>
                     );
 
