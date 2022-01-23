@@ -17,11 +17,12 @@ const style = {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: "20px",
     },
     inputEmail: {
         width: "270px",
-        marginTop: "20px"
+        marginTop: "20px",
     },
     loginBTN: {
         width: "250px",

@@ -80,7 +80,7 @@ const style = {
   otherSynCon: {
     display: "flex",
     marginLeft: "20px",
-    marginRight: "20px",
+    marginRight: "40px",
     marginTop: "10px",
     marginBottom: "50px"
   },
