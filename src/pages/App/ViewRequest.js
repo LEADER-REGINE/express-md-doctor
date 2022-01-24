@@ -345,7 +345,7 @@ export default function ViewRequest() {
                   case "Pending":
                     return (
                       <Box sx={style.btnBox}>
-                        <Button variant="outlined" sx={style.btn} onClick={() => editRequest()}>Change Time or Date</Button>
+                        <Button variant="outlined" sx={style.btn} onClick={() => editRequest()}>Change Time and Date</Button>
                         <Button variant="contained" sx={style.btn} onClick={() => acceptRequest()}>Accept</Button>
                         <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Decline</Button>
 
@@ -360,7 +360,6 @@ export default function ViewRequest() {
                         <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Cancel Appointment</Button>
                       </Box>
                     );
-
                   case "Declined":
                     return null;
                   default:

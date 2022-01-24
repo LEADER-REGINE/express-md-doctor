@@ -136,21 +136,33 @@ export default function DeclineRequest() {
                                         status: "Declined",
                                     })
                                     .then((docRef) => {
+                                        let archiveID = docRef.id;
                                         docRefMove
                                             .doc(docRef.id)
                                             .update({
                                                 documentId: docRef.id,
                                             })
                                             .then((docRef2) => {
-                                                docRefDelete.delete().then(() => {
-                                                    userRefDelete.delete().then(() => {
-                                                        history.push("/success");
-                                                    }).catch((error) => {
-                                                        console.error("Error removing document: ", error);
+                                                db.collection("requests")
+                                                    .doc(data.globalID)
+                                                    .update({
+                                                        archiveID: archiveID,
+                                                    })
+                                                    .then((docRef3) => {
+                                                        docRefDelete.delete().then(() => {
+                                                            userRefDelete.delete().then(() => {
+                                                                history.push("/success");
+                                                            }).catch((error) => {
+                                                                console.error("Error removing document: ", error);
+                                                            });
+                                                        }).catch((error) => {
+                                                            console.error("Error removing document: ", error);
+                                                        });
+                                                    })
+                                                    .catch((error) => {
+                                                        console.log(error);
+                                                        history.push("/sorry");
                                                     });
-                                                }).catch((error) => {
-                                                    console.error("Error removing document: ", error);
-                                                });
                                             })
                                             .catch((error) => {
                                                 console.log(error);

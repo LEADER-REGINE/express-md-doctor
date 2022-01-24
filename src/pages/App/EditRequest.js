@@ -22,35 +22,35 @@ const style = {
 
     },
     label: {
-    fontSize: "24px",
-    marginTop: "20px",
-    marginLeft: "20px"
+        fontSize: "24px",
+        marginTop: "20px",
+        marginLeft: "20px"
     },
 
-    innerCon : {
+    innerCon: {
         marginTop: "20px",
         display: "flex",
         flexDirection: "row",
         marginLeft: "30px",
-        alignItems: "center",    
+        alignItems: "center",
     },
 
     superInnerCon: {
         marginLeft: "30px"
-      },
+    },
 
-      patientProf: {
+    patientProf: {
         width: "90px",
         height: "90px",
         borderRadius: "90px"
-      },
+    },
 
-      dateTimeCon: {
-        marginTop : "50px",
+    dateTimeCon: {
+        marginTop: "50px",
         marginLeft: "20px",
         marginRight: "30px",
         minWidth: "200px",
-      },
+    },
 
     subLabel: {
         fontSize: "18px",
@@ -72,13 +72,13 @@ const style = {
         justifyContent: "center",
         flexDirection: "column",
         marginTop: "40px"
-      },
+    },
 
-      btn: {
+    btn: {
         width: "200px",
         marginBottom: "10px",
         borderRadius: "10px"
-      }
+    }
 }
 
 export default function EditRequest() {
@@ -144,39 +144,54 @@ export default function EditRequest() {
     }, []);
 
     const submitForm = (e) => {
-        var docRef = db.collection("doctors")
-            .doc(localStorage.getItem("uid"))
-            .collection("requests")
-            .doc(id);
-        var userRef = db.collection("users")
-            .doc(id)
-            .collection("requests")
-            .doc(id);
-        userRef
-            .update({
-                datetime: specifiedDate,
-                status: "Edited",
-            })
-            .then((docReference) => {
-                docRef
-                    .update({
-                        datetime: specifiedDate,
-                        status: "Edited",
-                    })
-                    .then((docRef) => {
-                        history.push("/success");
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        history.push("/sorry");
-                    });
-            })
-            .catch((error) => {
-                console.log(error);
-                history.push("/sorry");
-            });
+        appointmentData.data.map((data) => {
+            var docRef = db.collection("doctors")
+                .doc(data.doctorId)
+                .collection("requests")
+                .doc(data.userID);
+            var userRef = db.collection("users")
+                .doc(data.userID)
+                .collection("requests")
+                .doc(data.userID);
+            var globalRef = db.collection("requests")
+                .doc(data.globalID);
+            userRef
+                .update({
+                    datetime: specifiedDate,
+                    status: "Edited",
+                })
+                .then((docReference) => {
+                    docRef
+                        .update({
+                            datetime: specifiedDate,
+                            status: "Edited",
+                        })
+                        .then((docRef) => {
+                            db.collection("requests")
+                                .doc(data.globalID)
+                                .update({
+                                    datetime: specifiedDate,
+                                    status: "Edited",
+                                })
+                                .then((docRef) => {
+                                    history.push("/success");
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    history.push("/sorry");
+                                });
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            history.push("/sorry");
+                        });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    history.push("/sorry");
+                });
+        })
     }
-
     return (
         <Box className="base">
             {
@@ -186,21 +201,21 @@ export default function EditRequest() {
                     return (
                         <Box>
                             <Box>
-                            <Typography sx={style.label}>Edit Time and Date</Typography>
+                                <Typography sx={style.label}>Edit Time and Date</Typography>
                             </Box>
                             <Box sx={style.innerCon}>
-                            <Box>
-                             <Box component="img" alt="Image of Patient" sx={style.patientProf} src={data.photoURL} />
+                                <Box>
+                                    <Box component="img" alt="Image of Patient" sx={style.patientProf} src={data.photoURL} />
+                                </Box>
+                                <Box sx={style.superInnerCon}>
+                                    <Typography>Name: {data.userFullName}</Typography>
+                                    <Typography>Date: {setDate}</Typography>
+                                    <Typography>Time: {setTime}</Typography>
+                                    <Typography>Gender: {data.gender}</Typography>
+                                    <Typography>Location: {data.location}</Typography>
+                                </Box>
                             </Box>
-                            <Box sx={style.superInnerCon}>
-                                <Typography>Name: {data.userFullName}</Typography>
-                                <Typography>Date: {setDate}</Typography>
-                                <Typography>Time: {setTime}</Typography>
-                                <Typography>Gender: {data.gender}</Typography>
-                                <Typography>Location: {data.location}</Typography>
-                            </Box>
-                            </Box>
-                            <Box sx = {style.dateTimeCon}>
+                            <Box sx={style.dateTimeCon}>
                                 <LocalizationProvider dateAdapter={AdapterDateFns} >
                                     <Stack spacing={3}>
                                         <MobileDatePicker
@@ -219,9 +234,9 @@ export default function EditRequest() {
                                     </Stack>
                                 </LocalizationProvider>
                             </Box>
-                            <Box sx = {style.btnBox}>
-                                <Button variant="contained" sx = {style.btn} onClick={() => submitForm()}>Continue</Button>
-                                <Button variant="contained" sx = {style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => history.goBack()}>Cancel</Button>
+                            <Box sx={style.btnBox}>
+                                <Button variant="contained" sx={style.btn} onClick={() => submitForm()}>Continue</Button>
+                                <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => history.goBack()}>Cancel</Button>
                             </Box>
                         </Box>
                     );
