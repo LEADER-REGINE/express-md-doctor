@@ -151,7 +151,7 @@ export default function DeclineRequest() {
                                                     .then((docRef3) => {
                                                         docRefDelete.delete().then(() => {
                                                             userRefDelete.delete().then(() => {
-                                                                history.push("/success");
+                                                                history.push(`/success/${"cancellation"}`);
                                                             }).catch((error) => {
                                                                 console.error("Error removing document: ", error);
                                                             });

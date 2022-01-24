@@ -144,7 +144,7 @@ export default function RouterComponent() {
                         exact
                         isAuthenticated={values.isAuthenticated}
                         component={IsSuccessful}
-                        path="/success" />
+                        path="/success/:status" />
                     <PrivateRoute
                         exact
                         isAuthenticated={values.isAuthenticated}

@@ -150,7 +150,7 @@ export default function ViewRequest() {
             status: "Accepted",
           })
           .then((docRef) => {
-            history.push("/success");
+            history.push(`/success/${"accepted"}`);
           })
           .catch((error) => {
             console.log(error);
@@ -235,7 +235,7 @@ export default function ViewRequest() {
                         .then((docReference3) => {
                           docRefDelete.delete().then(() => {
                             userRefDelete.delete().then(() => {
-                              history.push("/success");
+                              history.push(`/success/${"completed"}`);
                             }).catch((error) => {
                               console.error("Error removing document: ", error);
                               history.push("/sorry");

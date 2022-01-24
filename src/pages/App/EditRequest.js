@@ -174,7 +174,7 @@ export default function EditRequest() {
                                     status: "Edited",
                                 })
                                 .then((docRef) => {
-                                    history.push("/success");
+                                    history.push(`/success/${"edited"}`);
                                 })
                                 .catch((error) => {
                                     console.log(error);
