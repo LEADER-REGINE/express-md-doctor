@@ -355,9 +355,9 @@ export default function ViewRequest() {
                     return null;
                   case "Accepted":
                     return (
-                      <Box>
-                        <Button variant="contained" onClick={() => completeRequest()}>Complete Appointment</Button>
-                        <Button variant="outlined" onClick={() => declineRequest()}>Cancel Appointment</Button>
+                      <Box sx={style.btnBox}>
+                        <Button variant="contained" sx={style.btn} onClick={() => completeRequest()}>Complete</Button>
+                        <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Cancel Appointment</Button>
                       </Box>
                     );
 
