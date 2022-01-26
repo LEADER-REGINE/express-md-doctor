@@ -195,6 +195,7 @@ export default function ViewRequest() {
           phoneNumber: data.phoneNumber,
           photoURL: data.photoURL,
           status: "Completed",
+          rated: false,
           globalID: data.globalID,
         })
         .then((docReference) => {
@@ -221,6 +222,7 @@ export default function ViewRequest() {
                   photoURL: data.photoURL,
                   status: "Completed",
                   globalID: data.globalID,
+                  rated: false,
                 })
                 .then((docRef) => {
                   docRefMove
@@ -231,6 +233,7 @@ export default function ViewRequest() {
                     .then((docRef2) => {
                       globalReq.doc(data.globalID).update({
                         status: "Completed",
+                        rated: false,
                       })
                         .then((docReference3) => {
                           docRefDelete.delete().then(() => {
