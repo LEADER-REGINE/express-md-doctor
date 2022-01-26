@@ -66,7 +66,7 @@ export default function IsSuccessful() {
                                 <Typography sx={style.sublabel}>
                                     The appointment has been completed. Thank you for using ExpressMD :) .
                                 </Typography>
-                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/")}>OK</Button>
+                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
                             </Paper>
                         );
                     case "edited":
@@ -90,7 +90,7 @@ export default function IsSuccessful() {
                                 <Typography sx={style.sublabel}>
                                     The appointment has been cancelled. The user will now be notified of the cancellation.
                                 </Typography>
-                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/")}>OK</Button>
+                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
                             </Paper>
                         );
                     case "accepted":
@@ -102,7 +102,7 @@ export default function IsSuccessful() {
                                 <Typography sx={style.sublabel}>
                                     Your may now contact the patient using their Phone Number. Thank You for using ExpressMD. Stay Safe.
                                 </Typography>
-                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/")}>OK</Button>
+                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
                             </Paper>
                         );
                     default:
