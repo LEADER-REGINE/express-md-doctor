@@ -21,7 +21,6 @@ const user = auth.currentUser;
 function Profile() {
 
     const id = localStorage.getItem("uid");
-    console.log(id);
     const history = useHistory();
     const db = firebase.firestore();
     const [userProfile, setuserProfile] = useState({
@@ -31,7 +30,6 @@ function Profile() {
         const userRef = db.collection('doctors').doc(id);
         let usrProfile = [];
         userRef.get().then(doc => {
-            console.log(doc.data());
             usrProfile.push(doc.data());
             setuserProfile({ profile: usrProfile });
         })
@@ -52,7 +50,6 @@ function Profile() {
             });
     };
 
-    console.log(userProfile);
 
     return (
         <Box className='profileContainer'>
@@ -63,7 +60,8 @@ function Profile() {
                             <Box color='primary' className='imgBox' key={userProfile.uid}>
                                 <img className='usrImg' alt='user image' src={userProfile.photoURL} />
                                 <Typography variant="h6">{userProfile.firstname + " " + userProfile.lastname}</Typography>
-                                <Button variant='contained'>Edit Profile</Button>
+                                <Typography variant="subtitle1">{userProfile.type}</Typography>
+                                <Button variant='contained' onClick={() => history.push("/editprofile")}>Edit Profile</Button>
                             </Box>
                             <Divider orientation="horizontal" flexItem />
                             <Box>

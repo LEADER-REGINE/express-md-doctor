@@ -18,7 +18,9 @@ import PublicRoute from '../utils/PublicRoute';
 import firebase from '../config/firebase';
 import ViewRequest from '../pages/App/ViewRequest'
 import Profile from '../pages/App/Profile';
+import Ratings from '../pages/App/Ratings';
 import EditRequest from '../pages/App/EditRequest';
+import EditProfile from '../pages/App/EditProfile';
 import IsSuccessful from "../pages/App/IsSuccessful";
 import IsNotSuccessful from "../pages/App/IsNotSuccessful";
 import DeclineRequest from '../pages/App/DeclineRequest';
@@ -128,6 +130,11 @@ export default function RouterComponent() {
                         exact />
                     <PrivateRoute
                         isAuthenticated={values.isAuthenticated}
+                        component={Ratings}
+                        path="/ratings"
+                        exact />
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
                         component={ViewRequest}
                         path="/view/:id"
                         exact />
@@ -151,6 +158,7 @@ export default function RouterComponent() {
                         isAuthenticated={values.isAuthenticated}
                         component={IsNotSuccessful}
                         path="/sorry" />
+                    <PrivateRoute exact isAuthenticated={values.isAuthenticated} component={EditProfile} path="/editprofile" />
                 </Switch>
                 <Box>
                     <Paper elevation="8" className="bottomNav">
