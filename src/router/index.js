@@ -101,6 +101,7 @@ export default function RouterComponent() {
         <ThemeProvider theme={ui.isDarkMode ? darkTheme : lightTheme}>
             <CssBaseline />
             <Router>
+                <Nav />
                 <Switch >
                     <PublicRoute
                         isAuthenticated={values.isAuthenticated}

@@ -1,21 +1,10 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import React, { useState } from 'react';
+import { MenuItem, Button, Container, Menu, Typography, IconButton, Toolbar, Box, AppBar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 import AccountModal from '../appcomponents/AccoundModal'
-import { useHistory, withRouter, NavLink } from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom';
+import Logo from "./icon-256x256.png";
 function Nav() {
-
-    const history = useHistory();
-
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     const handleOpenNavMenu = (event) => {
@@ -24,12 +13,6 @@ function Nav() {
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
-    };
-
-
-    function goHome() {
-        window.location.href = "/";
-        handleCloseNavMenu();
     };
 
     return (
@@ -42,7 +25,7 @@ function Nav() {
                         component="div"
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                     >
-                        LOGO
+                        <img src={Logo} alt='logo' width={64} height={64} />
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -74,7 +57,7 @@ function Nav() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            <NavLink to='/'>
+                            <NavLink to='/dashboard'>
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">Home</Typography>
                                 </MenuItem>
@@ -92,7 +75,7 @@ function Nav() {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                     >
-                        LOGO
+                        <img src={Logo} alt='logo' width={64} height={64} />
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <NavLink to='/'>
