@@ -97,10 +97,10 @@ export default function IsSuccessful() {
                         return (
                             <Paper sx={style.innerConPaper}>
                                 <Typography sx={style.label}>
-                                    Request Accepted
+                                    Bid for request successfully placed
                                 </Typography>
                                 <Typography sx={style.sublabel}>
-                                    Your may now contact the patient using their Phone Number. Thank You for using ExpressMD. Stay Safe.
+                                    Bid for request successfully placed. Please wait for the user to accept your bid request. Thank You
                                 </Typography>
                                 <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
                             </Paper>

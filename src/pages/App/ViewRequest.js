@@ -108,9 +108,35 @@ export default function ViewRequest() {
     data: [],
   });
 
+  const [docProfile, setdocProfile] = useState({
+    profile: [],
+  })
+  const fetchList = async () => {
+    const userRef = db.collection('doctors').doc(localStorage.getItem("uid"));
+    let usrProfile = [];
+    userRef.get().then(doc => {
+      usrProfile.push(doc.data());
+      setdocProfile({ profile: usrProfile });
+    })
+  }
+
+  const [userProfile, setuserProfile] = useState({
+    profile: [],
+  })
+  const fetchUser = async () => {
+    const userRef = db.collection('users').doc(id);
+    let usrProfile = [];
+    userRef.get().then(doc => {
+      usrProfile.push(doc.data());
+      setuserProfile({ profile: usrProfile });
+    })
+  }
+
+
+
   const fetchData = async () => {
     let isMounted = true
-    const docRef = await db.collection("doctors").doc(localStorage.getItem("uid")).collection("requests").doc(id);
+    const docRef = await db.collection("requests").doc(id);
     let rawData = [];
     docRef.get().then((doc) => {
       rawData.push(doc.data());
@@ -120,6 +146,8 @@ export default function ViewRequest() {
   };
 
   useEffect(() => {
+    fetchList();
+    fetchUser();
     fetchData();
   }, []);
 
@@ -132,35 +160,64 @@ export default function ViewRequest() {
   }
 
   function acceptRequest() {
-    var docRef = db.collection("doctors")
-      .doc(localStorage.getItem("uid"))
-      .collection("requests")
-      .doc(id);
-    var userRef = db.collection("users")
-      .doc(id)
-      .collection("requests")
-      .doc(id);
-    userRef
-      .update({
-        status: "Accepted",
-      })
-      .then((docReference) => {
-        docRef
-          .update({
-            status: "Accepted",
+    docProfile.profile.map((data) => {
+      let docName = data.lastname + ", " + data.firstname + " " + data.middleInitials;
+      let photoURL = data.photoURL;
+      let location = data.location;
+      let fee = data.price;
+      let fname = data.firstname;
+      let lname = data.lastname;
+      let middle = data.middleInitials;
+      userProfile.profile.map((data2) => {
+        var userRef = db.collection("users")
+          .doc(id)
+          .collection("requests")
+          .doc(id);
+        var globalRef = db.collection("requests")
+          .doc(id);
+        userRef
+          .collection("bidders")
+          .doc(localStorage.getItem("uid"))
+          .set({
+            docName: docName,
+            fname: fname,
+            lname: lname,
+            middle: middle,
+            docID: localStorage.getItem("uid"),
+            bid_time: new Date(),
+            photoURL: photoURL,
+            location: location,
+            fee: fee,
           })
-          .then((docRef) => {
-            history.push(`/success/${"accepted"}`);
+          .then((docReference) => {
+            globalRef
+              .collection("bidders")
+              .doc(localStorage.getItem("uid"))
+              .set({
+                docName: docName,
+                fname: fname,
+                lname: lname,
+                middle: middle,
+                docID: localStorage.getItem("uid"),
+                bid_time: new Date(),
+                photoURL: photoURL,
+                location: location,
+                fee: fee,
+              })
+              .then((docRef) => {
+                history.push(`/success/${"accepted"}`);
+              })
+              .catch((error) => {
+                console.log(error);
+                history.push("/sorry");
+              });
           })
           .catch((error) => {
             console.log(error);
             history.push("/sorry");
           });
       })
-      .catch((error) => {
-        console.log(error);
-        history.push("/sorry");
-      });
+    })
   }
 
   function completeRequest() {
@@ -345,13 +402,10 @@ export default function ViewRequest() {
                         <Button variant="outlined" sx={style.btn} onClick={() => declineRequest()}>Cancel Appointment</Button>
                       </Box>
                     );
-                  case "Pending":
+                  case "Waiting":
                     return (
                       <Box sx={style.btnBox}>
-                        <Button variant="outlined" sx={style.btn} onClick={() => editRequest()}>Change Time and Date</Button>
                         <Button variant="contained" sx={style.btn} onClick={() => acceptRequest()}>Accept</Button>
-                        <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Decline</Button>
-
                       </Box>
                     );
                   case "Edited":

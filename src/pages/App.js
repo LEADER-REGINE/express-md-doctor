@@ -1,4 +1,4 @@
-import { Typography, Box, Container, Button, Paper } from "@mui/material";
+import { Typography, Box, Container, Button, Paper, Avatar } from "@mui/material";
 import Nav from "../components/appcomponents/Nav";
 import TopPhoto from "../assets/Drawkit-Vector-Illustration-Medical-01 1.png";
 import React, { useEffect, useState } from "react";
@@ -112,7 +112,7 @@ export default function App() {
   });
 
   const fetchReqList = async () => {
-    const userRef = db.collection("requests").where("status", "!=", "Pending");
+    const userRef = db.collection("requests").orderBy("timestamp").where("status", "==", "Waiting");
     userRef.onSnapshot((doc) => {
       if (doc.size != 0) {
         setisReqEmpty(false);
@@ -181,24 +181,41 @@ export default function App() {
                       let setTime = setappointment.datetime
                         .toDate()
                         .toLocaleTimeString();
+                      let postDate = setappointment.timestamp
+                        .toDate().toLocaleTimeString();
                       return (
                         <Link
                           key={setappointment.userID}
                           to={`view/${setappointment.userID}`}
                         >
                           <Paper sx={style.upcommingReq} variant="outlined">
-                            <Typography variant="subtitle2">
-                              Name:{setappointment.userFullName}
-                            </Typography>
-                            <Typography variant="subtitle2">
-                              Date:{setDate}
-                            </Typography>
-                            <Typography variant="subtitle2">
-                              Time:{setTime}
-                            </Typography>
-                            <Typography variant="subtitle2">
-                              Location:{setappointment.location}
-                            </Typography>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                              <Box>
+                                <Avatar sx={{ width: 64, height: 64 }} src={setappointment.photoURL} alt="user image" />
+                              </Box>
+                              <Box>
+                                <Typography variant="h6">
+                                  {setappointment.userFullName}
+                                </Typography>
+                                <Typography variant="subtitle2">
+                                  {setappointment.location}
+                                </Typography>
+                                <Typography variant="subtitle2">
+                                  {postDate}
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box sx={{ marginTop: "15px" }}>
+                              <Typography variant="subtitle1">
+                                Symptoms: {setappointment.symptoms}
+                              </Typography>
+                              <Typography variant="subtitle1">
+                                Date: {setDate}
+                              </Typography>
+                              <Typography variant="subtitle1">
+                                Appointment Time: {setTime}
+                              </Typography>
+                            </Box>
                           </Paper>
                         </Link>
                       );
