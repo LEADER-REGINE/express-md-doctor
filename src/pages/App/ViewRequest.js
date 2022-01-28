@@ -175,22 +175,11 @@ export default function ViewRequest() {
           .doc(id);
         var globalRef = db.collection("requests")
           .doc(id);
-        userRef
-          .collection("bidders")
-          .doc(localStorage.getItem("uid"))
-          .set({
-            docName: docName,
-            fname: fname,
-            lname: lname,
-            middle: middle,
-            docID: localStorage.getItem("uid"),
-            bid_time: new Date(),
-            photoURL: photoURL,
-            location: location,
-            fee: fee,
-          })
-          .then((docReference) => {
-            globalRef
+        userRef.collection("bidders").doc(localStorage.getItem("uid")).get().then((doc) => {
+          if (doc.exists) {
+            alert("You can only bid once. Please wait for the patient to accept your bid.");
+          } else {
+            userRef
               .collection("bidders")
               .doc(localStorage.getItem("uid"))
               .set({
@@ -204,18 +193,36 @@ export default function ViewRequest() {
                 location: location,
                 fee: fee,
               })
-              .then((docRef) => {
-                history.push(`/success/${"accepted"}`);
+              .then((docReference) => {
+                globalRef
+                  .collection("bidders")
+                  .doc(localStorage.getItem("uid"))
+                  .set({
+                    docName: docName,
+                    fname: fname,
+                    lname: lname,
+                    middle: middle,
+                    docID: localStorage.getItem("uid"),
+                    bid_time: new Date(),
+                    photoURL: photoURL,
+                    location: location,
+                    fee: fee,
+                  })
+                  .then((docRef) => {
+                    history.push(`/success/${"accepted"}`);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    history.push("/sorry");
+                  });
               })
               .catch((error) => {
                 console.log(error);
                 history.push("/sorry");
               });
-          })
-          .catch((error) => {
-            console.log(error);
-            history.push("/sorry");
-          });
+          }
+        })
+
       })
     })
   }
