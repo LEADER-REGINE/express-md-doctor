@@ -20,10 +20,12 @@ import ViewRequest from '../pages/App/ViewRequest'
 import Profile from '../pages/App/Profile';
 import Ratings from '../pages/App/Ratings';
 import EditRequest from '../pages/App/EditRequest';
+import Feed from '../pages/App/Feed';
 import EditProfile from '../pages/App/EditProfile';
 import IsSuccessful from "../pages/App/IsSuccessful";
 import IsNotSuccessful from "../pages/App/IsNotSuccessful";
 import DeclineRequest from '../pages/App/DeclineRequest';
+import DynamicFeedRoundedIcon from '@mui/icons-material/DynamicFeedRounded';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -125,6 +127,12 @@ export default function RouterComponent() {
 
                     <PrivateRoute
                         isAuthenticated={values.isAuthenticated}
+                        component={Feed}
+                        path="/feed"
+                        exact />
+
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
                         component={Profile}
                         path="/profile"
                         exact />
@@ -172,6 +180,9 @@ export default function RouterComponent() {
                         >
                             <NavLink to='/dashboard'>
                                 <BottomNavigationAction label="Home" icon={<HomeIcon color="secondary" />} />
+                            </NavLink>
+                            <NavLink to='/feed'>
+                                <BottomNavigationAction label="Feed" icon={<DynamicFeedRoundedIcon color="secondary" />} />
                             </NavLink>
                             <NavLink to='/profile'>
                                 <BottomNavigationAction label="Profile" icon={<AccountCircleIcon color="secondary" />} />

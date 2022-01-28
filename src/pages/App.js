@@ -114,7 +114,7 @@ export default function App() {
 
 
   const fetchReqList = async () => {
-    const userRef = db.collection("requests").orderBy("timestamp").where("status", "==", "Waiting");
+    const userRef = db.collection("requests").orderBy("timestamp").where("status", "==", "Waiting").limit(3);
     userRef.onSnapshot((doc) => {
       if (doc.size != 0) {
         setisReqEmpty(false);
@@ -165,14 +165,63 @@ export default function App() {
       <Container>
         <Box className="schedBox">
           <Container>
-            <Typography className="schedHeader" variant="h6">
-              Request Feed
-            </Typography>
             <Paper elevation={3} className="schedPaper">
+              <Typography className="schedHeader" variant="h6">
+                Upcoming Appointments
+              </Typography>
+              <Box className="schedDetails">
+                {isupcomingEmpty ? (
+                  <Typography className="schedText" variant="subtitle2">
+                    There are no upcoming appointments.
+                  </Typography>
+                ) : (
+                  fetchUpcomingAppointments.appointments.map(
+                    (upcomingAppointment) => {
+                      let setDate = upcomingAppointment.datetime
+                        .toDate()
+                        .toLocaleDateString();
+                      let setTime = upcomingAppointment.datetime
+                        .toDate()
+                        .toLocaleTimeString();
+                      return (
+                        <Link
+                          key={upcomingAppointment.userID}
+                          to={`view/${upcomingAppointment.userID}`}
+                        >
+                          <Paper sx={style.upcommingReq} variant="outlined">
+                            <Typography variant="subtitle1">
+                              Name: {upcomingAppointment.userFullName}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                              Date: {setDate}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                              Time: {setTime}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                              Location: {upcomingAppointment.location}
+                            </Typography>
+                          </Paper>
+                        </Link>
+                      );
+                    }
+                  )
+                )}
+              </Box>
+            </Paper>
+          </Container>
+        </Box>
+        <Box className="schedBox">
+          <Container>
+
+            <Paper elevation={3} className="schedPaper">
+              <Typography className="schedHeader" variant="h6">
+                Recents Posts
+              </Typography>
               <Box className="schedDetails">
                 {isReqEmpty ? (
                   <Typography className="schedText" variant="subtitle2">
-                    There are no new requests.
+                    There are no requests posted.
                   </Typography>
                 ) : (
                   fetchPendingAppointments.appointments.map(
@@ -228,54 +277,7 @@ export default function App() {
             </Paper>
           </Container>
         </Box>
-        <Box className="schedBox">
-          <Container>
-            <Paper elevation={3} className="schedPaper">
-              <Typography className="schedHeader" variant="h6">
-                Upcoming Appointments
-              </Typography>
-              <Box className="schedDetails">
-                {isupcomingEmpty ? (
-                  <Typography className="schedText" variant="subtitle2">
-                    There are no upcoming appointments.
-                  </Typography>
-                ) : (
-                  fetchUpcomingAppointments.appointments.map(
-                    (upcomingAppointment) => {
-                      let setDate = upcomingAppointment.datetime
-                        .toDate()
-                        .toLocaleDateString();
-                      let setTime = upcomingAppointment.datetime
-                        .toDate()
-                        .toLocaleTimeString();
-                      return (
-                        <Link
-                          key={upcomingAppointment.userID}
-                          to={`view/${upcomingAppointment.userID}`}
-                        >
-                          <Paper sx={style.upcommingReq} variant="outlined">
-                            <Typography variant="subtitle1">
-                              Name: {upcomingAppointment.userFullName}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                              Date: {setDate}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                              Time: {setTime}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                              Location: {upcomingAppointment.location}
-                            </Typography>
-                          </Paper>
-                        </Link>
-                      );
-                    }
-                  )
-                )}
-              </Box>
-            </Paper>
-          </Container>
-        </Box>
+
       </Container>
     </Box>
   );
