@@ -111,6 +111,8 @@ export default function App() {
     appointments: [],
   });
 
+
+
   const fetchReqList = async () => {
     const userRef = db.collection("requests").orderBy("timestamp").where("status", "==", "Waiting");
     userRef.onSnapshot((doc) => {

@@ -235,97 +235,90 @@ export default function ViewRequest() {
       .doc(id)
       .collection("requests")
       .doc(id);
-    var globalReq = db.collection("requests");
+    var globalReq = db.collection("reqArchive");
     appointmentData.data.map((data) => {
-      userRefMove
-        .add({
-          feel: data.feel,
-          symptoms: data.symptoms,
-          others: data.others,
-          assigned_doctor: data.assigned_doctor,
-          doctorId: data.doctorId,
-          userID: data.userID,
-          userFullName: data.userFullName,
-          datetime: data.datetime,
-          gender: data.gender,
-          location: data.location,
-          phoneNumber: data.phoneNumber,
-          photoURL: data.photoURL,
-          status: "Completed",
-          rated: false,
-          globalID: data.globalID,
-        })
-        .then((docReference) => {
-          console.log(docReference.id);
-          userRefMove
-            .doc(docReference.id)
-            .update({
-              documentId: docReference.id,
-            })
-            .then((doc1) => {
-              docRefMove
-                .add({
-                  feel: data.feel,
-                  symptoms: data.symptoms,
-                  others: data.others,
-                  assigned_doctor: data.assigned_doctor,
-                  doctorId: data.doctorId,
-                  userID: data.userID,
-                  userFullName: data.userFullName,
-                  datetime: data.datetime,
-                  gender: data.gender,
-                  location: data.location,
-                  phoneNumber: data.phoneNumber,
-                  photoURL: data.photoURL,
-                  status: "Completed",
-                  globalID: data.globalID,
-                  rated: false,
-                })
-                .then((docRef) => {
-                  docRefMove
-                    .doc(docRef.id)
-                    .update({
-                      documentId: docRef.id,
-                    })
-                    .then((docRef2) => {
-                      globalReq.doc(data.globalID).update({
-                        status: "Completed",
-                        rated: false,
-                      })
-                        .then((docReference3) => {
-                          docRefDelete.delete().then(() => {
-                            userRefDelete.delete().then(() => {
-                              history.push(`/success/${"completed"}`);
-                            }).catch((error) => {
-                              console.error("Error removing document: ", error);
-                              history.push("/sorry");
-                            });
+      let payment = data.fee;
+      userProfile.profile.map((data2) => {
+        let paid = data2.coins - payment;
+        userRefMove
+          .add({
+            feel: data.feel,
+            symptoms: data.symptoms,
+            others: data.others,
+            assigned_doctor: data.assigned_doctor,
+            doctorId: data.doctorId,
+            userID: data.userID,
+            userFullName: data.userFullName,
+            datetime: data.datetime,
+            gender: data.gender,
+            location: data.location,
+            phoneNumber: data.phoneNumber,
+            photoURL: data.photoURL,
+            status: "Completed",
+            rated: false,
+            fee: data.fee,
+          })
+          .then((docReference) => {
+            console.log(docReference.id);
+            userRefMove
+              .doc(docReference.id)
+              .update({
+                documentId: docReference.id,
+              })
+              .then((doc1) => {
+                docRefMove
+                  .add({
+                    feel: data.feel,
+                    symptoms: data.symptoms,
+                    others: data.others,
+                    assigned_doctor: data.assigned_doctor,
+                    doctorId: data.doctorId,
+                    userID: data.userID,
+                    userFullName: data.userFullName,
+                    datetime: data.datetime,
+                    gender: data.gender,
+                    location: data.location,
+                    phoneNumber: data.phoneNumber,
+                    photoURL: data.photoURL,
+                    status: "Completed",
+                    rated: false,
+                    fee: data.fee,
+                  })
+                  .then((docRef) => {
+                    db.collection("users").doc(id)
+                      .update({
+                        coins: paid,
+                      }).then((docRef3) => {
+                        docRefDelete.delete().then(() => {
+                          userRefDelete.delete().then(() => {
+                            history.push(`/success/${"completed"}`);
                           }).catch((error) => {
                             console.error("Error removing document: ", error);
                             history.push("/sorry");
                           });
-                        })
-                    })
-                    .catch((error) => {
-                      console.log(error);
-                      history.push("/sorry");
-                    });
-                })
-                .catch((error) => {
-                  console.log(error);
-                  history.push("/sorry");
-                });
-            })
-            .catch((error) => {
-              console.log(error);
-              history.push("/sorry");
-            });
+                        }).catch((error) => {
+                          console.error("Error removing document: ", error);
+                          history.push("/sorry");
+                        });
+                      })
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    history.push("/sorry");
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+                history.push("/sorry");
+              });
 
-        })
-        .catch((error) => {
-          console.log(error);
-          history.push("/sorry");
-        });
+          })
+          .catch((error) => {
+            console.log(error);
+            history.push("/sorry");
+          });
+      })
+
     })
   }
 
