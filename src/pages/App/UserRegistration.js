@@ -130,6 +130,7 @@ function UserRegistration() {
                                                             phoneNumber: payload.phoneNumber,
                                                             location: payload.location,
                                                             timestamp: new Date(),
+                                                            status: "Pending",
                                                         })
                                                         .then((doc) => {
                                                             history.push(`/success/${"registration"}`);
