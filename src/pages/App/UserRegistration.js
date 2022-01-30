@@ -119,6 +119,17 @@ function UserRegistration() {
                                                             photoURL: fileurl1,
                                                             validID: fileurl2,
                                                             psacert: fileurl3,
+                                                            fname: payload.fname,
+                                                            lname: payload.lname,
+                                                            mname: payload.mname,
+                                                            email: payload.email,
+                                                            gender: payload.gender,
+                                                            type: payload.type,
+                                                            prcno: payload.prcno,
+                                                            rate: payload.rate,
+                                                            phoneNumber: payload.phoneNumber,
+                                                            location: payload.location,
+
                                                         })
                                                         .then((doc) => {
                                                             history.push(`/success/${"registration"}`);
