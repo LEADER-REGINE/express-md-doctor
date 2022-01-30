@@ -108,6 +108,14 @@ export default function ViewRequest() {
     data: [],
   });
 
+  const [payload, setPayload] = useState({
+    notes: "",
+  });
+
+  const userInput = (prop) => (e) => {
+    setPayload({ ...payload, [prop]: e.target.value });
+  };
+
   const [docProfile, setdocProfile] = useState({
     profile: [],
   })
@@ -191,6 +199,7 @@ export default function ViewRequest() {
                 bid_time: new Date(),
                 photoURL: photoURL,
                 location: location,
+
                 fee: fee,
               })
               .then((docReference) => {
@@ -267,6 +276,7 @@ export default function ViewRequest() {
             status: "Completed",
             rated: false,
             fee: data.fee,
+            notes: payload.notes,
           })
           .then((docReference) => {
             localStorage.setItem("docRef", docReference.id);
@@ -294,6 +304,7 @@ export default function ViewRequest() {
                     rated: false,
                     fee: data.fee,
                     documentId: localStorage.getItem("docRef"),
+                    notes: payload.notes,
                   })
                   .then((docRef) => {
                     globalRefMove.doc(localStorage.getItem("docRef"))
@@ -314,6 +325,7 @@ export default function ViewRequest() {
                         rated: false,
                         fee: data.fee,
                         documentId: localStorage.getItem("docRef"),
+                        notes: payload.notes,
                       })
                       .then((docRef) => {
                         db.collection("users").doc(id)
@@ -324,7 +336,6 @@ export default function ViewRequest() {
                               let exisCred = parseInt(doc4.data().credits);
                               let userFee = parseInt(data.fee);
                               let newCredits = parseInt(exisCred + userFee);
-
                               db.collection("doctors").doc(localStorage.getItem("uid"))
                                 .update({
                                   credits: newCredits,
@@ -469,10 +480,17 @@ export default function ViewRequest() {
                     return null;
                   case "Accepted":
                     return (
-                      <Box sx={style.btnBox}>
-                        <Button variant="contained" sx={style.btn} onClick={() => completeRequest()}>Complete</Button>
-                        <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Cancel Appointment</Button>
+                      <Box>
+                        <TextField
+                          onChange={userInput("notes")}
+                          value={payload.notes}
+                        />
+                        <Box sx={style.btnBox}>
+                          <Button variant="contained" sx={style.btn} onClick={() => completeRequest()}>Complete</Button>
+                          <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Cancel Appointment</Button>
+                        </Box>
                       </Box>
+
                     );
                   case "Declined":
                     return null;
