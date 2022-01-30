@@ -230,10 +230,11 @@ export default function ViewRequest() {
   function completeRequest() {
     var docRefMove = db.collection("doctors")
       .doc(localStorage.getItem("uid"))
-      .collection("archive")
+      .collection("archive");
     var userRefMove = db.collection("users")
       .doc(id)
-      .collection("archive")
+      .collection("archive");
+    var globalRefMove = db.collection("reqArchive");
     var docRefDelete = db.collection("doctors")
       .doc(localStorage.getItem("uid"))
       .collection("requests")
@@ -242,7 +243,9 @@ export default function ViewRequest() {
       .doc(id)
       .collection("requests")
       .doc(id);
-    var globalReq = db.collection("reqArchive");
+    var globalRefDelete = db.collection("requests").doc(id);
+
+    var globalReq = db.collection("reqArchive").doc(id);
     appointmentData.data.map((data) => {
       let payment = data.fee;
       userProfile.profile.map((data2) => {
@@ -266,15 +269,15 @@ export default function ViewRequest() {
             fee: data.fee,
           })
           .then((docReference) => {
-            console.log(docReference.id);
+            localStorage.setItem("docRef", docReference.id);
             userRefMove
               .doc(docReference.id)
               .update({
                 documentId: docReference.id,
               })
               .then((doc1) => {
-                docRefMove
-                  .add({
+                docRefMove.doc(localStorage.getItem("docRef"))
+                  .set({
                     feel: data.feel,
                     symptoms: data.symptoms,
                     others: data.others,
@@ -290,24 +293,78 @@ export default function ViewRequest() {
                     status: "Completed",
                     rated: false,
                     fee: data.fee,
+                    documentId: localStorage.getItem("docRef"),
                   })
                   .then((docRef) => {
-                    db.collection("users").doc(id)
-                      .update({
-                        coins: paid,
-                      }).then((docRef3) => {
-                        docRefDelete.delete().then(() => {
-                          userRefDelete.delete().then(() => {
-                            history.push(`/success/${"completed"}`);
-                          }).catch((error) => {
-                            console.error("Error removing document: ", error);
-                            history.push("/sorry");
-                          });
-                        }).catch((error) => {
-                          console.error("Error removing document: ", error);
-                          history.push("/sorry");
-                        });
+                    globalRefMove.doc(localStorage.getItem("docRef"))
+                      .set({
+                        feel: data.feel,
+                        symptoms: data.symptoms,
+                        others: data.others,
+                        assigned_doctor: data.assigned_doctor,
+                        doctorId: data.doctorId,
+                        userID: data.userID,
+                        userFullName: data.userFullName,
+                        datetime: data.datetime,
+                        gender: data.gender,
+                        location: data.location,
+                        phoneNumber: data.phoneNumber,
+                        photoURL: data.photoURL,
+                        status: "Completed",
+                        rated: false,
+                        fee: data.fee,
+                        documentId: localStorage.getItem("docRef"),
                       })
+                      .then((docRef) => {
+                        db.collection("users").doc(id)
+                          .update({
+                            coins: paid,
+                          }).then((docRef3) => {
+                            db.collection("doctors").doc(localStorage.getItem("uid")).get().then((doc4) => {
+                              let exisCred = parseInt(doc4.data().credits);
+                              let userFee = parseInt(data.fee);
+                              let newCredits = parseInt(exisCred + userFee);
+
+                              db.collection("doctors").doc(localStorage.getItem("uid"))
+                                .update({
+                                  credits: newCredits,
+                                })
+                                .then((doc5) => {
+                                  docRefDelete.delete().then(() => {
+                                    userRefDelete.delete().then(() => {
+                                      globalRefDelete.collection("bidders").doc(localStorage.getItem("uid")).delete().then(() => {
+                                        userRefDelete.collection("bidders").doc(localStorage.getItem("uid")).delete().then(() => {
+                                          globalRefDelete.delete().then(() => {
+                                            history.push(`/success/${"completed"}`);
+                                          }).catch((error) => {
+                                            console.error("Error removing document: ", error);
+                                            history.push("/sorry");
+                                          });
+                                        }).catch((error) => {
+                                          console.error("Error removing document: ", error);
+                                          history.push("/sorry");
+                                        });
+                                      }).catch((error) => {
+                                        console.error("Error removing document: ", error);
+                                        history.push("/sorry");
+                                      });
+                                    }).catch((error) => {
+                                      console.error("Error removing document: ", error);
+                                      history.push("/sorry");
+                                    });
+                                  }).catch((error) => {
+                                    console.error("Error removing document: ", error);
+                                    history.push("/sorry");
+                                  });
+                                })
+
+                            })
+                          })
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                        history.push("/sorry");
+                      });
                   })
                   .catch((error) => {
                     console.log(error);

@@ -16,7 +16,7 @@ export default function IsNotSuccessful() {
             <Typography>
                 Edit Unsuccessful. Please try again later.
             </Typography>
-            <Button variant="outlined" onClick={() => history.push("/dashboarf")}>OK</Button>
+            <Button variant="outlined" onClick={() => history.push("/dashboard")}>OK</Button>
         </Box >
     );
 }
