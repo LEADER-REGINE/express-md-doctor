@@ -84,6 +84,9 @@ export default function Login() {
                 <Button variant="contained"
                     onClick={() => login()}
                     sx={style.loginBTN}>Login</Button>
+                <Button variant="contained"
+                    onClick={() => history.push("/register")}
+                    sx={style.loginBTN}>Register</Button>
             </Box>
         </Box>
     );

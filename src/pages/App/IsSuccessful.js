@@ -105,6 +105,18 @@ export default function IsSuccessful() {
                                 <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
                             </Paper>
                         );
+                    case "registration":
+                        return (
+                            <Paper sx={style.innerConPaper}>
+                                <Typography sx={style.label}>
+                                    Registration Pending
+                                </Typography>
+                                <Typography sx={style.sublabel}>
+                                Registration Pending. Our team will now verify your account and send an email regarding your registration. Thank You.
+                                </Typography>
+                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
+                            </Paper>
+                        );
                     default:
                         return null;
                 }

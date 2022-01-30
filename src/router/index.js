@@ -26,6 +26,7 @@ import IsSuccessful from "../pages/App/IsSuccessful";
 import IsNotSuccessful from "../pages/App/IsNotSuccessful";
 import DeclineRequest from '../pages/App/DeclineRequest';
 import DynamicFeedRoundedIcon from '@mui/icons-material/DynamicFeedRounded';
+import Register from '../pages/App/UserRegistration';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -112,6 +113,12 @@ export default function RouterComponent() {
                         restricted={true}
                         component={Login}
                         path="/login"
+                        exact />
+                    <PublicRoute
+                        isAuthenticated={values.isAuthenticated}
+                        restricted={true}
+                        component={Register}
+                        path="/register"
                         exact />
                     <PublicRoute
                         isAuthenticated={values.isAuthenticated}
