@@ -129,7 +129,7 @@ function UserRegistration() {
                                                             rate: payload.rate,
                                                             phoneNumber: payload.phoneNumber,
                                                             location: payload.location,
-
+                                                            timestamp: new Date(),
                                                         })
                                                         .then((doc) => {
                                                             history.push(`/success/${"registration"}`);
