@@ -144,7 +144,7 @@ export default function ViewRequest() {
 
   const fetchData = async () => {
     let isMounted = true
-    const docRef = await db.collection("requests").doc(id);
+    const docRef = db.collection("requests").doc(id);
     let rawData = [];
     docRef.get().then((doc) => {
       rawData.push(doc.data());

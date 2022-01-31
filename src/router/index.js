@@ -27,6 +27,8 @@ import IsNotSuccessful from "../pages/App/IsNotSuccessful";
 import DeclineRequest from '../pages/App/DeclineRequest';
 import DynamicFeedRoundedIcon from '@mui/icons-material/DynamicFeedRounded';
 import Register from '../pages/App/UserRegistration';
+import ViewArchive from '../pages/App/ViewArchive';
+import TransactionHistory from '../components/appcomponents/TransactionHistory';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -150,8 +152,18 @@ export default function RouterComponent() {
                         exact />
                     <PrivateRoute
                         isAuthenticated={values.isAuthenticated}
+                        component={TransactionHistory}
+                        path="/history"
+                        exact />
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
                         component={ViewRequest}
                         path="/view/:id"
+                        exact />
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
+                        component={ViewArchive}
+                        path="/archive/:id/view"
                         exact />
                     <PrivateRoute
                         isAuthenticated={values.isAuthenticated}

@@ -80,7 +80,7 @@ export default function Ratings() {
                         {transactions && transactions.datas.map((transactions) => {
                             return (
                                 <ListItem sx={style.outerCon}>
-                                    <Link to={`/a/${transactions.documentId}/view`}>
+                                    <Link to={`/archive/${transactions.documentId}/view`}>
                                         <Box>
                                             <Paper sx={style.paperCon} elevation="5">
                                                 <Typography>

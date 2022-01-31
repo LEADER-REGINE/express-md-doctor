@@ -75,22 +75,6 @@ function Profile() {
                                         </ListItemButton>
                                     </ListItem>
                                     <ListItem disablePadding>
-                                        <ListItemButton onClick={() => history.push("/ratings")}>
-                                            <ListItemIcon>
-                                                <EventIcon color="secondary" />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Ratings" />
-                                        </ListItemButton>
-                                    </ListItem>
-                                    <ListItem disablePadding>
-                                        <ListItemButton onClick={() => history.push("/settings")}>
-                                            <ListItemIcon>
-                                                <SettingsIcon color="secondary" />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Settings" />
-                                        </ListItemButton>
-                                    </ListItem>
-                                    <ListItem disablePadding>
                                         <ListItemButton onClick={() => logout()}>
                                             <ListItemIcon>
                                                 <LogoutIcon color="secondary" />
