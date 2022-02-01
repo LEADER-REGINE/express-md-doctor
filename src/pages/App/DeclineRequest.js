@@ -68,9 +68,20 @@ export default function DeclineRequest() {
         isMounted = false
     };
 
+    const [userProfile, setuserProfile] = useState({
+        profile: [],
+    })
+    const fetchUser = async () => {
+        const userRef = db.collection('users').doc(id);
+        let usrProfile = [];
+        userRef.get().then(doc => {
+            usrProfile.push(doc.data());
+            setuserProfile({ profile: usrProfile });
+        })
+    }
 
     useEffect(() => {
-
+        fetchUser();
         fetchData();
     }, []);
 
@@ -80,10 +91,11 @@ export default function DeclineRequest() {
         } else {
             var docRefMove = db.collection("doctors")
                 .doc(localStorage.getItem("uid"))
-                .collection("archive")
+                .collection("archive");
             var userRefMove = db.collection("users")
                 .doc(id)
-                .collection("archive")
+                .collection("archive");
+            var globalRefMove = db.collection("reqArchive");
             var docRefDelete = db.collection("doctors")
                 .doc(localStorage.getItem("uid"))
                 .collection("requests")
@@ -92,103 +104,130 @@ export default function DeclineRequest() {
                 .doc(id)
                 .collection("requests")
                 .doc(id);
+            var globalRefDelete = db.collection("requests").doc(id);
+
+            var globalReq = db.collection("reqArchive").doc(id);
             appointmentData.data.map((data) => {
-                userRefMove
-                    .add({
-                        feel: data.feel,
-                        symptoms: data.symptoms,
-                        others: data.others,
-                        assigned_doctor: data.assigned_doctor,
-                        doctorId: data.doctorId,
-                        userID: data.userID,
-                        userFullName: data.userFullName,
-                        datetime: data.datetime,
-                        gender: data.gender,
-                        location: data.location,
-                        phoneNumber: data.phoneNumber,
-                        reason: payload.reason,
-                        photoURL: data.photoURL,
-                        status: "Declined",
-                    })
-                    .then((docReference) => {
-                        console.log(docReference.id);
-                        userRefMove
-                            .doc(docReference.id)
-                            .update({
-                                documentId: docReference.id,
-                            })
-                            .then((doc1) => {
-                                docRefMove
-                                    .add({
-                                        feel: data.feel,
-                                        symptoms: data.symptoms,
-                                        others: data.others,
-                                        assigned_doctor: data.assigned_doctor,
-                                        doctorId: data.doctorId,
-                                        userID: data.userID,
-                                        userFullName: data.userFullName,
-                                        datetime: data.datetime,
-                                        gender: data.gender,
-                                        location: data.location,
-                                        phoneNumber: data.phoneNumber,
-                                        reason: payload.reason,
-                                        photoURL: data.photoURL,
-                                        status: "Declined",
-                                    })
-                                    .then((docRef) => {
-                                        let archiveID = docRef.id;
-                                        docRefMove
-                                            .doc(docRef.id)
-                                            .update({
-                                                documentId: docRef.id,
-                                            })
-                                            .then((docRef2) => {
-                                                db.collection("requests")
-                                                    .doc(data.globalID)
-                                                    .update({
-                                                        archiveID: archiveID,
-                                                    })
-                                                    .then((docRef3) => {
-                                                        docRefDelete.delete().then(() => {
-                                                            userRefDelete.delete().then(() => {
-                                                                history.push(`/success/${"cancellation"}`);
+                userProfile.profile.map((data2) => {
+                    userRefMove
+                        .add({
+                            feel: data.feel,
+                            symptoms: data.symptoms,
+                            others: data.others,
+                            assigned_doctor: data.assigned_doctor,
+                            doctorId: data.doctorId,
+                            userID: data.userID,
+                            userFullName: data.userFullName,
+                            datetime: data.datetime,
+                            gender: data.gender,
+                            location: data.location,
+                            phoneNumber: data.phoneNumber,
+                            photoURL: data.photoURL,
+                            status: "Declined",
+                            documentId: localStorage.getItem("docRef"),
+                            reason: payload.reason,
+                        })
+                        .then((docReference) => {
+                            localStorage.setItem("docRef", docReference.id);
+                            userRefMove
+                                .doc(docReference.id)
+                                .update({
+                                    documentId: docReference.id,
+                                })
+                                .then((doc1) => {
+                                    docRefMove.doc(localStorage.getItem("docRef"))
+                                        .set({
+                                            feel: data.feel,
+                                            symptoms: data.symptoms,
+                                            others: data.others,
+                                            assigned_doctor: data.assigned_doctor,
+                                            doctorId: data.doctorId,
+                                            userID: data.userID,
+                                            userFullName: data.userFullName,
+                                            datetime: data.datetime,
+                                            gender: data.gender,
+                                            location: data.location,
+                                            phoneNumber: data.phoneNumber,
+                                            photoURL: data.photoURL,
+                                            status: "Declined",
+                                            documentId: localStorage.getItem("docRef"),
+                                            reason: payload.reason,
+                                        })
+                                        .then((docRef) => {
+                                            globalRefMove.doc(localStorage.getItem("docRef"))
+                                                .set({
+                                                    feel: data.feel,
+                                                    symptoms: data.symptoms,
+                                                    others: data.others,
+                                                    assigned_doctor: data.assigned_doctor,
+                                                    doctorId: data.doctorId,
+                                                    userID: data.userID,
+                                                    userFullName: data.userFullName,
+                                                    datetime: data.datetime,
+                                                    gender: data.gender,
+                                                    location: data.location,
+                                                    phoneNumber: data.phoneNumber,
+                                                    photoURL: data.photoURL,
+                                                    status: "Declined",
+                                                    documentId: localStorage.getItem("docRef"),
+                                                    reason: payload.reason,
+                                                })
+                                                .then((docRef) => {
+                                                    docRefDelete.delete().then(() => {
+                                                        userRefDelete.delete().then(() => {
+                                                            globalRefDelete.collection("bidders").doc(localStorage.getItem("uid")).delete().then(() => {
+                                                                userRefDelete.collection("bidders").doc(localStorage.getItem("uid")).delete().then(() => {
+                                                                    globalRefDelete.delete().then(() => {
+                                                                        firebase.database().ref('users/' + id + '/request/' + id).update({
+                                                                            status: "Your appointment has been completed. Thank you for using ExpressMD."
+                                                                        }).then((doc6) => {
+                                                                            history.push(`/success/${"completed"}`);
+                                                                        })
+                                                                    }).catch((error) => {
+                                                                        console.error("Error removing document: ", error);
+                                                                        history.push("/sorry");
+                                                                    });
+                                                                }).catch((error) => {
+                                                                    console.error("Error removing document: ", error);
+                                                                    history.push("/sorry");
+                                                                });
                                                             }).catch((error) => {
                                                                 console.error("Error removing document: ", error);
+                                                                history.push("/sorry");
                                                             });
                                                         }).catch((error) => {
                                                             console.error("Error removing document: ", error);
+                                                            history.push("/sorry");
                                                         });
-                                                    })
-                                                    .catch((error) => {
-                                                        console.log(error);
+                                                    }).catch((error) => {
+                                                        console.error("Error removing document: ", error);
                                                         history.push("/sorry");
                                                     });
-                                            })
-                                            .catch((error) => {
-                                                console.log(error);
-                                                history.push("/sorry");
-                                            });
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                        history.push("/sorry");
-                                    });
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                                history.push("/sorry");
-                            });
+                                                })
+                                                .catch((error) => {
+                                                    console.log(error);
+                                                    history.push("/sorry");
+                                                });
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                            history.push("/sorry");
+                                        });
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    history.push("/sorry");
+                                });
 
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        history.push("/sorry");
-                    });
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            history.push("/sorry");
+                        });
+                })
+
             })
-
-
         }
-
     }
 
     return (
@@ -199,7 +238,7 @@ export default function DeclineRequest() {
                     let setTime = data.datetime.toDate().toLocaleTimeString();
                     return (
                         <Box key={data.userID}>
-                            <Typography variant="h5">Edit Time and Date</Typography>
+                            <Typography variant="h5">Cancel Appointment</Typography>
                             <Box>
                                 <Typography>Name: {data.userFullName}</Typography>
                                 <Typography>Date: {setDate}</Typography>
