@@ -115,6 +115,13 @@ const style = {
     alignItems: "center",
     flexDirection: "column",
     color: "success.main"
+  },
+  statIconPending: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    color: "info.main"
   }
 
 
@@ -541,7 +548,7 @@ export default function ViewRequest() {
                           <Icon
 
                             baseClassName="fas"
-                            className="fas fa-calendar-check"
+                            className="fas fa-business-time"
                             sx={{
                               fontSize: { xs: 40, md: 80 },
                               width: 50,
