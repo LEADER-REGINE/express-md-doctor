@@ -127,6 +127,7 @@ export default function ViewRequest() {
 
   const history = useHistory();
   const db = firebase.firestore();
+  const database = firebase.database();
   const [appointmentData, setappointmentData] = useState({
     data: [],
   });
@@ -241,7 +242,11 @@ export default function ViewRequest() {
                     fee: fee,
                   })
                   .then((docRef) => {
-                    history.push(`/success/${"accepted"}`);
+                    firebase.database().ref('users/' + id + '/request/' + id).update({
+                      status: "There has been an update to your request. Please check your post."
+                    }).then((doc6) => {
+                      history.push(`/success/${"accepted"}`);
+                    })
                   })
                   .catch((error) => {
                     console.log(error);
@@ -369,7 +374,11 @@ export default function ViewRequest() {
                                       globalRefDelete.collection("bidders").doc(localStorage.getItem("uid")).delete().then(() => {
                                         userRefDelete.collection("bidders").doc(localStorage.getItem("uid")).delete().then(() => {
                                           globalRefDelete.delete().then(() => {
-                                            history.push(`/success/${"completed"}`);
+                                            firebase.database().ref('users/' + id + '/request/' + id).update({
+                                              status: "Your appointment has been completed. Thank you for using ExpressMD."
+                                            }).then((doc6) => {
+                                              history.push(`/success/${"completed"}`);
+                                            })
                                           }).catch((error) => {
                                             console.error("Error removing document: ", error);
                                             history.push("/sorry");

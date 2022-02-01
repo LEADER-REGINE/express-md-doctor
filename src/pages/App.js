@@ -136,7 +136,6 @@ export default function App() {
       .collection("doctors")
       .doc(localStorage.getItem("uid"))
       .collection("requests")
-      .where("status", "==", "Accepted");
     userRef.onSnapshot((doc) => {
       if (doc.size != 0) {
         setisUpcomingEmpty(false);
