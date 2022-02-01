@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme, getTheme } from "../../redux/actions/uiAction";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import Icon from "@mui/material/Icon";
+import { loadCSS } from "fg-loadcss";
 
 export default function TransactionHistory() {
     const history = useHistory();
@@ -44,6 +46,19 @@ export default function TransactionHistory() {
         fetchData();
     }, []);
 
+
+    //fontawesome
+    React.useEffect(() => {
+        const node = loadCSS(
+          "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
+          // Inject before JSS
+          document.querySelector("#font-awesome-css") || document.head.firstChild
+        );
+        return () => {
+          node.parentNode.removeChild(node);
+        };
+      }, []);
+
     const style = {
         outerCon: {
             display: "flex",
@@ -62,11 +77,25 @@ export default function TransactionHistory() {
         },
 
         Label: {
-            fontSize: "24px"
+            fontSize: "24px",
+            marginTop: "5px",
+            textAlign: 'center',
         }
     }
     return (
         <Box>
+            <Typography className="headerStyle">
+        <Icon
+          baseClassName="fas"
+          className="fas fa-notes-medical"
+          sx={{
+            fontSize: { xs: 30, md: 50 },
+            color: "primary",
+            width: 300,
+            marginTop: 2,
+          }}
+        />
+      </Typography>
             <Box sx={style.LabelCon}>
                 <Typography sx={style.Label}>Transaction History</Typography>
             </Box>

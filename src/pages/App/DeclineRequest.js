@@ -25,22 +25,51 @@ const style = {
     },
     label: {
         fontSize: "24px",
-        marginRight: "10px"
-    },
+        marginTop: "5px",
+        textAlign: 'center',
+      },
 
     subLabel: {
         fontSize: "18px",
         fontStyle: "italic",
         color: "red"
     },
-    textField: {
-        width: "300px",
-    },
+   
     inputField: {
         display: "flex",
         justifyContent: "center",
         alignItems: 'center'
-    }
+    },
+    innerSub: {
+        fontSize: "20px",
+        marginLeft: "25px",
+        marginTop: "20px",
+      },
+      innerSub2: {
+        fontSize: "25px",
+        marginLeft: "25px",
+        marginTop: "40px",
+      },
+      innerSub3: {
+        fontSize: "15px",
+        textAlign:'center',
+        color:'red',
+      },
+      textField: {
+        width: "350px",
+      },
+      btn: {
+        width: "200px",
+        marginBottom: "10px",
+        borderRadius: "10px"
+      },
+      btnBox: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        marginTop: "20px"
+      },
 }
 
 export default function DeclineRequest() {
@@ -242,7 +271,7 @@ React.useEffect(() => {
       node.parentNode.removeChild(node);
     };
   }, []);
-  
+
     return (
         <Box className="base">
             {
@@ -251,17 +280,40 @@ React.useEffect(() => {
                     let setTime = data.datetime.toDate().toLocaleTimeString();
                     return (
                         <Box key={data.userID}>
-                            <Typography variant="h5">Cancel Appointment</Typography>
+                             <Box>
+              <Typography className="headerStyle">
+                  <Icon
+                    baseClassName="fas"
+                    className="fas fa-calendar-times"
+                    sx={{
+                      fontSize: { xs: 30, md: 50 },
+                      color: "primary",
+                      width: 300,
+                      marginTop: 2,
+                    }}
+                  />
+                </Typography>
+                <Typography sx={style.label}>Cancel Appointment
+                <hr
+                    style={{
+                      width: 350,
+                      color: "primary",
+                      backgroundColor: "primary",
+                      height: .5,
+                      borderColor: "primary",
+                    }}
+                  /></Typography>
+              </Box>
                             <Box>
-                                <Typography>Date: {setDate}</Typography>
-                                <Typography>Time: {setTime}</Typography>
+                                <Typography sx={style.innerSub}>Date of Cancellation: {setDate}</Typography>
+                                <Typography sx={style.innerSub}>Time of Cancellation: {setTime}</Typography>
                             </Box>
                             <Box>
-                                <Typography >Reason for Decline? </Typography>
-                                <Typography>*Required</Typography>
+                                <Typography sx={style.innerSub2}>Reason for Cancellation: </Typography>
                             </Box>
-                            <Box >
+                            <Box sx={style.inputField}>
                                 <TextField
+                                sx={style.textField}
                                     id="outlined-basic"
                                     variant="outlined"
                                     multiline
@@ -269,11 +321,13 @@ React.useEffect(() => {
                                     minRows={6}
                                     onChange={userInput("reason")}
                                 />
+                                
 
                             </Box>
-                            <Box>
-                                <Button variant="contained" onClick={() => submitForm()}>Continue</Button>
-                                <Button variant="contained" onClick={() => history.goBack()}>Cancel</Button>
+                            <Typography sx={style.innerSub3}>*This Field is Required</Typography>
+                            <Box sx={style.btnBox}>
+                                <Button variant="contained" sx={style.btn} onClick={() => submitForm()}>Continue</Button>
+                                <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => history.goBack()}>Cancel</Button>
                             </Box>
                         </Box>
                     );
