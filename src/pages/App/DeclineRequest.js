@@ -179,9 +179,9 @@ export default function DeclineRequest() {
                                                                 userRefDelete.collection("bidders").doc(localStorage.getItem("uid")).delete().then(() => {
                                                                     globalRefDelete.delete().then(() => {
                                                                         firebase.database().ref('users/' + id + '/request/' + id).update({
-                                                                            status: "Your appointment has been completed. Thank you for using ExpressMD."
+                                                                            status: "Your appointment has been cancelled."
                                                                         }).then((doc6) => {
-                                                                            history.push(`/success/${"completed"}`);
+                                                                            history.push(`/success/${"cancellation"}`);
                                                                         })
                                                                     }).catch((error) => {
                                                                         console.error("Error removing document: ", error);
