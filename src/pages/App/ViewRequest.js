@@ -8,6 +8,9 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { useParams, useHistory } from "react-router-dom";
 import firebase from '../../config/firebase';
+import { loadCSS } from "fg-loadcss";
+import Icon from "@mui/material/Icon";
+import { textAlign } from "@mui/system";
 
 const style = {
   parentCon: {
@@ -18,8 +21,8 @@ const style = {
   },
   label: {
     fontSize: "24px",
-    marginTop: "20px",
-    marginLeft: "20px"
+    marginTop: "5px",
+    textAlign: 'center',
   },
 
   subLabel: {
@@ -50,7 +53,7 @@ const style = {
   innerSub: {
     fontSize: "24px",
     marginLeft: "25px",
-    marginTop: "20px",
+    marginTop: "10px",
   },
 
   patientProf: {
@@ -92,6 +95,26 @@ const style = {
     width: "200px",
     marginBottom: "10px",
     borderRadius: "10px"
+  },
+  innerSub2: {
+    marginBottom: "50px",
+    marginLeft: "60px",
+    fontSize: "18px",
+    marginRight: "20px"
+
+  },
+  innerSub3: {
+    marginBottom: "20px",
+    fontSize: "20px",
+
+
+  },
+  statIconAccepted: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    color: "success.main"
   }
 
 
@@ -397,6 +420,18 @@ export default function ViewRequest() {
     })
   }
 
+  React.useEffect(() => {
+    const node = loadCSS(
+      "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
+      // Inject before JSS
+      document.querySelector("#font-awesome-css") || document.head.firstChild
+    );
+    return () => {
+      node.parentNode.removeChild(node);
+    };
+  }, []);
+
+
   return (
     <Box className="base">
       {
@@ -406,7 +441,28 @@ export default function ViewRequest() {
           return (
             <Box>
               <Box>
-                <Typography sx={style.label}>Review Requests</Typography>
+              <Typography className="headerStyle">
+                  <Icon
+                    baseClassName="fas"
+                    className="fas fa-address-book"
+                    sx={{
+                      fontSize: { xs: 30, md: 50 },
+                      color: "primary",
+                      width: 300,
+                      marginTop: 2,
+                    }}
+                  />
+                </Typography>
+                <Typography sx={style.label}>Review Requests
+                <hr
+                    style={{
+                      width: 350,
+                      color: "primary",
+                      backgroundColor: "primary",
+                      height: .5,
+                      borderColor: "primary",
+                    }}
+                  /></Typography>
               </Box>
               {/* <Box>
                 <Box component = "img" alt="Image of Patient"  sx = {style.patientProf}src={data.photoURL} />
@@ -436,18 +492,15 @@ export default function ViewRequest() {
                   ></TextField>
                 </Box>
               </Box>
-              <Box sx={style.syntCon}>
-                <Typography>Any Symptoms: {data.symptoms}</Typography>
-                <Box>
-                  <Typography sx={style.textFieldBotInput}>Others?:</Typography>
-                </Box>
-                <Box sx={style.otherSynCon}>
-                  <TextField variant="standard" inputProps={{ readOnly: true, }} sx={style.otherSyn} value={data.others} ></TextField>
-                </Box>
-              </Box>
-              <Box>
-                <Typography>Status: {data.status}</Typography>
-              </Box>
+              <Box sx={{ marginTop: "20px" }}>
+                          <Typography sx={style.innerSub}>
+                            Symptoms:{" "}
+                          </Typography>
+                          <Typography sx={style.innerSub2}>
+                            {" "}
+                            {data.symptoms} {data.others}
+                          </Typography>
+                        </Box>
 
               {(() => {
                 switch (data.status) {
@@ -472,8 +525,27 @@ export default function ViewRequest() {
                     );
                   case "Waiting":
                     return (
+                      <Box>
+                      <Typography sx={style.innerSub}>Status:</Typography>
+                      <Box sx={style.statIconPending}>
+                        <Typography sx={style.innerSub3}>
+                          <Icon
+
+                            baseClassName="fas"
+                            className="fas fa-calendar-check"
+                            sx={{
+                              fontSize: { xs: 40, md: 80 },
+                              width: 50,
+                              marginLeft: 2
+                            }}
+                          />
+                          <Typography sx={style.innerSub3}>{data.status}</Typography>
+
+                        </Typography>
+                      </Box>
                       <Box sx={style.btnBox}>
                         <Button variant="contained" sx={style.btn} onClick={() => acceptRequest()}>Accept</Button>
+                      </Box>
                       </Box>
                     );
                   case "Edited":
@@ -481,10 +553,31 @@ export default function ViewRequest() {
                   case "Accepted":
                     return (
                       <Box>
+                      <Typography sx={style.innerSub}>Status:</Typography>
+                      <Box sx={style.statIconAccepted}>
+                        <Typography sx={style.innerSub3}>
+                          <Icon
+
+                            baseClassName="fas"
+                            className="fas fa-calendar-check"
+                            sx={{
+                              fontSize: { xs: 40, md: 80 },
+                              width: 50,
+                              marginLeft: 2
+                            }}
+                          />
+                          <Typography sx={style.innerSub3}>{data.status}</Typography>
+
+                        </Typography>
+                      </Box>
+                      <Typography sx={style.innerSub}>Doctor's Note:</Typography>
+                      <Box sx={style.inputField}>
                         <TextField
+                           sx={style.textField}
                           onChange={userInput("notes")}
                           value={payload.notes}
                         />
+                        </Box>
                         <Box sx={style.btnBox}>
                           <Button variant="contained" sx={style.btn} onClick={() => completeRequest()}>Complete</Button>
                           <Button variant="contained" sx={style.btn} style={{ backgroundColor: "#FF5956" }} onClick={() => declineRequest()}>Cancel Appointment</Button>
