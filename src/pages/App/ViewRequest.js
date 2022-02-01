@@ -10,7 +10,6 @@ import { useParams, useHistory } from "react-router-dom";
 import firebase from '../../config/firebase';
 import { loadCSS } from "fg-loadcss";
 import Icon from "@mui/material/Icon";
-import { textAlign } from "@mui/system";
 
 const style = {
   parentCon: {
@@ -435,7 +434,7 @@ export default function ViewRequest() {
 
     })
   }
-
+// fontawesome icons
   React.useEffect(() => {
     const node = loadCSS(
       "https://use.fontawesome.com/releases/v5.14.0/css/all.css",

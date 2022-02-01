@@ -13,6 +13,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import TimePicker from '@mui/lab/TimePicker';
 import { getAuth } from "firebase/auth";
+import { loadCSS } from "fg-loadcss";
+import Icon from "@mui/material/Icon";
 
 const style = {
     parentCon: {
@@ -229,7 +231,18 @@ export default function DeclineRequest() {
             })
         }
     }
-
+// fontawesome icons
+React.useEffect(() => {
+    const node = loadCSS(
+      "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
+      // Inject before JSS
+      document.querySelector("#font-awesome-css") || document.head.firstChild
+    );
+    return () => {
+      node.parentNode.removeChild(node);
+    };
+  }, []);
+  
     return (
         <Box className="base">
             {
@@ -240,10 +253,8 @@ export default function DeclineRequest() {
                         <Box key={data.userID}>
                             <Typography variant="h5">Cancel Appointment</Typography>
                             <Box>
-                                <Typography>Name: {data.userFullName}</Typography>
                                 <Typography>Date: {setDate}</Typography>
                                 <Typography>Time: {setTime}</Typography>
-                                <Typography>Location: {data.location}</Typography>
                             </Box>
                             <Box>
                                 <Typography >Reason for Decline? </Typography>
