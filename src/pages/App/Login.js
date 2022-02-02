@@ -31,11 +31,11 @@ const style = {
     },
     inputEmail: {
         marginTop: "20px",
-        
-            [`& fieldset`]: {
-              borderRadius: 4,
-            },
-          
+
+        [`& fieldset`]: {
+            borderRadius: 4,
+        },
+
     },
     loginBTN: {
         width: "250px",
@@ -67,7 +67,7 @@ export default function Login() {
 
         } else {
             setEmailError(false)
-            
+
 
         }
     };
@@ -87,6 +87,17 @@ export default function Login() {
                 .catch((error) => {
                     var errorCode = error.code;
                     var errorMessage = error.message;
+                    if (error.code == "auth/wrong-password") {
+                        setpasswordError(true);
+                    } else if (!error.code == "auth/wrong-password") {
+                        setpasswordError(false);
+                    }
+
+                    if (error.code == "auth/user-not-found") {
+                        setAccountError(true);
+                    } else {
+                        setAccountError(false);
+                    }
                 });
         }
     };
@@ -95,7 +106,7 @@ export default function Login() {
         <Box>
             <Typography sx={style.loginLabel}>Login</Typography>
             <Box sx={style.outerCon}>
-                <TextField 
+                <TextField
                     placeholder="Email"
                     autoComplete="off"
                     onChange={userInput("email")}
@@ -126,22 +137,22 @@ export default function Login() {
                     variant="outlined"
                     InputProps={{
                         startAdornment: (
-                          <InputAdornment position="start">
-                            <LockIcon />
-                          </InputAdornment>
+                            <InputAdornment position="start">
+                                <LockIcon />
+                            </InputAdornment>
                         ),
                         endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              edge="end"
-                            >
-                              {showPassword ? <Visibility /> : <VisibilityOff />}
-                            </IconButton>
-                          </InputAdornment>
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
                         ),
-                      }}
+                    }}
                 />
                 <Button variant="contained"
                     onClick={() => login()}
