@@ -17,6 +17,7 @@ import { useHistory, withRouter, useLocation } from "react-router-dom";
 import { IconButton } from "@mui/material";
 
 import "./Registration.css";
+import validator from "validator";
 
 function UserRegistration() {
   const location = useLocation();
@@ -56,6 +57,17 @@ function UserRegistration() {
   function handleChange3(e) {
     setFile3(e.target.files[0]);
   }
+  
+  const [emailError, setEmailError] = useState("");
+  const userInputEmail = (prop) => (e) => {
+    setPayload({ ...payload, [prop]: e.target.value });
+    var email = e.target.value;
+    if (validator.isEmail(email)) {
+      setEmailError("");
+    } else {
+      setEmailError("Please enter a valid email");
+    }
+  };
 
   const userInput = (prop) => (e) => {
     setPayload({ ...payload, [prop]: e.target.value });
@@ -297,8 +309,11 @@ function UserRegistration() {
                 InputLabelProps={{
                   style: { color: "black" },
                 }}
-                onChange={userInput("email")}
+                onChange={userInputEmail("email")}
               />
+              <FormHelperText sx={style.textHelp}>
+                {emailError}
+              </FormHelperText>
             </FormControl>
             <FormControl
               required
