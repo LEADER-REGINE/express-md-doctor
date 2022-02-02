@@ -52,7 +52,6 @@ export default function Login() {
                 .then((userCredential) => {
                     // Signed in
                     var user = userCredential.user;
-                    console.log(user);
                     localStorage.setItem("uid", user.uid);
                     // ...
                     history.push("/dashboard")

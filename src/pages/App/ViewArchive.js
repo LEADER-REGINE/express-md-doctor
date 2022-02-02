@@ -55,10 +55,8 @@ export default function ViewArchive() {
     const fetchData = async () => {
         let isMounted = true
         const docRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("archive").doc(id);
-        console.log(id);
         let rawData = [];
         docRef.get().then((doc) => {
-            console.log(doc.data().ratingID);
             rawData.push(doc.data());
             setappointmentData({ data: rawData });
             localStorage.setItem("userID", doc.data().userID);
@@ -72,7 +70,6 @@ export default function ViewArchive() {
         const docRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("usrrating").doc(localStorage.getItem("userDocID"));
         let rawData = [];
         docRef.get().then((doc) => {
-            console.log("ratingdocument: " + doc.data());
             rawData.push(doc.data());
             setdocData({ data: rawData });
             
