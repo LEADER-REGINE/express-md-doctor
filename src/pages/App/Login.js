@@ -85,8 +85,6 @@ export default function Login() {
                     history.push("/dashboard")
                 })
                 .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
                     if (error.code == "auth/wrong-password") {
                         setpasswordError(true);
                     } else if (!error.code == "auth/wrong-password") {
