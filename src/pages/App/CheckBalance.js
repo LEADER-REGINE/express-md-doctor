@@ -41,13 +41,22 @@ export default function CheckBalance() {
                         doctorProfile.profile.map((docProfile) => {
                             return (
                                 <Box className="docProfileBox" key={docProfile.uid}>
-                                    <Paper>
-                                        <Typography variant="h6">
-                                            Claimable Balance
-                                        </Typography>
-                                        <Typography variant="h5">PHP {docProfile.credits}</Typography>
-                                        <Button variant="outlined">Claim</Button>
-                                    </Paper>
+                                    <Box className="docProfileBox">
+                                        <Paper>
+                                            <Typography variant="h6">
+                                                Claimable Balance
+                                            </Typography>
+                                            <Typography variant="h5">PHP {docProfile.credits}</Typography>
+                                            <Button variant="outlined">Claim</Button>
+                                        </Paper>
+                                    </Box>
+                                    <Box className="docProfileBox" key={docProfile.uid}>
+                                        <Paper>
+                                            <Typography variant="h6">
+                                                Previous Claims
+                                            </Typography>
+                                        </Paper>
+                                    </Box>
                                 </Box>
                             );
                         })}
