@@ -86,8 +86,10 @@ export default function Login() {
 
   const login = (e) => {
       console.log(validate)
+      console.log(passwordError)
     if (!payload.email || !payload.password) {
         setFill(true);
+        setpasswordError(false)
     }
     else if (payload.email || payload.password) {
         setFill(false);
@@ -167,7 +169,7 @@ export default function Login() {
             sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "50px" }}
           >
             <TextField
-              error={(passwordError, fill)}
+              error={(fill , passwordError)}
               placeholder="Password"
               type={showPassword ? "text" : "password"}
               onChange={userInputPassword("password")}
