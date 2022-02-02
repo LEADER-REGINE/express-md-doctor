@@ -9,6 +9,10 @@ import firebase from '../../config/firebase';
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { Link } from 'react-router-dom';
 import '../App/DocProfile.css'
+import PreviousClaimsTable from '../../components/appcomponents/PreviousClaimsTable';
+import CardHeader from '@mui/material/CardHeader';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
 
 export default function CheckBalance() {
     const [value, setValue] = useState(0);
@@ -34,36 +38,39 @@ export default function CheckBalance() {
     }, []);
 
     return (
-        <Box className='base'>
-            <Container className='container'>
-                <Box>
-                    {doctorProfile &&
-                        doctorProfile.profile.map((docProfile) => {
-                            return (
-                                <Box className="docProfileBox" key={docProfile.uid}>
-                                    <Box className="docProfileBox">
-                                        <Paper>
-                                            <Typography variant="h6">
-                                                Claimable Balance
-                                            </Typography>
-                                            <Typography variant="h5">PHP {docProfile.credits}</Typography>
-                                            <Button variant="outlined">Claim</Button>
-                                        </Paper>
-                                    </Box>
-                                    <Box className="docProfileBox" key={docProfile.uid}>
-                                        <Paper>
-                                            <Typography variant="h6">
-                                                Previous Claims
-                                            </Typography>
-                                        </Paper>
-                                    </Box>
-                                </Box>
-                            );
-                        })}
-                </Box>
+        <Box >
+            <Box sx={{ p: "20px 20px 0px 20px" }}>
+                {doctorProfile &&
+                    doctorProfile.profile.map((docProfile) => {
+                        return (
+                            <Card sx={{ width: '100%', p: "20px" }} key={docProfile.uid}>
 
-            </Container >
+                                <Typography variant="h6">
+                                    Claimable Balance
+                                </Typography>
+                                <Grid
+                                    display="flex"
+                                    direction="column"
+                                    justifyConten="center"
+                                    alignItems="center"
+                                >
+                                    <Typography variant="h5">PHP {docProfile.credits}</Typography>
+
+                                    <Button variant="outlined">Claim</Button>
+                                </Grid>
+
+
+                            </Card>
+                        );
+                    })}
+            </Box>
+
+
+
+
+            <PreviousClaimsTable sx={{ p: "20px 20px 0px 20px" }} />
 
         </Box >
+
     )
 }
