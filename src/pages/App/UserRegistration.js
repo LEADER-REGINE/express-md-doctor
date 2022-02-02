@@ -10,6 +10,7 @@ import {
   InputLabel,
   MenuItem,
   Typography,
+  Avatar
 } from "@mui/material";
 import firebase from "../../config/firebase";
 import React, { useState } from "react";
@@ -49,13 +50,14 @@ function UserRegistration() {
   const [url3, setURL3] = useState("");
 
   function handleChange(e) {
-    setFile(e.target.files[0]);
+    setFile( URL.createObjectURL(e.target.files[0]));
   }
   function handleChange2(e) {
-    setFile2(e.target.files[0]);
+    setFile2( URL.createObjectURL(e.target.files[0]));
   }
   function handleChange3(e) {
-    setFile3(e.target.files[0]);
+    setFile3( URL.createObjectURL(e.target.files[0]));
+    console.log (file3)
   }
   const [fill , setFill] = useState("")
   const [emailError, setEmailError] = useState("");
@@ -207,6 +209,16 @@ function UserRegistration() {
         borderRadius: 4,
       },
     },
+    file2img : {
+      width : "200px",
+      borderRadius : "10px" 
+    },
+
+    file2imgCon : {
+      display : "flex",
+      flexDirection : "row",
+      justifyContent : "space-between"
+    }
   };
   return (
     <Box className="base">
@@ -230,8 +242,7 @@ function UserRegistration() {
                 }}
               >
                 <IconButton color="primary" aria-label="upload picture">
-                  <Box
-                    component="img"
+                  <Avatar
                     src={file}
                     sx={{ width: 128, height: 128 }}
                   />
@@ -256,6 +267,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="First Name"
                 variant="outlined"
@@ -272,6 +284,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="Last Name"
                 variant="outlined"
@@ -289,6 +302,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="Middle Initials"
                 variant="outlined"
@@ -305,6 +319,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="E-mail"
                 variant="outlined"
@@ -342,6 +357,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="Phone Number"
                 type="tel"
@@ -363,6 +379,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="Location (Barangay , Municipality)"
                 variant="outlined"
@@ -379,6 +396,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="Rate"
                 variant="outlined"
@@ -420,6 +438,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="PRC Profession"
                 variant="outlined"
@@ -437,6 +456,7 @@ function UserRegistration() {
               <TextField
                 sx={style.textInput}
                 required
+                autoComplete="off"
                 id="filled-required"
                 placeholder="PRC License Number"
                 variant="outlined"
@@ -445,11 +465,11 @@ function UserRegistration() {
                 }}
                 onChange={userInput("prcno")}
                 value={payload.prcno}
-                maxLength={7}
+                inputProps={{ maxLength: 7, minLength: 7 }}
                 type="tel"
               />
               <FormHelperText>
-                {fill ? "Please fill out all of the fields" : " Will be used to verify your Identity on the PRC Online Verification."}
+                {fill ? <Typography variant = "h8">"Please fill out all of the fields"</Typography>: " Will be used to verify your Identity on the PRC Online Verification."}
                
               </FormHelperText>
             </FormControl>
@@ -457,27 +477,46 @@ function UserRegistration() {
               required
               sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}
             >
+              <Box sx = {style.file2imgCon}>
+              <Box>
               <Typography variant="h6">Valid ID</Typography>
+              <Box sx={style.uploadBtn}>
               <input
                 accept="image/*"
-                id="icon-button-file"
+                id="icon-button-file2"
                 type="file"
                 accept="image/x-png,image/jpeg"
                 onChange={handleChange2}
+                style = {{display : "none"}}
               />
+              <label for="icon-button-file2">Upload</label>
+              </Box>
+              </Box>
+              
+              <Box  sx = {style.file2img}component = "img" src = {file2}></Box>
+              </Box>
             </FormControl>
             <FormControl
               required
               sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}
-            >
+            > <Box sx = {style.file2imgCon}>
+              <Box>
               <Typography variant="h6">PSA Birth Certificate</Typography>
+              <Box sx={style.uploadBtn}>
               <input
                 accept="image/*"
-                id="icon-button-file"
+                id="icon-button-file3"
                 type="file"
                 accept="image/x-png,image/jpeg"
                 onChange={handleChange3}
+                style = {{display : "none"}}
+                
               />
+              <label for="icon-button-file3">Upload</label>
+              </Box>
+              </Box>
+              <Box  sx = {style.file2img}component = "img" src = {file3}></Box>
+              </Box>
             </FormControl>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
               <Box
