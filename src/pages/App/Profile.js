@@ -75,6 +75,14 @@ function Profile() {
                                         </ListItemButton>
                                     </ListItem>
                                     <ListItem disablePadding>
+                                        <ListItemButton onClick={() => history.push("/balance")}>
+                                            <ListItemIcon>
+                                                <EventIcon color="secondary" />
+                                            </ListItemIcon>
+                                            <ListItemText primary="Balance" />
+                                        </ListItemButton>
+                                    </ListItem>
+                                    <ListItem disablePadding>
                                         <ListItemButton onClick={() => logout()}>
                                             <ListItemIcon>
                                                 <LogoutIcon color="secondary" />

@@ -29,6 +29,7 @@ import DynamicFeedRoundedIcon from '@mui/icons-material/DynamicFeedRounded';
 import Register from '../pages/App/UserRegistration';
 import ViewArchive from '../pages/App/ViewArchive';
 import TransactionHistory from '../components/appcomponents/TransactionHistory';
+import CheckBalance from '../pages/App/CheckBalance';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -133,7 +134,11 @@ export default function RouterComponent() {
                         component={App}
                         path="/dashboard"
                         exact />
-
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
+                        component={CheckBalance}
+                        path="/balance"
+                        exact />
                     <PrivateRoute
                         isAuthenticated={values.isAuthenticated}
                         component={Feed}
@@ -185,6 +190,7 @@ export default function RouterComponent() {
                         isAuthenticated={values.isAuthenticated}
                         component={IsNotSuccessful}
                         path="/sorry" />
+
                     <PrivateRoute exact isAuthenticated={values.isAuthenticated} component={EditProfile} path="/editprofile" />
                 </Switch>
                 <Box>

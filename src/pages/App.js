@@ -100,7 +100,7 @@ const style = {
 
 export default function App() {
 
-  
+
   const [isReqEmpty, setisReqEmpty] = useState(false);
   const [isupcomingEmpty, setisUpcomingEmpty] = useState(false);
   const history = useHistory();
@@ -116,7 +116,7 @@ export default function App() {
 
 
   const fetchReqList = async () => {
-    const userRef = db.collection("requests").orderBy("timestamp").where("status", "==", "Waiting").limit(3);
+    const userRef = db.collection("requests").orderBy("timestamp", "desc").where("status", "==", "Waiting").limit(3);
     userRef.onSnapshot((doc) => {
       if (doc.size != 0) {
         setisReqEmpty(false);
