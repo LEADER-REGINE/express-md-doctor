@@ -180,11 +180,12 @@ export default function RouterComponent() {
                         component={DeclineRequest}
                         path="/view/:id/decline"
                         exact />
-                    <PrivateRoute
+                    <PublicRoute
                         exact
                         isAuthenticated={values.isAuthenticated}
                         component={IsSuccessful}
-                        path="/success/:status" />
+                        path="/success/:status"
+                        restricted={false} />
                     <PrivateRoute
                         exact
                         isAuthenticated={values.isAuthenticated}
