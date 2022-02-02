@@ -5,13 +5,14 @@ import 'firebase/compat/database'
 import 'firebase/compat/storage'
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBuW4rRLBz0xHlJIbZd1zi8JJUxUaz5GZY",
-    authDomain: "expressmd-159c1.firebaseapp.com",
-    databaseURL: "https://expressmd-159c1-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "expressmd-159c1",
-    storageBucket: "expressmd-159c1.appspot.com",
-    messagingSenderId: "313609030451",
-    appId: "1:313609030451:web:3d476d8f20f963e7c0cc46"
+    apiKey: "AIzaSyBnGPQ02cNB1WPkK_9QFX23Te3GE4u2c-c",
+    authDomain: "expressmd-10ee8.firebaseapp.com",
+    databaseURL: "https://expressmd-10ee8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "expressmd-10ee8",
+    storageBucket: "expressmd-10ee8.appspot.com",
+    messagingSenderId: "620512705710",
+    appId: "1:620512705710:web:f73178389b7230db5e013f",
+    measurementId: "G-E9F5L6S1CX"
 };
 
 firebase.initializeApp(firebaseConfig);
