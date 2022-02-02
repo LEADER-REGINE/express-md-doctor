@@ -108,9 +108,6 @@ function AccoundModal() {
             ) : (
                 <Box >
                     <Tooltip title="Login">
-                        <IconButton onClick={() => GoogleLogin()} sx={{ p: 0 }}>
-                            <Avatar alt="Account Login" />
-                        </IconButton>
                     </Tooltip>
                 </Box>
             )}
