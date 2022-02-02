@@ -53,10 +53,10 @@ function UserRegistration() {
     setFile( URL.createObjectURL(e.target.files[0]));
   }
   function handleChange2(e) {
-    setFile2( URL.createObjectURL(e.target.files[0]));
+    setFile2( URL.createObjectURL(e.target.files[1]));
   }
   function handleChange3(e) {
-    setFile3( URL.createObjectURL(e.target.files[0]));
+    setFile3( URL.createObjectURL(e.target.files[2]));
     console.log (file3)
   }
   const [fill , setFill] = useState("")
