@@ -10,6 +10,7 @@ import {
   InputLabel,
   MenuItem,
   Typography,
+  Avatar
 } from "@mui/material";
 import firebase from "../../config/firebase";
 import React, { useState } from "react";
@@ -230,8 +231,7 @@ function UserRegistration() {
                 }}
               >
                 <IconButton color="primary" aria-label="upload picture">
-                  <Box
-                    component="img"
+                  <Avatar
                     src={file}
                     sx={{ width: 128, height: 128 }}
                   />
