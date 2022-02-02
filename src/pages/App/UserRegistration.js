@@ -189,7 +189,7 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                                sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="First Name"
@@ -202,7 +202,7 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                                sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="Last Name"
@@ -216,7 +216,7 @@ function UserRegistration() {
 
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="Middle Initials"
@@ -229,7 +229,7 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="E-mail"
@@ -243,7 +243,7 @@ function UserRegistration() {
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <InputLabel sx={{ color: 'black' }} >Gender</InputLabel>
                             <Select
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 id='gender'
                                 label="Gender"
                                 value={'Male'}
@@ -257,11 +257,11 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="Phone Number"
-                                type = "tel"
+                                type="tel"
                                 pattern="[0-9]"
                                 inputProps={{ maxLength: 11, minLength: 11 }}
                                 variant="outlined"
@@ -270,13 +270,14 @@ function UserRegistration() {
                                 }}
                                 onChange={userInput("phoneNumber")}
                                 value={payload.phoneNumber}
+                                type="tel"
                             />
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 required
-                            
+
                                 id="filled-required"
                                 placeholder="Location (Barangay , Municipality)"
                                 variant="outlined"
@@ -288,7 +289,7 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="Rate"
@@ -298,13 +299,14 @@ function UserRegistration() {
                                 }}
                                 onChange={userInput("rate")}
                                 value={payload.rate}
+                                type="tel"
                             />
                             <FormHelperText>How much you charge for a consultation.</FormHelperText>
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "20px" }}>
                             <InputLabel sx={{ color: 'black' }} >Type</InputLabel>
                             <Select
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 id='Municipality'
                                 label="Municipality *"
                                 value={'Bustos'}
@@ -315,10 +317,10 @@ function UserRegistration() {
                                 <MenuItem value={'Pediatrics'}>Pediatrics</MenuItem>
                             </Select>
                         </FormControl>
-                        <Typography variant="h5" style = {{marginTop : "10px"}}>Verification Information</Typography>
+                        <Typography variant="h5" style={{ marginTop: "10px" }}>Verification Information</Typography>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="PRC Profession"
@@ -332,7 +334,7 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
-                            sx ={style.textInput}
+                                sx={style.textInput}
                                 required
                                 id="filled-required"
                                 placeholder="PRC License Number"
@@ -342,27 +344,25 @@ function UserRegistration() {
                                 }}
                                 onChange={userInput("prcno")}
                                 value={payload.prcno}
+                                maxLength={7}
+                                type="tel"
                             />
                             <FormHelperText>Will be used to verify your Identity on the PRC Online Verification.</FormHelperText>
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <Typography variant="h6">Valid ID</Typography>
-                            <Box sx={style.uploadBtn}>
-                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange2} style={{ display: "none" }} />
-                            <label for="icon-button-file">Upload</label>
-                            </Box>
+                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange2} />
+
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <Typography variant="h6">PSA Birth Certificate</Typography>
-                            <Box sx={style.uploadBtn}>
-                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange3} style={{ display: "none" }} />
-                            <label for="icon-button-file">Upload</label>
-                            </Box>
+                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange3} />
+
                         </FormControl>
-                        <FormControl required sx={{ m: 1, minWidth: 120}}>
-                            <Box style ={{ display : "flex" , alignItems : "center" , justifyContent : "center" , flexDirection : "column"}}>
-                            <Button onClick={() => completeProfile()} variant='outlined' disabled={!file, !file2, !file3}>Complete</Button>
-                            <FormHelperText style = {{textAlign : "center"}}>By clicking complete, you agree to the Privacy Policy.</FormHelperText>
+                        <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                            <Box style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+                                <Button onClick={() => completeProfile()} variant='outlined' disabled={!file, !file2, !file3}>Complete</Button>
+                                <FormHelperText style={{ textAlign: "center" }}>By clicking complete, you agree to the Privacy Policy.</FormHelperText>
                             </Box>
                         </FormControl>
 
