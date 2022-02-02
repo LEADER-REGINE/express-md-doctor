@@ -1,18 +1,10 @@
-import { Box, Container, TextField, Button, FormGroup, FormControl, FormHelperText, Avatar, Select, InputLabel, MenuItem, Typography } from '@mui/material'
+import { Box, Container, TextField, Button, FormGroup, FormControl, FormHelperText, Select, InputLabel, MenuItem, Typography } from '@mui/material'
 import firebase from '../../config/firebase';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory, withRouter, useLocation } from "react-router-dom";
-import {
-    getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut
-} from "firebase/auth";
-import { useDispatch } from 'react-redux';
-import { getTheme } from "../../redux/actions/uiAction";
 import { IconButton } from '@mui/material';
 
 import './Registration.css';
-
-
-const auth = getAuth();
 
 
 function UserRegistration() {
