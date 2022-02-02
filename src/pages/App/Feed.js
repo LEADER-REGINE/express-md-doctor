@@ -82,12 +82,17 @@ const style = {
     },
 
     upcommingReq: {
-        minWidth: "300px",
+        minWidth: "350px",
         padding: "10px",
         borderColor: "#7EB6BC",
         borderWidth: "2px",
-        marginBottom: "10px",
+        marginBottom: "20px",
+        
     },
+    outerCon : {
+        marginLeft : "20px",
+        marginRight : "20px"
+    }
 };
 
 export default function Feed() {
@@ -151,12 +156,13 @@ export default function Feed() {
                                                 key={setappointment.userID}
                                                 to={`view/${setappointment.userID}`}
                                             >
+                                                <Box sx = {style.outerCon}>
                                                 <Paper sx={style.upcommingReq} variant="outlined">
                                                     <Box sx={{ display: "flex", flexDirection: "row" }}>
                                                         <Box>
                                                             <Avatar sx={{ width: 64, height: 64 }} src={setappointment.photoURL} alt="user image" />
                                                         </Box>
-                                                        <Box>
+                                                        <Box style = {{marginLeft : "30px"}}>
                                                             <Typography variant="h6">
                                                                 {setappointment.userFullName}
                                                             </Typography>
@@ -180,6 +186,7 @@ export default function Feed() {
                                                         </Typography>
                                                     </Box>
                                                 </Paper>
+                                                </Box>
                                             </Link>
                                         );
                                     }
