@@ -24,6 +24,7 @@ function UserRegistration() {
         rate: "",
         prcno: "",
         email: "",
+        profession: "",
     });
 
     const [file, setFile] = useState(null);
@@ -61,7 +62,8 @@ function UserRegistration() {
             !payload.phoneNumber ||
             !payload.type ||
             !payload.prcno ||
-            !payload.rate
+            !payload.rate ||
+            !payload.profession
         ) {
             alert("Please fill out all of the fields");
         } else {
@@ -77,6 +79,7 @@ function UserRegistration() {
                     rate: payload.rate,
                     phoneNumber: payload.phoneNumber,
                     location: payload.location,
+                    profession: payload.profession,
                 })
                 .then((docRef) => {
                     localStorage.setItem("documentID", docRef.id);
@@ -123,6 +126,7 @@ function UserRegistration() {
                                                             location: payload.location,
                                                             timestamp: new Date(),
                                                             status: "Pending",
+                                                            profession: payload.profession,
                                                         })
                                                         .then((doc) => {
                                                             history.push(`/success/${"registration"}`);
@@ -294,6 +298,19 @@ function UserRegistration() {
                             </Select>
                         </FormControl>
                         <Typography variant="h5">Verification Information</Typography>
+                        <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
+                            <TextField
+                                required
+                                id="filled-required"
+                                label="PRC Profession"
+                                variant="outlined"
+                                InputLabelProps={{
+                                    style: { color: 'black' },
+                                }}
+                                onChange={userInput("profession")}
+                                value={payload.profession}
+                            />
+                        </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
                                 required
