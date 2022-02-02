@@ -49,7 +49,7 @@ function UserRegistration() {
   const [url3, setURL3] = useState("");
 
   function handleChange(e) {
-    setFile(e.target.files[0]);
+    setFile( URL.createObjectURL(e.target.files[0]));
   }
   function handleChange2(e) {
     setFile2(e.target.files[0]);

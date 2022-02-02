@@ -90,7 +90,7 @@ const style = {
   },
 
   upcommingReq: {
-    minWidth: "300px",
+    minWidth: "350px",
     padding: "10px",
     borderColor: "#7EB6BC",
     borderWidth: "2px",
@@ -240,6 +240,7 @@ export default function App() {
                           key={setappointment.userID}
                           to={`view/${setappointment.userID}`}
                         >
+                          <Box>
                           <Paper sx={style.upcommingReq} variant="outlined">
                             <Box sx={{ display: "flex", flexDirection: "row" }}>
                               <Box>
@@ -269,6 +270,7 @@ export default function App() {
                               </Typography>
                             </Box>
                           </Paper>
+                          </Box>
                         </Link>
                       );
                     }
