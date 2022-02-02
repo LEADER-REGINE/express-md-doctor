@@ -57,7 +57,7 @@ function UserRegistration() {
   function handleChange3(e) {
     setFile3(e.target.files[0]);
   }
-  
+  const [fill , setFill] = useState("")
   const [emailError, setEmailError] = useState("");
   const userInputEmail = (prop) => (e) => {
     setPayload({ ...payload, [prop]: e.target.value });
@@ -66,11 +66,13 @@ function UserRegistration() {
       setEmailError("");
     } else {
       setEmailError("Please enter a valid email");
+      setFill(false)
     }
   };
 
   const userInput = (prop) => (e) => {
     setPayload({ ...payload, [prop]: e.target.value });
+    setFill(false)
   };
   const completeProfile = (e) => {
     if (
@@ -86,7 +88,7 @@ function UserRegistration() {
       !payload.rate ||
       !payload.profession
     ) {
-      alert("Please fill out all of the fields");
+      setFill(true);
     } else {
       db.collection("registration")
         .add({
@@ -447,8 +449,8 @@ function UserRegistration() {
                 type="tel"
               />
               <FormHelperText>
-                Will be used to verify your Identity on the PRC Online
-                Verification.
+                {fill ? "Please fill out all of the fields" : " Will be used to verify your Identity on the PRC Online Verification."}
+               
               </FormHelperText>
             </FormControl>
             <FormControl
