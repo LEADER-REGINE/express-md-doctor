@@ -95,10 +95,6 @@ function Nav() {
                             </Button>
                         </NavLink>
                     </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        <AccountModal />
-                    </Box>
                 </Toolbar>
             </Container>
         </AppBar>
