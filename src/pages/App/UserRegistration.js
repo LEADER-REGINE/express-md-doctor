@@ -158,6 +158,11 @@ function UserRegistration() {
             textAlign: "center",
             borderRadius: "10px",
             color: "white"
+        },
+        textInput: {
+            [`& fieldset`]: {
+                borderRadius: 4,
+            },
         }
     }
     return (
@@ -184,9 +189,10 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                                sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="First Name"
+                                placeholder="First Name"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -196,9 +202,10 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                                sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="Last Name"
+                                placeholder="Last Name"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -209,9 +216,10 @@ function UserRegistration() {
 
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                            sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="Middle Initials"
+                                placeholder="Middle Initials"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -221,9 +229,10 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                            sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="E-mail"
+                                placeholder="E-mail"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -234,6 +243,7 @@ function UserRegistration() {
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <InputLabel sx={{ color: 'black' }} >Gender</InputLabel>
                             <Select
+                            sx ={style.textInput}
                                 id='gender'
                                 label="Gender"
                                 value={'Male'}
@@ -247,9 +257,13 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                            sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="Phone Number"
+                                placeholder="Phone Number"
+                                type = "tel"
+                                pattern="[0-9]"
+                                inputProps={{ maxLength: 11, minLength: 11 }}
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -260,9 +274,11 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                            sx ={style.textInput}
                                 required
+                            
                                 id="filled-required"
-                                label="Location"
+                                placeholder="Location (Barangay , Municipality)"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -272,9 +288,10 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                            sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="Rate"
+                                placeholder="Rate"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -287,6 +304,7 @@ function UserRegistration() {
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "20px" }}>
                             <InputLabel sx={{ color: 'black' }} >Type</InputLabel>
                             <Select
+                            sx ={style.textInput}
                                 id='Municipality'
                                 label="Municipality *"
                                 value={'Bustos'}
@@ -297,12 +315,13 @@ function UserRegistration() {
                                 <MenuItem value={'Pediatrics'}>Pediatrics</MenuItem>
                             </Select>
                         </FormControl>
-                        <Typography variant="h5">Verification Information</Typography>
+                        <Typography variant="h5" style = {{marginTop : "10px"}}>Verification Information</Typography>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                            sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="PRC Profession"
+                                placeholder="PRC Profession"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -313,9 +332,10 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <TextField
+                            sx ={style.textInput}
                                 required
                                 id="filled-required"
-                                label="PRC License Number"
+                                placeholder="PRC License Number"
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: { color: 'black' },
@@ -327,15 +347,23 @@ function UserRegistration() {
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <Typography variant="h6">Valid ID</Typography>
-                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange2} />
+                            <Box sx={style.uploadBtn}>
+                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange2} style={{ display: "none" }} />
+                            <label for="icon-button-file">Upload</label>
+                            </Box>
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}>
                             <Typography variant="h6">PSA Birth Certificate</Typography>
-                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange3} />
+                            <Box sx={style.uploadBtn}>
+                            <input accept="image/*" id="icon-button-file" type="file" accept="image/x-png,image/jpeg" onChange={handleChange3} style={{ display: "none" }} />
+                            <label for="icon-button-file">Upload</label>
+                            </Box>
                         </FormControl>
-                        <FormControl required sx={{ m: 1, minWidth: 120, marginRight: "50px" }}>
+                        <FormControl required sx={{ m: 1, minWidth: 120}}>
+                            <Box style ={{ display : "flex" , alignItems : "center" , justifyContent : "center" , flexDirection : "column"}}>
                             <Button onClick={() => completeProfile()} variant='outlined' disabled={!file, !file2, !file3}>Complete</Button>
-                            <FormHelperText>By clicking complete, you agree to the Privacy Policy.</FormHelperText>
+                            <FormHelperText style = {{textAlign : "center"}}>By clicking complete, you agree to the Privacy Policy.</FormHelperText>
+                            </Box>
                         </FormControl>
 
                     </FormGroup>
