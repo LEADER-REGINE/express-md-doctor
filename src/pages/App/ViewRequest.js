@@ -50,7 +50,7 @@ const style = {
   },
 
   innerSub: {
-    fontSize: "24px",
+    fontSize: "21px",
     marginLeft: "25px",
     marginTop: "10px",
   },
@@ -521,7 +521,7 @@ export default function ViewRequest() {
                 switch (data.status) {
                   case "Requested Cancellation":
                     return (
-                      <Box sx={style.btnBox}>
+                      <Box>
                         <Box>
                           <Typography sx={style.innerSub}>Reason for Cancellation:</Typography>
                           <Box sx={style.inputField}>
@@ -535,7 +535,9 @@ export default function ViewRequest() {
                             ></TextField>
                           </Box>
                         </Box>
+                        <Box  sx={style.btnBox}>
                         <Button variant="outlined" sx={style.btn} onClick={() => declineRequest()}>Cancel Appointment</Button>
+                        </Box>
                       </Box>
                     );
                   case "Waiting":
