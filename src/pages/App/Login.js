@@ -5,6 +5,15 @@ import { getTheme } from "../../redux/actions/uiAction";
 import bcrypt from 'bcryptjs';
 import firebase from '../../config/firebase';
 import { NavLink, useHistory } from "react-router-dom";
+import LockIcon from '@mui/icons-material/Lock';
+import InputAdornment from "@mui/material/InputAdornment";
+import EmailIcon from '@mui/icons-material/Email';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import validator from 'validator'
+import { IconButton } from "@mui/material";
 
 const style = {
     loginLabel: {
@@ -21,14 +30,20 @@ const style = {
         marginTop: "20px",
     },
     inputEmail: {
-        width: "270px",
         marginTop: "20px",
+        
+            [`& fieldset`]: {
+              borderRadius: 4,
+            },
+          
     },
     loginBTN: {
         width: "250px",
         marginTop: "20px"
     }
 }
+
+
 
 
 const db = firebase.firestore();
@@ -39,9 +54,22 @@ export default function Login() {
         email: "",
         password: "",
     });
-
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const [emailError, setEmailError] = useState("")
     const userInput = (prop) => (e) => {
         setPayload({ ...payload, [prop]: e.target.value });
+        var email = e.target.value
+        if (validator.isEmail(email)) {
+            setEmailError(true)
+
+
+
+        } else {
+            setEmailError(false)
+            
+
+        }
     };
 
     const login = (e) => {
@@ -67,18 +95,53 @@ export default function Login() {
         <Box>
             <Typography sx={style.loginLabel}>Login</Typography>
             <Box sx={style.outerCon}>
-                <TextField label="Email"
+                <TextField 
+                    placeholder="Email"
+                    autoComplete="off"
                     onChange={userInput("email")}
                     value={payload.email}
                     sx={style.inputEmail}
-                    variant="standard"
+                    variant="outlined"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <EmailIcon />
+                            </InputAdornment>
+                        ),
+
+                        endAdornment: (
+                            <InputAdornment position="end">
+
+                                {emailError ? <CheckCircle /> : <CancelIcon />}
+
+                            </InputAdornment>
+                        )
+                    }}
                 />
-                <TextField label="Password"
-                    type="password"
+                <TextField placeholder="Password"
+                    type={showPassword ? "text" : "password"}
                     onChange={userInput("password")}
                     value={payload.password}
                     sx={style.inputEmail}
-                    variant="standard"
+                    variant="outlined"
+                    InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LockIcon />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              edge="end"
+                            >
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
                 />
                 <Button variant="contained"
                     onClick={() => login()}
