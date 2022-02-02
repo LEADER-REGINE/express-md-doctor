@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import firebase from '../../config/firebase';
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../App/DocProfile.css'
 import PreviousClaimsTable from '../../components/appcomponents/PreviousClaimsTable';
 import CardHeader from '@mui/material/CardHeader';
@@ -17,6 +17,7 @@ import Grid from '@mui/material/Grid';
 export default function CheckBalance() {
     const [value, setValue] = useState(0);
 
+    const history = useHistory();
     const db = firebase.firestore();
     const [doctorProfile, setdoctorProfile] = useState({
         profile: [],
@@ -56,7 +57,7 @@ export default function CheckBalance() {
                                 >
                                     <Typography variant="h5">PHP {docProfile.credits}</Typography>
 
-                                    <Button variant="outlined">Claim</Button>
+                                    <Button variant="outlined" onClick={() => history.push("/claim")}>Claim</Button>
                                 </Grid>
 
 

@@ -30,6 +30,7 @@ import Register from '../pages/App/UserRegistration';
 import ViewArchive from '../pages/App/ViewArchive';
 import TransactionHistory from '../components/appcomponents/TransactionHistory';
 import CheckBalance from '../pages/App/CheckBalance';
+import ClaimBalance from '../pages/App/ClaimBalance';
 
 export default function RouterComponent() {
     const ui = useSelector((state) => state.ui);
@@ -143,6 +144,12 @@ export default function RouterComponent() {
                         isAuthenticated={values.isAuthenticated}
                         component={Feed}
                         path="/feed"
+                        exact />
+
+                    <PrivateRoute
+                        isAuthenticated={values.isAuthenticated}
+                        component={ClaimBalance}
+                        path="/claim"
                         exact />
 
                     <PrivateRoute
