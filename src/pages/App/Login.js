@@ -169,7 +169,7 @@ export default function Login() {
             sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "50px" }}
           >
             <TextField
-              error={(fill , passwordError)}
+              error={(fill || passwordError)}
               placeholder="Password"
               type={showPassword ? "text" : "password"}
               onChange={userInputPassword("password")}
