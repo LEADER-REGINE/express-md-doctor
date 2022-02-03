@@ -4,24 +4,29 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "images/192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src": "images/192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "images/256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
     },
     {
       "src": "images/512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": "/",
   "scope": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#d6f5f4",
   "background_color": "#ffffff"
 }
