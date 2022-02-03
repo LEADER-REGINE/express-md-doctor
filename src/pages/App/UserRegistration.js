@@ -40,23 +40,34 @@ function UserRegistration() {
     profession: "",
   });
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
   const [url, setURL] = useState("");
+  
 
-  const [file2, setFile2] = useState(null);
+
+  const [file2, setFile2] = useState("");
   const [url2, setURL2] = useState("");
 
-  const [file3, setFile3] = useState(null);
+  const [file3, setFile3] = useState("");
   const [url3, setURL3] = useState("");
+  const [ imagepreview3 , setimagePreview3 ] = useState(null)
+  const [ imagepreview2 , setimagePreview2 ] = useState(null)
+  const [ imagepreview1 , setimagePreview1 ] = useState(null)
 
   function handleChange(e) {
-    setFile( URL.createObjectURL(e.target.files[0]));
+    setimagePreview1( URL.createObjectURL(e.target.files[0]));
+    setFile(e.target.file[0])
+
   }
   function handleChange2(e) {
-    setFile2( URL.createObjectURL(e.target.files[0]));
+    setimagePreview2( URL.createObjectURL(e.target.files[0]));
+    setFile2(e.target.files[0])
+    console.log (file2)
   }
   function handleChange3(e) {
-    setFile3( URL.createObjectURL(e.target.files[0]));
+    setimagePreview3(URL.createObjectURL(e.target.files[0]));
+    setFile3(e.target.files[0]);
+
     console.log (file3)
   }
   const [fill , setFill] = useState("")
@@ -493,7 +504,7 @@ function UserRegistration() {
               </Box>
               </Box>
               
-              <Box  sx = {style.file2img}component = "img" src = {file2}></Box>
+              <Box  sx = {style.file2img}component = "img" src = {imagepreview2}></Box>
               </Box>
             </FormControl>
             <FormControl
@@ -510,12 +521,14 @@ function UserRegistration() {
                 accept="image/x-png,image/jpeg"
                 onChange={handleChange3}
                 style = {{display : "none"}}
+                multiple = "true"
+                
                 
               />
               <label for="icon-button-file3">Upload</label>
               </Box>
               </Box>
-              <Box  sx = {style.file2img}component = "img" src = {file3}></Box>
+              <Box  sx = {style.file2img}component = "img" src = {imagepreview3}></Box>
               </Box>
             </FormControl>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
