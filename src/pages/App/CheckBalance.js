@@ -99,7 +99,7 @@ export default function CheckBalance() {
                     {fetchPrevClaims.claims.map((data) => {
                         let setTime = data.timestamp.toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        let setDate = data.datetime.toDate().toLocaleDateString('en-US', options);
+                        let setDate = data.timestamp.toDate().toLocaleDateString('en-US', options);
                         return (
                             <Paper key={setDate} sx={{
                                 display: 'flex',

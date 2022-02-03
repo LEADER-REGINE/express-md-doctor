@@ -206,6 +206,7 @@ export default function ViewRequest() {
       let fname = data.firstname;
       let lname = data.lastname;
       let middle = data.middleInitials;
+
       userProfile.profile.map((data2) => {
         var userRef = db.collection("users")
           .doc(id)
@@ -229,7 +230,7 @@ export default function ViewRequest() {
                 bid_time: new Date(),
                 photoURL: photoURL,
                 location: location,
-
+                timestamp: new Date(),
                 fee: fee,
               })
               .then((docReference) => {
@@ -246,6 +247,7 @@ export default function ViewRequest() {
                     photoURL: photoURL,
                     location: location,
                     fee: fee,
+                    timestamp: new Date(),
                   })
                   .then((docRef) => {
                     firebase.database().ref('users/' + id + '/request/' + id).update({
@@ -311,6 +313,7 @@ export default function ViewRequest() {
             rated: false,
             fee: data.fee,
             notes: payload.notes,
+            timestamp: new Date(),
           })
           .then((docReference) => {
             localStorage.setItem("docRef", docReference.id);
@@ -339,6 +342,7 @@ export default function ViewRequest() {
                     fee: data.fee,
                     documentId: localStorage.getItem("docRef"),
                     notes: payload.notes,
+                    timestamp: new Date(),
                   })
                   .then((docRef) => {
                     globalRefMove.doc(localStorage.getItem("docRef"))
@@ -360,6 +364,7 @@ export default function ViewRequest() {
                         fee: data.fee,
                         documentId: localStorage.getItem("docRef"),
                         notes: payload.notes,
+                        timestamp: new Date(),
                       })
                       .then((docRef) => {
                         db.collection("users").doc(id)
