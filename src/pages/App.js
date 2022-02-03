@@ -90,7 +90,7 @@ const style = {
   },
 
   upcommingReq: {
-    minWidth: "350px",
+    width: "100%",
     padding: "10px",
     borderColor: "#7EB6BC",
     borderWidth: "2px",
@@ -241,35 +241,35 @@ export default function App() {
                           to={`view/${setappointment.userID}`}
                         >
                           <Box>
-                          <Paper sx={style.upcommingReq} variant="outlined">
-                            <Box sx={{ display: "flex", flexDirection: "row" }}>
-                              <Box>
-                                <Avatar sx={{ width: 64, height: 64 }} src={setappointment.photoURL} alt="user image" />
+                            <Paper sx={style.upcommingReq} variant="outlined">
+                              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Box>
+                                  <Avatar sx={{ width: 64, height: 64 }} src={setappointment.photoURL} alt="user image" />
+                                </Box>
+                                <Box>
+                                  <Typography variant="h6">
+                                    {setappointment.userFullName}
+                                  </Typography>
+                                  <Typography variant="subtitle2">
+                                    {setappointment.location}
+                                  </Typography>
+                                  <Typography variant="subtitle2">
+                                    {postDate}
+                                  </Typography>
+                                </Box>
                               </Box>
-                              <Box>
-                                <Typography variant="h6">
-                                  {setappointment.userFullName}
+                              <Box sx={{ marginTop: "15px" }}>
+                                <Typography variant="subtitle1">
+                                  Symptoms: {setappointment.symptoms}
                                 </Typography>
-                                <Typography variant="subtitle2">
-                                  {setappointment.location}
+                                <Typography variant="subtitle1">
+                                  Date: {setDate}
                                 </Typography>
-                                <Typography variant="subtitle2">
-                                  {postDate}
+                                <Typography variant="subtitle1">
+                                  Appointment Time: {setTime}
                                 </Typography>
                               </Box>
-                            </Box>
-                            <Box sx={{ marginTop: "15px" }}>
-                              <Typography variant="subtitle1">
-                                Symptoms: {setappointment.symptoms}
-                              </Typography>
-                              <Typography variant="subtitle1">
-                                Date: {setDate}
-                              </Typography>
-                              <Typography variant="subtitle1">
-                                Appointment Time: {setTime}
-                              </Typography>
-                            </Box>
-                          </Paper>
+                            </Paper>
                           </Box>
                         </Link>
                       );
