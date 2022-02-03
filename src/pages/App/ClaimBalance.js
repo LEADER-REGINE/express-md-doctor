@@ -11,6 +11,14 @@ export default function ClaimBalance() {
         profile: [],
     })
 
+    const [payload, setPayload] = useState({
+        gcashNum: "",
+        gcashName: "",
+    });
+    const userInput = (prop) => (e) => {
+        setPayload({ ...payload, [prop]: e.target.value });
+    };
+
     const fetchList = async () => {
         const userRef = db.collection('doctors').doc(localStorage.getItem("uid"));
         let usrProfile = [];
@@ -25,20 +33,49 @@ export default function ClaimBalance() {
     }, []);
 
     function sendClaim() {
-        /* userProfile.profile.map((data) => {
-            var globalRef = db.collection("claimCredit").doc(data.uid);
-            var batch = db.batch()
-            batch.set(globalRef, {
-                status: "Pending",
-                balance: data.credits,
-                timestamp: new Date(),
-                uid: data.uid,
-            })
+        if (!payload.gcashNum || !payload.gcashName) {
+            alert("Please fill out all the fields");
+        } else {
+            userProfile.profile.map((data) => {
+                if (data.credits < 1) {
+                    alert('you have no claimable balance');
+                } else {
+                    var random = Date.now()
+                    var userRef = db.collection("doctors").doc(data.uid);
+                    var userclaimRef = db.collection("doctors").doc(data.uid).collection("PreviousClaims").doc(random);
+                    var globalRef = db.collection("claimCredit").doc(localStorage.getItem("uid"));
 
-            batch.commit().then((doc)=>{
+                    var batch = db.batch()
+                    batch.set(globalRef, {
+                        status: "Pending",
+                        amount: data.credits,
+                        timestamp: new Date(),
+                        uid: data.uid,
+                        gcashNum: payload.gcashNum,
+                        gcashName: payload.gcashName,
+                    })
+                    batch.set(userclaimRef, {
+                        status: "Pending",
+                        amount: data.credits,
+                        timestamp: new Date(),
+                        uid: data.uid,
+                        gcashNum: payload.gcashNum,
+                        gcashName: payload.gcashName,
+                        docID: random,
+                    })
+                    batch.update(userRef, {
+                        credits: parseInt(0),
+                    })
+
+                    batch.commit().then((doc) => {
+                        history.push(`/success/${"claimpending"}`);
+                    })
+
+                }
 
             })
-        }) */
+        }
+
     }
 
     return (
@@ -48,7 +85,13 @@ export default function ClaimBalance() {
                 return (
                     <Box>
                         <Typography>Claimable Balance: PHP {data.credits}</Typography>
-                        <TextField placeholder="GCash Number" />
+                        <TextField placeholder="GCash Number"
+                            onChange={userInput("gcashNum")}
+                            inputProps={{ maxLength: 11, minLength: 11 }}
+                        />
+                        <TextField placeholder="GCash Account Name"
+                            onChange={userInput("gcashName")}
+                        />
                         <Button onClick={() => sendClaim()}>Claim</Button>
                     </Box>
                 )

@@ -23,6 +23,13 @@ export default function CheckBalance() {
         profile: [],
     });
 
+
+    const [fetchPrevClaims, setfetchPrevClaims] = useState({
+        claims: [],
+    });
+
+    const [prevClaim, setprevClaim] = useState(true);
+
     const fetchData = async () => {
         let isMounted = true
         const docRef = await db.collection("doctors").doc(localStorage.getItem("uid"));
@@ -34,8 +41,28 @@ export default function CheckBalance() {
         isMounted = false
     };
 
+    const fetchPrevious = async () => {
+        const userRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("PreviousClaims").orderBy("timestamp", "desc").limit(5);
+        userRef.onSnapshot((doc) => {
+            if (doc.size == 0) {
+                // doc.data() will be undefined in this case
+                setprevClaim(true);
+            } else {
+                setprevClaim(false);
+                userRef.onSnapshot((doc) => {
+                    let getPrevClaim = [];
+                    doc.forEach((req) => {
+                        getPrevClaim.push(req.data());
+                    });
+                    setfetchPrevClaims({ claims: getPrevClaim });
+                });
+            }
+        });
+    };
+
     useEffect(() => {
         fetchData();
+        fetchPrevious();
     }, []);
 
     return (
@@ -52,7 +79,7 @@ export default function CheckBalance() {
                                 <Grid
                                     display="flex"
                                     direction="column"
-                                    justifyConten="center"
+                                    justifyContent="center"
                                     alignItems="center"
                                 >
                                     <Typography variant="h5">PHP {docProfile.credits}</Typography>
@@ -66,10 +93,36 @@ export default function CheckBalance() {
                     })}
             </Box>
 
+            <Box>
+                <Typography>Previous Claims</Typography>
+                <Box>
+                    {fetchPrevClaims.claims.map((data) => {
+                        let setTime = data.timestamp.toDate().toLocaleTimeString();
+                        let setDate = data.timestamp.toDate().toLocaleDateString();
+                        return (
+                            <Paper key={setDate}>
+                                <Typography>
+                                    {data.amount}
+                                </Typography>
+                                <Typography>
+                                    {data.status}
+                                </Typography>
+                                <Typography>
+                                    {data.gcashNum}
+                                </Typography>
+                                <Typography>
+                                    {setTime}
+                                </Typography>
+                                <Typography>
+                                    {setDate}
+                                </Typography>
+                            </Paper>
+                        )
+                    })
 
-
-
-            <PreviousClaimsTable sx={{ p: "20px 20px 0px 20px" }} />
+                    }
+                </Box>
+            </Box>
 
         </Box >
 

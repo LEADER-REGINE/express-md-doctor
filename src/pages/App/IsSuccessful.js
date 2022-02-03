@@ -112,7 +112,19 @@ export default function IsSuccessful() {
                                     Registration Pending
                                 </Typography>
                                 <Typography sx={style.sublabel}>
-                                Registration Pending. Our team will now verify your account and send an email regarding your registration. Thank You.
+                                    Registration Pending. Our team will now verify your account and send an email regarding your registration. Thank You.
+                                </Typography>
+                                <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
+                            </Paper>
+                        );
+                    case "claimpending":
+                        return (
+                            <Paper sx={style.innerConPaper}>
+                                <Typography sx={style.label}>
+                                    Claim Pending
+                                </Typography>
+                                <Typography sx={style.sublabel}>
+                                    You claim is now being reviewed. Our team will send your balance to your gcash account. Thank You.
                                 </Typography>
                                 <Button variant="filled" sx={style.btn} onClick={() => history.push("/dashboard")}>OK</Button>
                             </Paper>
