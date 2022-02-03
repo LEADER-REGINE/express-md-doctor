@@ -2,6 +2,8 @@ import { Typography, Box, Container, Button, Paper, Avatar } from "@mui/material
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../../config/firebase";
+import Icon from "@mui/material/Icon";
+import { loadCSS } from "fg-loadcss";
 const style = {
     requestBtn: {
         borderColor: "white",
@@ -92,6 +94,14 @@ const style = {
     outerCon: {
         marginLeft: "20px",
         marginRight: "20px"
+    },
+    LabelCon: {
+        marginTop: "5px",
+        textAlign: 'center',
+        marginLeft: "10px"
+    },
+    Label: {
+        fontSize: "24px"
     }
 };
 
@@ -125,14 +135,38 @@ export default function Feed() {
         fetchReqList();
     }, []);
 
+     //fontawesome
+     React.useEffect(() => {
+        const node = loadCSS(
+            "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
+            // Inject before JSS
+            document.querySelector("#font-awesome-css") || document.head.firstChild
+        );
+        return () => {
+            node.parentNode.removeChild(node);
+        };
+    }, []);
     return (
         <Box className="base">
+            <Typography className="headerStyle">
+                <Icon
+                    baseClassName="fas"
+                    className="fas fa-address-card"
+                    sx={{
+                        fontSize: { xs: 30, md: 50 },
+                        color: "primary",
+                        width: 300,
+                        marginTop: 2,
+                    }}
+                />
+            </Typography>
+            <Box sx={style.LabelCon}>
+                <Typography sx={style.Label}>Post Feed</Typography>
+            </Box>
             <Container>
                 <Box className="schedBox">
                     <Container>
-                        <Typography className="schedHeader" variant="h6">
-                            Posts Feed
-                        </Typography>
+                        
 
 
                         <Box className="schedDetails">

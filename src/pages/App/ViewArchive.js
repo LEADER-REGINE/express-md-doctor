@@ -187,8 +187,10 @@ export default function ViewArchive() {
                                 </Box>
                             </Box>
                             <Box>
-                                <Typography>Doctor's Notes</Typography>
-                                <TextField readOnly value={data.notes} />
+                                <Typography sx={style.innerSub}>Doctor's Notes:</Typography>
+                                <Box sx={style.inputField}>
+                                                            <Typography>{data.notes}</Typography>
+                                                        </Box>
                             </Box>
                             {(() => {
                                 switch (data.status) {
@@ -196,7 +198,7 @@ export default function ViewArchive() {
                                         if (!data.rated) {
                                             return (
                                                 <Box>
-                                                    <Typography>This user has not yet rated you</Typography>
+                                                    <Typography variant="h6" sx={{ textAlign: "center", marginTop: "50px" }}>This user has not yet rated you</Typography>
                                                 </Box>
                                             );
                                         } else {
