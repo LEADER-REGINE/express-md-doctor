@@ -94,28 +94,39 @@ export default function CheckBalance() {
             </Box>
 
             <Box>
-                <Typography>Previous Claims</Typography>
-                <Box>
+                <Typography variant="h6" sx={{ p: "20px 20px 0px 20px" }}>Previous Claims</Typography>
+                <Box sx={{ p: "20px 20px 0px 20px" }}>
                     {fetchPrevClaims.claims.map((data) => {
                         let setTime = data.timestamp.toDate().toLocaleTimeString();
                         let setDate = data.timestamp.toDate().toLocaleDateString();
                         return (
-                            <Paper key={setDate}>
-                                <Typography>
-                                    {data.amount}
-                                </Typography>
-                                <Typography>
-                                    {data.status}
-                                </Typography>
-                                <Typography>
-                                    {data.gcashNum}
-                                </Typography>
-                                <Typography>
-                                    {setTime}
-                                </Typography>
-                                <Typography>
-                                    {setDate}
-                                </Typography>
+                            <Paper key={setDate} sx={{
+                                display: 'flex', 
+                                direction: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                padding:"10px 20px"
+                            }}>
+                                <Box>
+                                    <Typography variant="h6">
+                                        PHP {data.amount}
+                                    </Typography>
+                                    <Typography>
+                                        {data.gcashNum}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6" >
+                                        {data.status}
+                                    </Typography>
+                                    <Typography>
+                                        {setDate}
+                                    </Typography>
+                                    {/* <Typography>
+                                        {setTime}
+                                    </Typography> */}
+                                </Box>
+
                             </Paper>
                         )
                     })
