@@ -56,7 +56,7 @@ function UserRegistration() {
 
   function handleChange(e) {
     setimagePreview1( URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.file[0])
+    setFile(e.target.files[0])
 
   }
   function handleChange2(e) {
@@ -254,7 +254,7 @@ function UserRegistration() {
               >
                 <IconButton color="primary" aria-label="upload picture">
                   <Avatar
-                    src={file}
+                    src={imagepreview1}
                     sx={{ width: 128, height: 128 }}
                   />
                 </IconButton>
