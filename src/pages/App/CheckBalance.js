@@ -97,15 +97,16 @@ export default function CheckBalance() {
                 <Typography variant="h6" sx={{ p: "20px 20px 0px 20px" }}>Previous Claims</Typography>
                 <Box sx={{ p: "20px 20px 0px 20px" }}>
                     {fetchPrevClaims.claims.map((data) => {
-                        let setTime = data.timestamp.toDate().toLocaleTimeString();
-                        let setDate = data.timestamp.toDate().toLocaleDateString();
+                        let setTime = data.timestamp.toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        let setDate = data.datetime.toDate().toLocaleDateString('en-US', options);
                         return (
                             <Paper key={setDate} sx={{
-                                display: 'flex', 
+                                display: 'flex',
                                 direction: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                padding:"10px 20px"
+                                padding: "10px 20px"
                             }}>
                                 <Box>
                                     <Typography variant="h6">

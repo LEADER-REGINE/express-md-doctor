@@ -27,14 +27,14 @@ const style = {
         fontSize: "24px",
         marginTop: "5px",
         textAlign: 'center',
-      },
+    },
 
     subLabel: {
         fontSize: "18px",
         fontStyle: "italic",
         color: "red"
     },
-   
+
     inputField: {
         display: "flex",
         justifyContent: "center",
@@ -44,32 +44,32 @@ const style = {
         fontSize: "20px",
         marginLeft: "25px",
         marginTop: "20px",
-      },
-      innerSub2: {
+    },
+    innerSub2: {
         fontSize: "25px",
         marginLeft: "25px",
         marginTop: "40px",
-      },
-      innerSub3: {
+    },
+    innerSub3: {
         fontSize: "15px",
-        textAlign:'center',
-        color:'red',
-      },
-      textField: {
+        textAlign: 'center',
+        color: 'red',
+    },
+    textField: {
         width: "350px",
-      },
-      btn: {
+    },
+    btn: {
         width: "200px",
         marginBottom: "10px",
         borderRadius: "10px"
-      },
-      btnBox: {
+    },
+    btnBox: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
         marginTop: "20px"
-      },
+    },
 }
 
 export default function DeclineRequest() {
@@ -260,50 +260,51 @@ export default function DeclineRequest() {
             })
         }
     }
-// fontawesome icons
-React.useEffect(() => {
-    const node = loadCSS(
-      "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
-      // Inject before JSS
-      document.querySelector("#font-awesome-css") || document.head.firstChild
-    );
-    return () => {
-      node.parentNode.removeChild(node);
-    };
-  }, []);
+    // fontawesome icons
+    React.useEffect(() => {
+        const node = loadCSS(
+            "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
+            // Inject before JSS
+            document.querySelector("#font-awesome-css") || document.head.firstChild
+        );
+        return () => {
+            node.parentNode.removeChild(node);
+        };
+    }, []);
 
     return (
         <Box className="base">
             {
                 appointmentData && appointmentData.data.map((data) => {
-                    let setDate = data.datetime.toDate().toLocaleDateString();
-                    let setTime = data.datetime.toDate().toLocaleTimeString();
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    let setDate = data.datetime.toDate().toLocaleDateString('en-US', options);
+                    let setTime = data.datetime.toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                     return (
                         <Box key={data.userID}>
-                             <Box>
-              <Typography className="headerStyle">
-                  <Icon
-                    baseClassName="fas"
-                    className="fas fa-calendar-times"
-                    sx={{
-                      fontSize: { xs: 30, md: 50 },
-                      color: "primary",
-                      width: 300,
-                      marginTop: 2,
-                    }}
-                  />
-                </Typography>
-                <Typography sx={style.label}>Cancel Appointment
-                <hr
-                    style={{
-                      width: 350,
-                      color: "primary",
-                      backgroundColor: "primary",
-                      height: .5,
-                      borderColor: "primary",
-                    }}
-                  /></Typography>
-              </Box>
+                            <Box>
+                                <Typography className="headerStyle">
+                                    <Icon
+                                        baseClassName="fas"
+                                        className="fas fa-calendar-times"
+                                        sx={{
+                                            fontSize: { xs: 30, md: 50 },
+                                            color: "primary",
+                                            width: 300,
+                                            marginTop: 2,
+                                        }}
+                                    />
+                                </Typography>
+                                <Typography sx={style.label}>Cancel Appointment
+                                    <hr
+                                        style={{
+                                            width: 350,
+                                            color: "primary",
+                                            backgroundColor: "primary",
+                                            height: .5,
+                                            borderColor: "primary",
+                                        }}
+                                    /></Typography>
+                            </Box>
                             <Box>
                                 <Typography sx={style.innerSub}>Date of Cancellation: {setDate}</Typography>
                                 <Typography sx={style.innerSub}>Time of Cancellation: {setTime}</Typography>
@@ -313,7 +314,7 @@ React.useEffect(() => {
                             </Box>
                             <Box sx={style.inputField}>
                                 <TextField
-                                sx={style.textField}
+                                    sx={style.textField}
                                     id="outlined-basic"
                                     variant="outlined"
                                     multiline
@@ -321,7 +322,7 @@ React.useEffect(() => {
                                     minRows={6}
                                     onChange={userInput("reason")}
                                 />
-                                
+
 
                             </Box>
                             <Typography sx={style.innerSub3}>*This Field is Required</Typography>

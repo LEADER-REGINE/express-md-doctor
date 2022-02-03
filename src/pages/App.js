@@ -178,12 +178,11 @@ export default function App() {
                 ) : (
                   fetchUpcomingAppointments.appointments.map(
                     (upcomingAppointment) => {
-                      let setDate = upcomingAppointment.datetime
-                        .toDate()
-                        .toLocaleDateString();
+                      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                      let setDate = upcomingAppointment.datetime.toDate().toLocaleDateString('en-US', options);
                       let setTime = upcomingAppointment.datetime
                         .toDate()
-                        .toLocaleTimeString();
+                        .toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                       return (
                         <Link
                           key={upcomingAppointment.userID}
@@ -227,14 +226,13 @@ export default function App() {
                 ) : (
                   fetchPendingAppointments.appointments.map(
                     (setappointment) => {
-                      let setDate = setappointment.datetime
-                        .toDate()
-                        .toLocaleDateString();
+                      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                      let setDate = setappointment.datetime.toDate().toLocaleDateString('en-US', options);
                       let setTime = setappointment.datetime
                         .toDate()
-                        .toLocaleTimeString();
+                        .toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                       let postDate = setappointment.timestamp
-                        .toDate().toLocaleTimeString();
+                        .toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                       return (
                         <Link
                           key={setappointment.userID}

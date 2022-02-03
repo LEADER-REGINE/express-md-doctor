@@ -40,9 +40,8 @@ export default function ClaimBalance() {
                 if (data.credits < 1) {
                     alert('you have no claimable balance');
                 } else {
-                    var random = Date.now()
                     var userRef = db.collection("doctors").doc(data.uid);
-                    var userclaimRef = db.collection("doctors").doc(data.uid).collection("PreviousClaims").doc(random);
+                    var userclaimRef = db.collection("doctors").doc(data.uid).collection("PreviousClaims").doc();
                     var globalRef = db.collection("claimCredit").doc(localStorage.getItem("uid"));
 
                     var batch = db.batch()
@@ -53,6 +52,7 @@ export default function ClaimBalance() {
                         uid: data.uid,
                         gcashNum: payload.gcashNum,
                         gcashName: payload.gcashName,
+                        fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials
                     })
                     batch.set(userclaimRef, {
                         status: "Pending",
@@ -61,7 +61,7 @@ export default function ClaimBalance() {
                         uid: data.uid,
                         gcashNum: payload.gcashNum,
                         gcashName: payload.gcashName,
-                        docID: random,
+                        fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials
                     })
                     batch.update(userRef, {
                         credits: parseInt(0),

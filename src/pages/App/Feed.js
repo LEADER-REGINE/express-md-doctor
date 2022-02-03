@@ -87,11 +87,11 @@ const style = {
         borderColor: "#7EB6BC",
         borderWidth: "2px",
         marginBottom: "20px",
-        
+
     },
-    outerCon : {
-        marginLeft : "20px",
-        marginRight : "20px"
+    outerCon: {
+        marginLeft: "20px",
+        marginRight: "20px"
     }
 };
 
@@ -143,49 +143,48 @@ export default function Feed() {
                             ) : (
                                 fetchPendingAppointments.appointments.map(
                                     (setappointment) => {
-                                        let setDate = setappointment.datetime
-                                            .toDate()
-                                            .toLocaleDateString();
+                                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                                        let setDate = setappointment.datetime.toDate().toLocaleDateString('en-US', options);
                                         let setTime = setappointment.datetime
                                             .toDate()
-                                            .toLocaleTimeString();
+                                            .toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                                         let postDate = setappointment.timestamp
-                                            .toDate().toLocaleTimeString();
+                                            .toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                                         return (
                                             <Link
                                                 key={setappointment.userID}
                                                 to={`view/${setappointment.userID}`}
                                             >
-                                                <Box sx = {style.outerCon}>
-                                                <Paper sx={style.upcommingReq} variant="outlined">
-                                                    <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                                        <Box>
-                                                            <Avatar sx={{ width: 64, height: 64 }} src={setappointment.photoURL} alt="user image" />
+                                                <Box sx={style.outerCon}>
+                                                    <Paper sx={style.upcommingReq} variant="outlined">
+                                                        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                                            <Box>
+                                                                <Avatar sx={{ width: 64, height: 64 }} src={setappointment.photoURL} alt="user image" />
+                                                            </Box>
+                                                            <Box style={{ marginLeft: "30px" }}>
+                                                                <Typography variant="h6">
+                                                                    {setappointment.userFullName}
+                                                                </Typography>
+                                                                <Typography variant="subtitle2">
+                                                                    {setappointment.location}
+                                                                </Typography>
+                                                                <Typography variant="subtitle2">
+                                                                    {postDate}
+                                                                </Typography>
+                                                            </Box>
                                                         </Box>
-                                                        <Box style = {{marginLeft : "30px"}}>
-                                                            <Typography variant="h6">
-                                                                {setappointment.userFullName}
+                                                        <Box sx={{ marginTop: "15px" }}>
+                                                            <Typography variant="subtitle1">
+                                                                Symptoms: {setappointment.symptoms}
                                                             </Typography>
-                                                            <Typography variant="subtitle2">
-                                                                {setappointment.location}
+                                                            <Typography variant="subtitle1">
+                                                                Date: {setDate}
                                                             </Typography>
-                                                            <Typography variant="subtitle2">
-                                                                {postDate}
+                                                            <Typography variant="subtitle1">
+                                                                Appointment Time: {setTime}
                                                             </Typography>
                                                         </Box>
-                                                    </Box>
-                                                    <Box sx={{ marginTop: "15px" }}>
-                                                        <Typography variant="subtitle1">
-                                                            Symptoms: {setappointment.symptoms}
-                                                        </Typography>
-                                                        <Typography variant="subtitle1">
-                                                            Date: {setDate}
-                                                        </Typography>
-                                                        <Typography variant="subtitle1">
-                                                            Appointment Time: {setTime}
-                                                        </Typography>
-                                                    </Box>
-                                                </Paper>
+                                                    </Paper>
                                                 </Box>
                                             </Link>
                                         );

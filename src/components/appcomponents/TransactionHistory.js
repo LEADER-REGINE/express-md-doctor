@@ -50,14 +50,14 @@ export default function TransactionHistory() {
     //fontawesome
     React.useEffect(() => {
         const node = loadCSS(
-          "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
-          // Inject before JSS
-          document.querySelector("#font-awesome-css") || document.head.firstChild
+            "https://use.fontawesome.com/releases/v5.14.0/css/all.css",
+            // Inject before JSS
+            document.querySelector("#font-awesome-css") || document.head.firstChild
         );
         return () => {
-          node.parentNode.removeChild(node);
+            node.parentNode.removeChild(node);
         };
-      }, []);
+    }, []);
 
     const style = {
         outerCon: {
@@ -85,17 +85,17 @@ export default function TransactionHistory() {
     return (
         <Box>
             <Typography className="headerStyle">
-        <Icon
-          baseClassName="fas"
-          className="fas fa-notes-medical"
-          sx={{
-            fontSize: { xs: 30, md: 50 },
-            color: "primary",
-            width: 300,
-            marginTop: 2,
-          }}
-        />
-      </Typography>
+                <Icon
+                    baseClassName="fas"
+                    className="fas fa-notes-medical"
+                    sx={{
+                        fontSize: { xs: 30, md: 50 },
+                        color: "primary",
+                        width: 300,
+                        marginTop: 2,
+                    }}
+                />
+            </Typography>
             <Box sx={style.LabelCon}>
                 <Typography sx={style.Label}>Transaction History</Typography>
             </Box>
@@ -107,8 +107,9 @@ export default function TransactionHistory() {
                     :
                     <List className='transactionList'>
                         {transactions && transactions.datas.map((transactions) => {
-                            let setDate = transactions.datetime.toDate().toLocaleDateString();
-                            let setTime = transactions.datetime.toDate().toLocaleTimeString();
+                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                            let setDate = transactions.datetime.toDate().toLocaleDateString('en-US', options);
+                            let setTime = transactions.datetime.toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                             return (
                                 <ListItem sx={style.outerCon}>
                                     <Link to={`/archive/${transactions.documentId}/view`}>

@@ -72,7 +72,7 @@ export default function ViewArchive() {
         docRef.get().then((doc) => {
             rawData.push(doc.data());
             setdocData({ data: rawData });
-            
+
         });
         isMounted = false
     };
@@ -167,8 +167,9 @@ export default function ViewArchive() {
         <Box className="base">
             {
                 appointmentData && appointmentData.data.map((data) => {
-                    let setDate = data.datetime.toDate().toLocaleDateString();
-                    let setTime = data.datetime.toDate().toLocaleTimeString();
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    let setDate = data.datetime.toDate().toLocaleDateString('en-US', options);
+                    let setTime = data.datetime.toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
                     return (
                         <Box>
