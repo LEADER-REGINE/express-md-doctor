@@ -1,0 +1,6 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "ga.expressmd.doc.twa",
+                     "sha256_cert_fingerprints": ["B4:85:72:D0:55:0D:0E:AB:36:CF:97:1C:BF:AC:D9:35:37:29:22:CB:66:9A:35:86:D0:0A:B5:05:08:68:5D:1D"] }
+      }
+]
