@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountModal from '../appcomponents/AccoundModal'
 import { NavLink } from 'react-router-dom';
 import Logo from "./icon-256x256.png";
+import Logo1 from "./logo2.png";
 function Nav() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -18,7 +19,7 @@ function Nav() {
     return (
         <AppBar position="sticky">
             <Container maxWidth="xl">
-                <Toolbar disableGutters>
+                <Toolbar disableGutters sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                     <Typography
                         variant="h6"
                         noWrap
@@ -28,7 +29,7 @@ function Nav() {
                         <img src={Logo} alt='logo' width={64} height={64} />
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -68,14 +69,14 @@ function Nav() {
                                 </MenuItem>
                             </NavLink>
                         </Menu>
-                    </Box>
+                    </Box> */}
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                        sx={{  display: { xs: 'flex', md: 'none' } }}
                     >
-                        <img src={Logo} alt='logo' width={64} height={64} />
+                        <img src={Logo1} alt='logo' width={64} height={50} />
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <NavLink to='/'>
