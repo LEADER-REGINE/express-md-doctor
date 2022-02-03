@@ -41,7 +41,7 @@ export default function ClaimBalance() {
                     alert('you have no claimable balance');
                 } else {
                     var userRef = db.collection("doctors").doc(data.uid);
-                    var userclaimRef = db.collection("doctors").doc(data.uid).collection("PreviousClaims").doc();
+                    var userclaimRef = db.collection("doctors").doc(data.uid).collection("PreviousClaims");
                     var globalRef = db.collection("claimCredit").doc(localStorage.getItem("uid"));
 
                     var batch = db.batch()
@@ -54,21 +54,29 @@ export default function ClaimBalance() {
                         gcashName: payload.gcashName,
                         fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials
                     })
-                    batch.set(userclaimRef, {
-                        status: "Pending",
-                        amount: data.credits,
-                        timestamp: new Date(),
-                        uid: data.uid,
-                        gcashNum: payload.gcashNum,
-                        gcashName: payload.gcashName,
-                        fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials
-                    })
-                    batch.update(userRef, {
-                        credits: parseInt(0),
-                    })
-
                     batch.commit().then((doc) => {
-                        history.push(`/success/${"claimpending"}`);
+                        userclaimRef.add({
+                            status: "Pending",
+                            amount: data.credits,
+                            timestamp: new Date(),
+                            uid: data.uid,
+                            gcashNum: payload.gcashNum,
+                            gcashName: payload.gcashName,
+                            fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials
+                        }).then((doc2) => {
+                            var batch = db.batch();
+                            batch.update(userRef, {
+                                transactionID: doc2.id,
+                            })
+                            batch.update(userRef, {
+                                credits: parseInt(0),
+                                transactionID: doc2.id,
+                            })
+                            batch.commit().then((doc3) => {
+                                history.push(`/success/${"claimpending"}`);
+                            })
+                        })
+
                     })
 
                 }
