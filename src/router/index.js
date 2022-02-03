@@ -187,8 +187,9 @@ export default function RouterComponent() {
                         component={DeclineRequest}
                         path="/view/:id/decline"
                         exact />
-                    <PrivateRoute
+                    <PublicRoute
                         exact
+                        restricted={false}
                         isAuthenticated={values.isAuthenticated}
                         component={IsSuccessful}
                         path="/success/:status" />

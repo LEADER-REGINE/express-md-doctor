@@ -16,7 +16,9 @@ import firebase from "../../config/firebase";
 import React, { useState } from "react";
 import { useHistory, withRouter, useLocation } from "react-router-dom";
 import { IconButton } from "@mui/material";
-
+import Compress from "react-image-file-resizer";
+import Compressor from 'compressorjs';
+import imageCompression from 'browser-image-compression';
 import "./Registration.css";
 import validator from "validator";
 
@@ -42,7 +44,7 @@ function UserRegistration() {
 
   const [file, setFile] = useState("");
   const [url, setURL] = useState("");
-  
+
 
 
   const [file2, setFile2] = useState("");
@@ -50,27 +52,26 @@ function UserRegistration() {
 
   const [file3, setFile3] = useState("");
   const [url3, setURL3] = useState("");
-  const [ imagepreview3 , setimagePreview3 ] = useState(null)
-  const [ imagepreview2 , setimagePreview2 ] = useState(null)
-  const [ imagepreview1 , setimagePreview1 ] = useState(null)
+  const [imagepreview3, setimagePreview3] = useState(null)
+  const [imagepreview2, setimagePreview2] = useState(null)
+  const [imagepreview1, setimagePreview1] = useState(null)
+  const [compressedFile3, setCompressedFile] = useState(null);
 
   function handleChange(e) {
-    setimagePreview1( URL.createObjectURL(e.target.files[0]));
+    setimagePreview1(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0])
 
   }
   function handleChange2(e) {
-    setimagePreview2( URL.createObjectURL(e.target.files[0]));
+    setimagePreview2(URL.createObjectURL(e.target.files[0]));
     setFile2(e.target.files[0])
-    console.log (file2)
+    console.log(e.target.files[0]);
   }
   function handleChange3(e) {
     setimagePreview3(URL.createObjectURL(e.target.files[0]));
     setFile3(e.target.files[0]);
-
-    console.log (file3)
   }
-  const [fill , setFill] = useState("")
+  const [fill, setFill] = useState("")
   const [emailError, setEmailError] = useState("");
   const userInputEmail = (prop) => (e) => {
     setPayload({ ...payload, [prop]: e.target.value });
@@ -126,8 +127,7 @@ function UserRegistration() {
             })
             .then((doc) => {
               const ref = store.ref(
-                `/registration/${localStorage.getItem("documentID")}/${
-                  file.name
+                `/registration/${localStorage.getItem("documentID")}/${file.name
                 }`
               );
               const uploadTask = ref.put(file);
@@ -136,8 +136,7 @@ function UserRegistration() {
                   setFile(null);
                   setURL(fileurl1);
                   const ref = store.ref(
-                    `/registration/${localStorage.getItem("documentID")}/${
-                      file2.name
+                    `/registration/${localStorage.getItem("documentID")}/${file2.name
                     }`
                   );
                   const uploadTask = ref.put(file2);
@@ -220,15 +219,15 @@ function UserRegistration() {
         borderRadius: 4,
       },
     },
-    file2img : {
-      width : "200px",
-      borderRadius : "10px" 
+    file2img: {
+      width: "200px",
+      borderRadius: "10px"
     },
 
-    file2imgCon : {
-      display : "flex",
-      flexDirection : "row",
-      justifyContent : "space-between"
+    file2imgCon: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between"
     }
   };
   return (
@@ -480,55 +479,55 @@ function UserRegistration() {
                 type="tel"
               />
               <FormHelperText>
-                {fill ? <Typography variant = "h8">"Please fill out all of the fields"</Typography>: " Will be used to verify your Identity on the PRC Online Verification."}
-               
+                {fill ? <Typography variant="h8">"Please fill out all of the fields"</Typography> : " Will be used to verify your Identity on the PRC Online Verification."}
+
               </FormHelperText>
             </FormControl>
             <FormControl
               required
               sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}
             >
-              <Box sx = {style.file2imgCon}>
-              <Box>
-              <Typography variant="h6">Valid ID</Typography>
-              <Box sx={style.uploadBtn}>
-              <input
-                accept="image/*"
-                id="icon-button-file2"
-                type="file"
-                accept="image/x-png,image/jpeg"
-                onChange={handleChange2}
-                style = {{display : "none"}}
-              />
-              <label for="icon-button-file2">Upload</label>
-              </Box>
-              </Box>
-              
-              <Box  sx = {style.file2img}component = "img" src = {imagepreview2}></Box>
+              <Box sx={style.file2imgCon}>
+                <Box>
+                  <Typography variant="h6">Valid ID</Typography>
+                  <Box sx={style.uploadBtn}>
+                    <input
+                      accept="image/*"
+                      id="icon-button-file2"
+                      type="file"
+                      accept="image/x-png,image/jpeg"
+                      onChange={handleChange2}
+                      style={{ display: "none" }}
+                    />
+                    <label for="icon-button-file2">Upload</label>
+                  </Box>
+                </Box>
+
+                <Box sx={style.file2img} component="img" src={imagepreview2}></Box>
               </Box>
             </FormControl>
             <FormControl
               required
               sx={{ m: 1, minWidth: 120, zIndex: 0, marginTop: "30px" }}
-            > <Box sx = {style.file2imgCon}>
-              <Box>
-              <Typography variant="h6">PSA Birth Certificate</Typography>
-              <Box sx={style.uploadBtn}>
-              <input
-                accept="image/*"
-                id="icon-button-file3"
-                type="file"
-                accept="image/x-png,image/jpeg"
-                onChange={handleChange3}
-                style = {{display : "none"}}
-                multiple = "true"
-                
-                
-              />
-              <label for="icon-button-file3">Upload</label>
-              </Box>
-              </Box>
-              <Box  sx = {style.file2img}component = "img" src = {imagepreview3}></Box>
+            > <Box sx={style.file2imgCon}>
+                <Box>
+                  <Typography variant="h6">PSA Birth Certificate</Typography>
+                  <Box sx={style.uploadBtn}>
+                    <input
+                      accept="image/*"
+                      id="icon-button-file3"
+                      type="file"
+                      accept="image/x-png,image/jpeg"
+                      onChange={handleChange3}
+                      style={{ display: "none" }}
+                      multiple="true"
+
+
+                    />
+                    <label for="icon-button-file3">Upload</label>
+                  </Box>
+                </Box>
+                <Box sx={style.file2img} component="img" src={imagepreview3}></Box>
               </Box>
             </FormControl>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
