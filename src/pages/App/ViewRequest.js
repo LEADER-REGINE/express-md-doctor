@@ -275,7 +275,7 @@ export default function ViewRequest() {
   function completeRequest() {
     if (!payload.notes) {
       alert("Please fill out the fields");
-    } {
+    } else {
       var docRefMove = db.collection("doctors")
         .doc(localStorage.getItem("uid"))
         .collection("archive");
