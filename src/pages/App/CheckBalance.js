@@ -42,7 +42,7 @@ export default function CheckBalance() {
     };
 
     const fetchPrevious = async () => {
-        const userRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("PreviousClaims").orderBy("timestamp", "desc").limit(5);
+        const userRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("prevClaims").orderBy("timestamp", "desc").limit(5);
         userRef.onSnapshot((doc) => {
             if (doc.size == 0) {
                 // doc.data() will be undefined in this case
@@ -101,7 +101,7 @@ export default function CheckBalance() {
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         let setDate = data.timestamp.toDate().toLocaleDateString('en-US', options);
                         return (
-                            <Paper key={setDate} sx={{
+                            <Paper key={data.timestamp} sx={{
                                 display: 'flex',
                                 direction: 'row',
                                 justifyContent: 'space-between',

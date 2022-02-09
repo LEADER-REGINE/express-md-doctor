@@ -40,44 +40,46 @@ export default function ClaimBalance() {
                 if (data.credits < 1) {
                     alert('you have no claimable balance');
                 } else {
-                    var userRef = db.collection("doctors").doc(data.uid);
-                    var userclaimRef = db.collection("doctors").doc(data.uid).collection("PreviousClaims");
-                    var globalRef = db.collection("claimCredit").doc(localStorage.getItem("uid"));
 
-                    var batch = db.batch()
-                    batch.set(globalRef, {
+                    const secondsSinceEpoch = Math.round(Date.now() / 1000)
+                    var docuID = secondsSinceEpoch.toString();
+                    console.log(secondsSinceEpoch);
+                    const doctorRef = db.collection("doctors").doc(localStorage.getItem("uid"));
+                    const globalRef = db.collection("creditClaims");
+                    const docuRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("prevClaims");
+
+                    globalRef.doc(docuID).set({
                         status: "Pending",
                         amount: data.credits,
                         timestamp: new Date(),
                         uid: data.uid,
                         gcashNum: payload.gcashNum,
                         gcashName: payload.gcashName,
-                        fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials
+                        fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials,
+                        docID: docuID,
                     })
-                    batch.commit().then((doc) => {
-                        userclaimRef.add({
-                            status: "Pending",
-                            amount: data.credits,
-                            timestamp: new Date(),
-                            uid: data.uid,
-                            gcashNum: payload.gcashNum,
-                            gcashName: payload.gcashName,
-                            fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials
-                        }).then((doc2) => {
-                            var batch = db.batch();
-                            batch.update(userRef, {
-                                transactionID: doc2.id,
+                        .then(() => {
+                            docuRef.doc(docuID).set({
+                                status: "Pending",
+                                amount: data.credits,
+                                timestamp: new Date(),
+                                uid: data.uid,
+                                gcashNum: payload.gcashNum,
+                                gcashName: payload.gcashName,
+                                fullname: data.lastname + ", " + data.firstname + " " + data.middleInitials,
+                                docID: docuID,
                             })
-                            batch.update(userRef, {
-                                credits: parseInt(0),
-                                transactionID: doc2.id,
-                            })
-                            batch.commit().then((doc3) => {
-                                history.push(`/success/${"claimpending"}`);
-                            })
+                                .then(() => {
+                                    doctorRef
+                                        .update({
+                                            credits: parseInt(0),
+                                        })
+                                        .then((doc7) => {
+                                            alert("Success");
+                                            window.location.reload();
+                                        })
+                                })
                         })
-
-                    })
 
                 }
 
