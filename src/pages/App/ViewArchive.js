@@ -22,13 +22,112 @@ const style = {
         fontStyle: "italic",
         color: "red"
     },
+    patientProf: {
+        width: "90px",
+        height: "90px",
+        borderRadius: "90px"
+    },
+    superInnerCon: {
+        marginLeft: "30px"
+    },
+
+    innerSub2: {
+        fontSize: "18px",
+        marginLeft: "25px",
+        marginTop: "40px",
+        marginBottom: "10px",
+    },
+    innerSub5: {
+        fontSize: "18px",
+
+        marginTop: "20px",
+        marginBottom: "10px",
+    },
+
+    innerSubrate: {
+        fontSize: "18px",
+        marginTop: "5px",
+        marginBottom: "10px",
+        textAlign: "center"
+    },
+
+
     textField: {
         width: "300px",
     },
-    inputField: {
+
+    dateTimeCon: {
+        marginTop: "50px",
+        marginLeft: "20px",
+        marginRight: "30px",
+        minWidth: "200px",
+    },
+    dateandTime: {
         display: "flex",
         justifyContent: "center",
-        alignItems: 'center'
+        flexDirection: "column",
+        marginLeft: "20px",
+        marginRight: "30px",
+
+    },
+
+    rateBox: {
+        alignItems: "center",
+    },
+
+    con: {
+        marginTop: "50px"
+    },
+
+    dateAndTime: {
+        marginTop: "10px"
+    },
+
+    notelabel: {
+        fontSize: "12px",
+        fontStyle: "Italic",
+        marginLeft: "20px",
+        color: "gray"
+    },
+
+    btnBox: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        marginTop: "20px"
+    },
+
+    btn: {
+        width: "200px",
+        marginBottom: "10px",
+        borderRadius: "10px"
+    },
+    ratePaper: {
+        minWidth: "50px",
+        borderColor: "#7EB6BC",
+        borderWidth: "2px",
+        marginRight: "30px",
+        borderRadius: "8px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "10px",
+        minHeight: "10px",
+        marginBottom: "20px",
+        marginTop: "50px",
+
+    },
+    rateContainer: {
+        marginLeft: "30px",
+
+    },
+    rateButn: {
+        marginTop: "10px"
+    },
+    rateContainer2: {
+        display: "flex",
     }
 }
 
@@ -61,19 +160,22 @@ export default function ViewArchive() {
             setappointmentData({ data: rawData });
             localStorage.setItem("userID", doc.data().userID);
             localStorage.setItem("userDocID", doc.data().ratingID);
+            localStorage.setItem("reviewID", doc.data().reviewID);
         });
         isMounted = false
     };
 
     const fetchDoc = async () => {
         let isMounted = true
-        const docRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("usrrating").doc(localStorage.getItem("userDocID"));
-        let rawData = [];
-        docRef.get().then((doc) => {
-            rawData.push(doc.data());
-            setdocData({ data: rawData });
-
-        });
+        if (localStorage.getItem("reviewID") != 'undefined' || !localStorage.getItem("reviewID")) {
+            const docRef = db.collection("doctors").doc(localStorage.getItem("uid")).collection("usrrating").doc(localStorage.getItem("reviewID"));
+            let rawData = [];
+            docRef.get().then((doc) => {
+                rawData.push(doc.data());
+                setdocData({ data: rawData });
+                console.log(doc.data());
+            });
+        }
         isMounted = false
     };
 
@@ -189,8 +291,8 @@ export default function ViewArchive() {
                             <Box>
                                 <Typography sx={style.innerSub}>Doctor's Notes:</Typography>
                                 <Box sx={style.inputField}>
-                                                            <Typography>{data.notes}</Typography>
-                                                        </Box>
+                                    <Typography>{data.notes}</Typography>
+                                </Box>
                             </Box>
                             {(() => {
                                 switch (data.status) {
@@ -203,21 +305,156 @@ export default function ViewArchive() {
                                             );
                                         } else {
                                             return (
-                                                <Box>
+                                                <Box sx={style.rateContainer2}>
                                                     {
                                                         docData && docData.data.map((data2) => {
+                                                            const style = {
+                                                                innerCon: {
+                                                                    marginTop: "20px",
+                                                                    display: "flex",
+                                                                    flexDirection: "row",
+                                                                    marginLeft: "30px",
+                                                                    alignItems: "center",
+
+                                                                },
+                                                                patientProf: {
+                                                                    width: "90px",
+                                                                    height: "90px",
+                                                                    borderRadius: "90px"
+                                                                },
+                                                                superInnerCon: {
+                                                                    marginLeft: "30px"
+                                                                },
+                                                                innerSub: {
+                                                                    fontSize: "24px",
+                                                                    marginLeft: "25px",
+                                                                    marginTop: "20px",
+                                                                    marginBottom: "10px",
+                                                                },
+
+                                                                innerSub2: {
+                                                                    fontSize: "18px",
+                                                                    marginLeft: "25px",
+                                                                    marginTop: "40px",
+                                                                    marginBottom: "10px",
+                                                                },
+                                                                innerSub5: {
+                                                                    fontSize: "18px",
+
+                                                                    marginTop: "20px",
+                                                                    marginBottom: "10px",
+                                                                },
+
+                                                                innerSubrate: {
+                                                                    fontSize: "18px",
+                                                                    marginTop: "5px",
+                                                                    marginBottom: "10px",
+                                                                    textAlign: "center"
+                                                                },
+
+
+                                                                inputField: {
+                                                                    display: "flex",
+                                                                    marginLeft: "30px",
+                                                                    marginRight: "30px",
+                                                                    justifyContent: "center",
+                                                                    marginTop: "10px",
+
+                                                                },
+
+                                                                textField: {
+                                                                    width: "300px",
+                                                                },
+
+                                                                dateTimeCon: {
+                                                                    marginTop: "50px",
+                                                                    marginLeft: "20px",
+                                                                    marginRight: "30px",
+                                                                    minWidth: "200px",
+                                                                },
+                                                                dateandTime: {
+                                                                    display: "flex",
+                                                                    justifyContent: "center",
+                                                                    flexDirection: "column",
+                                                                    marginLeft: "20px",
+                                                                    marginRight: "30px",
+
+                                                                },
+
+                                                                rateBox: {
+                                                                    alignItems: "center",
+                                                                },
+
+                                                                con: {
+                                                                    marginTop: "50px"
+                                                                },
+
+                                                                dateAndTime: {
+                                                                    marginTop: "10px"
+                                                                },
+
+                                                                notelabel: {
+                                                                    fontSize: "12px",
+                                                                    fontStyle: "Italic",
+                                                                    marginLeft: "20px",
+                                                                    color: "gray"
+                                                                },
+
+                                                                btnBox: {
+                                                                    display: "flex",
+                                                                    alignItems: "center",
+                                                                    justifyContent: "center",
+                                                                    flexDirection: "column",
+                                                                    marginTop: "20px"
+                                                                },
+
+                                                                btn: {
+                                                                    width: "200px",
+                                                                    marginBottom: "10px",
+                                                                    borderRadius: "10px"
+                                                                },
+                                                                ratePaper: {
+                                                                    minWidth: "50px",
+                                                                    borderColor: "#7EB6BC",
+                                                                    borderWidth: "2px",
+                                                                    marginRight: "30px",
+                                                                    borderRadius: "8px",
+                                                                    display: "flex",
+                                                                    alignItems: "center",
+                                                                    justifyContent: "center",
+                                                                    padding: "10px",
+                                                                    minHeight: "10px",
+                                                                    marginBottom: "20px",
+                                                                    marginTop: "50px",
+
+                                                                },
+                                                                rateContainer: {
+                                                                    marginLeft: "30px",
+                                                                },
+                                                                rateButn: {
+                                                                    marginTop: "10px"
+                                                                }
+                                                            }
                                                             return (
-                                                                <Box>
-                                                                    <Paper>
-                                                                        <Rating
-                                                                            readOnly
-                                                                            value={data2.rating}
-                                                                            precision={1}
-                                                                            icon={<StarRoundedIcon />}
-                                                                            emptyIcon={<StarRoundedIcon />}
-                                                                        />
-                                                                        <TextField readOnly value={data2.review} />
+
+                                                                <Box sx={style.rateContainer}>
+
+                                                                    <Paper sx={style.ratePaper} elevation={3} >
+                                                                        <Box >
+
+                                                                            <Box><Typography sx={style.innerSubrate}>User Rating:</Typography></Box>
+
+                                                                            <Rating
+                                                                                sx={{ fontSize: "45px", marginTop: "10px", marginLeft: "30px", }}
+                                                                                name="rating"
+                                                                                value={data2.rating}
+                                                                                precision={1}
+                                                                            />
+                                                                            <Typography sx={style.innerSub5}>User Review:</Typography>
+                                                                            <Typography sx={{ marginLeft: "30px", marginBottom: "30px" }}>{data2.review}</Typography>
+                                                                        </Box>
                                                                     </Paper>
+
                                                                 </Box>
                                                             )
                                                         })
