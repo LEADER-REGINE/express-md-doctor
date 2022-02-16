@@ -428,13 +428,15 @@ function UserRegistration() {
               <InputLabel sx={{ color: "black" }}>Type</InputLabel>
               <Select
                 sx={style.textInput}
-                id="Municipality"
-                label="Municipality *"
-                value={"Bustos"}
+                id="Type"
+                label="Type"
+                value={"General Doctor"}
                 onChange={userInput("type")}
                 value={payload.type}
               >
                 <MenuItem value={"General Doctor"}>General Doctor</MenuItem>
+                <MenuItem value={"OB/GYN"}>OB/GYN</MenuItem>
+                <MenuItem value={"Orthopedics"}>Orthopedics</MenuItem>
                 <MenuItem value={"Pediatrics"}>Pediatrics</MenuItem>
               </Select>
             </FormControl>
