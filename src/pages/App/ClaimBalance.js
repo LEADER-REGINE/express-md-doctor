@@ -1,7 +1,8 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography , Paper } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import firebase from '../../config/firebase';
 import { withRouter, useHistory } from 'react-router-dom';
+import balancepic from "../../assets/balance.png"
 
 export default function ClaimBalance() {
 
@@ -88,21 +89,80 @@ export default function ClaimBalance() {
 
     }
 
+    const style = {
+        picCon : {
+            display : "flex",
+            justifyContent : "center",
+            alignItems : "center",
+            marginTop : "20px"
+        },
+        banner : {
+            width : "80px",
+        },
+        claim : {
+            display : "flex",
+            justifyContent : "center",
+            alignItems : "center",
+            marginTop : "50px",
+            padding : "40px 20px",
+            marginLeft : "20px",
+            marginRight : "20px",
+            flexDirection : "column",
+            border : "2px solid #7EB6BC"
+        
+
+        },
+        label : {
+            fontSize : "24px"
+        },
+        sublabel : {
+            fontSize : "14px"
+        },
+        inputField : {
+            display : "flex",
+            justifyContent : "center",
+            alignItems : "center",
+            marginTop : "50px",
+            marginLeft : "20px",
+            marginRight : "20px",
+            flexDirection : "column",
+            marginBottom : "100px"
+        },
+        textInput: {
+            [`& fieldset`]: {
+              borderRadius: 4,
+            },
+            minWidth : "250px",
+            marginLeft : "20px",
+            marginRight : "20px",
+            marginBottom : "20px"
+        }
+    }
+
     return (
         <Box>
-            <Typography>Claim Balance</Typography>
             {userProfile.profile.map((data) => {
                 return (
                     <Box>
-                        <Typography>Claimable Balance: PHP {data.credits}</Typography>
-                        <TextField placeholder="GCash Number"
+                        <Box sx = {style.picCon}>
+                        <Box component = "img" src = {balancepic} sx = {style.banner}/>
+                        </Box>
+                        <Paper sx = {style.claim} variant = "outlined">
+                        <Typography sx = {style.label}>PHP {data.credits}</Typography>
+                        <Typography sx = {style.sublabel}>AVAILABLE BALANCE</Typography>
+                        </Paper>
+
+                        <Box sx = {style.inputField}>
+                        <TextField sx = {style.textInput} placeholder="GCash Number"
                             onChange={userInput("gcashNum")}
+                            type = "tel"
                             inputProps={{ maxLength: 11, minLength: 11 }}
                         />
-                        <TextField placeholder="GCash Account Name"
+                        <TextField sx = {style.textInput} placeholder="GCash Account Name"
                             onChange={userInput("gcashName")}
                         />
                         <Button onClick={() => sendClaim()}>Claim</Button>
+                        </Box>
                     </Box>
                 )
             })}
