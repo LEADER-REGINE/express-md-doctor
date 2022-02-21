@@ -66,8 +66,8 @@ export default function CheckBalance() {
     }, []);
 
     return (
-        <Box >
-            <Box sx={{ p: "20px 20px 0px 20px" }}>
+        <Box>
+            <Box sx={{ p: "20px 20px 0px 20px" }} >
                 {doctorProfile &&
                     doctorProfile.profile.map((docProfile) => {
                         return (
@@ -93,39 +93,42 @@ export default function CheckBalance() {
                     })}
             </Box>
 
+             
             <Box>
                 <Typography variant="h6" sx={{ p: "20px 20px 0px 20px" }}>Previous Claims</Typography>
-                <Box sx={{ p: "20px 20px 0px 20px" }}>
+                <Box sx={{ p: "20px 20px 0px 20px" }} style = {{marginBottom : "100px"}}>
                     {fetchPrevClaims.claims.map((data) => {
                         let setTime = data.timestamp.toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         let setDate = data.timestamp.toDate().toLocaleDateString('en-US', options);
                         return (
-                            <Paper key={data.timestamp} sx={{
+                            <Paper  key={data.timestamp} sx={{
                                 display: 'flex',
                                 direction: 'row',
-                                justifyContent: 'space-between',
+                                marginBottom  : "20px",
                                 alignItems: 'center',
-                                padding: "10px 20px"
-                            }}>
+                                padding: "10px 20px",
+                                
+                                border  : "2px solid #7EB6BC"
+                            }} variant = "outlined">
                                 <Box>
-                                    <Typography variant="h6">
+                                    <Typography style = {{fontSize : "18px" , fontWeight : 600}}>
                                         PHP {data.amount}
                                     </Typography>
                                     <Typography>
                                         {data.gcashNum}
                                     </Typography>
                                 </Box>
-                                <Box>
-                                    <Typography variant="h6" >
+                                <Box style = {{marginLeft : "50px"}}>
+                                    <Typography variant="h7" >
                                         {data.status}
                                     </Typography>
-                                    <Typography>
+                                    <Typography style = {{fontSize : "14px"}}>
                                         {setDate}
-                                    </Typography>
-                                    {/* <Typography>
+                                    </Typography >
+                                    <Typography style = {{fontSize : "14px"}}>
                                         {setTime}
-                                    </Typography> */}
+                                    </Typography>
                                 </Box>
 
                             </Paper>
